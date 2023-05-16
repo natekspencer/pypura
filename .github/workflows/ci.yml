@@ -36,6 +36,6 @@ jobs:
           poetry run pylint pypura tests
           poetry run pydocstyle pypura tests
       - name: Run mypy
-        run: poetry run mypy pypura tests
+        run: poetry run mypy --install-types --non-interactive pypura tests
       - name: Test with pytest
-        run: poetry run pytest --timeout=10 --cov=pypura --asyncio-mode=auto
+        run: poetry run pytest --cov=pypura
