@@ -83,7 +83,7 @@ class Pura:
     ) -> bool:
         """Set intensity."""
         json = {"bay": bay, "controller": controller, "intensity": intensity}
-        resp = self.__post(f"devices/{device_id}/nightlight", json=json)
+        resp = self.__post(f"devices/{device_id}/intensity", json=json)
         return resp.json().get("success") is True
 
     def set_nightlight(
