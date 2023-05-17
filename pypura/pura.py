@@ -22,6 +22,9 @@ BASE_URL = "https://trypura.io/mobile/api/"
 class Pura:
     """Pura account."""
 
+    _user: Cognito | None = None
+    _auth: RequestsSrpAuth | None = None
+
     def __init__(
         self,
         *,
@@ -31,30 +34,45 @@ class Pura:
         refresh_token: str | None = None,
     ) -> None:
         """Initialize."""
-        user = Cognito(
-            decode(USER_POOL_ID),
-            decode(CLIENT_ID),
-            username=username,
-            access_token=access_token,
-            id_token=id_token,
-            refresh_token=refresh_token,
-        )
-        if access_token or id_token:
-            user.verify_tokens()
-        self._user = user
-        self._auth = RequestsSrpAuth(cognito=user, auth_token_type=TokenType.ID_TOKEN)
+        self._username = username
+        self._access_token = access_token
+        self._id_token = id_token
+        self._refresh_token = refresh_token
+
+    def get_user(self) -> Cognito:
+        """Return the Cognito user."""
+        if self._user is None:
+            self._user = Cognito(
+                decode(USER_POOL_ID),
+                decode(CLIENT_ID),
+                username=self._username,
+                access_token=self._access_token,
+                id_token=self._id_token,
+                refresh_token=self._refresh_token,
+            )
+            if self._access_token or self._id_token:
+                self._user.verify_tokens()
+        return self._user
+
+    def get_auth(self) -> RequestsSrpAuth:
+        """Return the RequestsSrpAuth."""
+        if self._auth is None:
+            self._auth = RequestsSrpAuth(
+                cognito=self.get_user(), auth_token_type=TokenType.ID_TOKEN
+            )
+        return self._auth
 
     def authenticate(self, password: str) -> None:
         """Authenticate a user."""
         try:
-            self._user.authenticate(password=password)
+            self.get_user().authenticate(password=password)
         except ClientError as err:
             _LOGGER.error(err)
             raise PuraAuthenticationError(err) from err
 
     def logout(self) -> None:
         """Logout of all clients (including app)."""
-        self._user.logout()
+        self.get_user().logout()
 
     def get_devices(self) -> Any:
         """Get devices."""
@@ -125,7 +143,7 @@ class Pura:
     def __request(self, method: str, url: str, **kwargs: Any) -> Any:
         """Make a request."""
         response = requests.request(
-            method, urljoin(BASE_URL, url), auth=self._auth, timeout=10, **kwargs
+            method, urljoin(BASE_URL, url), auth=self.get_auth(), timeout=10, **kwargs
         )
         json = response.json()
         if (status_code := response.status_code) != 200:

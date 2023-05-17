@@ -30,9 +30,9 @@ jobs:
         run: poetry install
       - name: Run linting
         run: |
-          poetry run isort .
-          poetry run black . --check
-          poetry run flake8 .
+          poetry run isort pypura tests
+          poetry run black pypura tests --check
+          poetry run flake8 pypura tests
           poetry run pylint pypura tests
           poetry run pydocstyle pypura tests
       - name: Run mypy
