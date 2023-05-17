@@ -62,7 +62,7 @@ class Pura:
             )
         return self._auth
 
-    def get_tokens(self) -> dict[str, str] | None:
+    def get_tokens(self) -> dict[str, str]:
         """Return the tokens."""
         if (user := self.get_user()).access_token:
             return {
@@ -70,7 +70,7 @@ class Pura:
                 "id_token": user.id_token,
                 "refresh_token": user.refresh_token,
             }
-        return None
+        return {}
 
     def authenticate(self, password: str) -> None:
         """Authenticate a user."""
