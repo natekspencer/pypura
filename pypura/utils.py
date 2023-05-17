@@ -24,4 +24,5 @@ def fragrance_name(code: str) -> str:
             "Unknown fragrance code '%s', please report this at %s", code, ISSUE_URL
         )
         name = f"Fragrance code: {code}"
+        FRAGRANCES[code] = name
     return name
