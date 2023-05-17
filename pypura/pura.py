@@ -22,26 +22,39 @@ BASE_URL = "https://trypura.io/mobile/api/"
 class Pura:
     """Pura account."""
 
-    _user: Cognito | None = None
-    _auth: RequestsSrpAuth | None = None
+    def __init__(
+        self,
+        *,
+        username: str | None = None,
+        access_token: str | None = None,
+        id_token: str | None = None,
+        refresh_token: str | None = None,
+    ) -> None:
+        """Initialize."""
+        user = Cognito(
+            decode(USER_POOL_ID),
+            decode(CLIENT_ID),
+            username=username,
+            access_token=access_token,
+            id_token=id_token,
+            refresh_token=refresh_token,
+        )
+        if access_token or id_token:
+            user.verify_tokens()
+        self._user = user
+        self._auth = RequestsSrpAuth(cognito=user, auth_token_type=TokenType.ID_TOKEN)
 
-    def authenticate(self, username: str, password: str) -> None:
+    def authenticate(self, password: str) -> None:
         """Authenticate a user."""
-        self._user = Cognito(decode(USER_POOL_ID), decode(CLIENT_ID), username=username)
         try:
             self._user.authenticate(password=password)
         except ClientError as err:
             _LOGGER.error(err)
             raise PuraAuthenticationError(err) from err
 
-        self._auth = RequestsSrpAuth(
-            cognito=self._user, auth_token_type=TokenType.ID_TOKEN
-        )
-
     def logout(self) -> None:
-        """Logout."""
-        if self._user:
-            self._user.logout()
+        """Logout of all clients (including app)."""
+        self._user.logout()
 
     def get_devices(self) -> Any:
         """Get devices."""
