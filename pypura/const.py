@@ -1,4 +1,6 @@
 """Constants."""
+from __future__ import annotations
+
 from typing import Final
 
 USER_POOL_ID = "dXMtZWFzdC0xX0xhQjcxOGhZdg=="
