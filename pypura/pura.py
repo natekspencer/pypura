@@ -51,6 +51,7 @@ class Pura:
                 refresh_token=self._refresh_token,
             )
             if self._access_token or self._id_token:
+                self._user.check_token()
                 self._user.verify_tokens()
         return self._user
 
