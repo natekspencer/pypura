@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
+from typing import Any, Final
 from urllib.parse import urljoin
 
 import requests
@@ -16,7 +16,7 @@ from .utils import decode
 
 _LOGGER = logging.getLogger(__name__)
 
-BASE_URL = "https://trypura.io/mobile/api/"
+BASE_URL: Final = "https://trypura.io/mobile/api/"
 
 
 class Pura:

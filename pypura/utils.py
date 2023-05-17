@@ -3,13 +3,14 @@ from __future__ import annotations
 
 import logging
 from base64 import b64decode
+from typing import Final
 
 from .const import FRAGRANCES
 
 _LOGGER = logging.getLogger(__name__)
 
-ENCODING = "utf-8"
-ISSUE_URL = "https://github.com/natekspencer/pypura/issues/1"
+ENCODING: Final = "utf-8"
+ISSUE_URL: Final = "https://github.com/natekspencer/pypura/issues/1"
 
 
 def decode(value: str) -> str:

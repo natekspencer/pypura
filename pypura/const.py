@@ -3,8 +3,8 @@ from __future__ import annotations
 
 from typing import Final
 
-USER_POOL_ID = "dXMtZWFzdC0xX0xhQjcxOGhZdg=="
-CLIENT_ID = "NGlla3ViYXQwamI1aWxqZmJhYWxzaXFmOWo="
+USER_POOL_ID: Final = "dXMtZWFzdC0xX0xhQjcxOGhZdg=="
+CLIENT_ID: Final = "NGlla3ViYXQwamI1aWxqZmJhYWxzaXFmOWo="
 
 FRAGRANCES: Final[dict[str, str]] = {
     "AJV": "Birchwood Pine",
