@@ -62,6 +62,16 @@ class Pura:
             )
         return self._auth
 
+    def get_tokens(self) -> dict[str, str] | None:
+        """Return the tokens."""
+        if (user := self.get_user()).access_token:
+            return {
+                "access_token": user.access_token,
+                "id_token": user.id_token,
+                "refresh_token": user.refresh_token,
+            }
+        return None
+
     def authenticate(self, password: str) -> None:
         """Authenticate a user."""
         try:
