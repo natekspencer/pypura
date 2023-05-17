@@ -45,20 +45,19 @@ class Pura:
 
     def get_devices(self) -> Any:
         """Get devices."""
-        devices = self.__get("users/devices")
-        return devices.json()
+        return self.__get("users/devices")
 
     def set_always_on(self, device_id: str, *, bay: int) -> bool:
         """Set always on."""
         json = {"bay": bay}
         resp = self.__post(f"devices/{device_id}/always-on", json=json)
-        return resp.json().get("success") is True
+        return resp.get("success") is True
 
     def set_ambient_mode(self, device_id: str, *, ambient_mode: bool) -> bool:
         """Set away mode."""
         json = {"ambientMode": ambient_mode}
         resp = self.__post(f"devices/{device_id}/ambientMode", json=json)
-        return resp.json().get("success") is True
+        return resp.get("success") is True
 
     def set_away_mode(
         self,
@@ -76,7 +75,7 @@ class Pura:
                 {"latitude": latitude, "longitude": longitude, "radius": radius}
             )
         resp = self.__post(f"devices/{device_id}/awayMode", json=json)
-        return resp.json().get("success") is True
+        return resp.get("success") is True
 
     def set_intensity(
         self, device_id: str, *, bay: int, controller: str, intensity: int
@@ -84,7 +83,7 @@ class Pura:
         """Set intensity."""
         json = {"bay": bay, "controller": controller, "intensity": intensity}
         resp = self.__post(f"devices/{device_id}/intensity", json=json)
-        return resp.json().get("success") is True
+        return resp.get("success") is True
 
     def set_nightlight(
         self,
@@ -103,23 +102,27 @@ class Pura:
             "controller": controller,
         }
         resp = self.__post(f"devices/{device_id}/nightlight", json=json)
-        return resp.json().get("success") is True
+        return resp.get("success") is True
 
     def stop_all(self, device_id: str) -> bool:
         """Stop all."""
         resp = self.__post(f"devices/{device_id}/stop-all")
-        return resp.json().get("success") is True
+        return resp.get("success") is True
 
-    def __request(self, method: str, url: str, **kwargs: Any) -> requests.Response:
+    def __request(self, method: str, url: str, **kwargs: Any) -> Any:
         """Make a request."""
-        return requests.request(
+        response = requests.request(
             method, urljoin(BASE_URL, url), auth=self._auth, timeout=10, **kwargs
         )
+        json = response.json()
+        if (status_code := response.status_code) != 200:
+            _LOGGER.error("Status: %s - %s", status_code, json)
+        return json
 
-    def __get(self, url: str, **kwargs: Any) -> requests.Response:
+    def __get(self, url: str, **kwargs: Any) -> Any:
         """Make a get request."""
         return self.__request("get", url, **kwargs)
 
-    def __post(self, url: str, **kwargs: Any) -> requests.Response:
+    def __post(self, url: str, **kwargs: Any) -> Any:
         """Make a post request."""
         return self.__request("post", url, **kwargs)
