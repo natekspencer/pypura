@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pypura"
-version = "0.1.1"
+version = "0.1.2"
 description = "Python package for interacting with Pura smart fragrance diffuser"
 authors = ["Nathan Spencer <natekspencer@gmail.com>"]
 license = "MIT"

@@ -4,4 +4,4 @@ from .pura import Pura
 from .utils import fragrance_name
 
 __all__ = ["Pura", "PuraApiException", "PuraAuthenticationError", "fragrance_name"]
-__version__ = "0.1.1"
+__version__ = "0.1.2"
