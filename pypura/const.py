@@ -9,7 +9,9 @@ CLIENT_ID: Final = "NGlla3ViYXQwamI1aWxqZmJhYWxzaXFmOWo="
 FRAGRANCES: Final[dict[str, str]] = {
     "AJV": "Birchwood Pine",
     "BMC": "Balsam & Cedar",
+    "DZI": "Orange Blossom",
     "JRG": "Elsa Journeys to Ahtohallan",
+    "JVB": "Vanilla Chiffon",
     "JZB": "Velvet Wineberry",
     "JZJ": "Egyptian Sandalwood",
     "KDR": "Ocean Mist & Sea Salt",
