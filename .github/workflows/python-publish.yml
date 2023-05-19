@@ -1,11 +1,12 @@
 # An action to build and publish python package to https://pypi.org/ using poetry https://github.com/sdispater/poetry
 # For more information see: https://github.com/marketplace/actions/publish-python-poetry-package
 
-name: Build/publish python package to PyPi using Poetry
+name: Publish python package
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - "v*.*.*"
 
 permissions:
   contents: read
