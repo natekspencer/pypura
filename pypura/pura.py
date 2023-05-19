@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+from datetime import datetime, timedelta
 from typing import Any, Final
 from urllib.parse import urljoin
 
@@ -11,12 +12,14 @@ from pycognito import Cognito
 from pycognito.utils import RequestsSrpAuth, TokenType
 
 from .const import CLIENT_ID, USER_POOL_ID
-from .exceptions import PuraAuthenticationError
+from .exceptions import PuraApiException, PuraAuthenticationError
 from .utils import decode
 
 _LOGGER = logging.getLogger(__name__)
 
 BASE_URL: Final = "https://trypura.io/mobile/api/"
+
+TIMER_DURATION_DEFAULT = timedelta(hours=4)
 
 
 class Pura:
@@ -148,6 +151,28 @@ class Pura:
             "controller": controller,
         }
         resp = self.__post(f"devices/{device_id}/nightlight", json=json)
+        return resp.get("success") is True
+
+    def set_timer(
+        self,
+        device_id: str,
+        *,
+        bay: int,
+        intensity: int,
+        start: datetime | int = datetime.now(),
+        end: datetime | timedelta | int = TIMER_DURATION_DEFAULT,
+    ) -> bool:
+        """Set timer."""
+        if isinstance(start, datetime):
+            start = int(start.timestamp())
+        if isinstance(end, datetime):
+            end = int(end.timestamp())
+        elif isinstance(end, timedelta):
+            end = start + end.seconds
+        if end <= start:
+            raise PuraApiException("Timer 'end' time must be greater than 'start' time")
+        json = {"bay": bay, "intensity": intensity, "start": start, "end": end}
+        resp = self.__post(f"devices/{device_id}/timer", json=json)
         return resp.get("success") is True
 
     def stop_all(self, device_id: str) -> bool:

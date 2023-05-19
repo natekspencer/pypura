@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pypura"
-version = "0.1.2"
+version = "0.0.0"
 description = "Python package for interacting with Pura smart fragrance diffuser"
 authors = ["Nathan Spencer <natekspencer@gmail.com>"]
 license = "MIT"
@@ -23,6 +23,11 @@ pytest = "^7.3.1"
 pytest-cov = "^4.0.0"
 tox = "^4.5.1"
 
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+style = "semver"
+
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core", "poetry-dynamic-versioning"]
+build-backend = "poetry_dynamic_versioning.backend"
