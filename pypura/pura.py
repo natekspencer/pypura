@@ -159,10 +159,12 @@ class Pura:
         *,
         bay: int,
         intensity: int,
-        start: datetime | int = datetime.now(),
+        start: datetime | int | None = None,
         end: datetime | timedelta | int = TIMER_DURATION_DEFAULT,
     ) -> bool:
         """Set timer."""
+        if not start:
+            start = datetime.now()
         if isinstance(start, datetime):
             start = int(start.timestamp())
         if isinstance(end, datetime):
@@ -182,12 +184,14 @@ class Pura:
 
     def __request(self, method: str, url: str, **kwargs: Any) -> Any:
         """Make a request."""
+        _LOGGER.debug("Making %s request to %s with %s", method, url, kwargs)
         response = requests.request(
             method, urljoin(BASE_URL, url), auth=self.get_auth(), timeout=10, **kwargs
         )
         json = response.json()
         if (status_code := response.status_code) != 200:
             _LOGGER.error("Status: %s - %s", status_code, json)
+            response.raise_for_status()
         return json
 
     def __get(self, url: str, **kwargs: Any) -> Any:
