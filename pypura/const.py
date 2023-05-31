@@ -32,6 +32,7 @@ FRAGRANCES: Final[dict[str, str]] = {
     "LHT": "Anna & Olaf in the Enchanted Forest",
     "LMS": "Sunday Morning",
     "LPO": "Love Potion",
+    "LVP": "Cedar Leaf & Lavender",
     "LWZ": "Sweet Grace",
     "MBZ": "Pumpkin Chai",
     "MGL": "13-Relaxation",
