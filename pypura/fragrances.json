@@ -1,0 +1,1718 @@
+[
+  {
+    "name": "Coastal Palm",
+    "type": "Car Fragrance",
+    "sku": "CJIC",
+    "brand": "Pura"
+  },
+  {
+    "name": "Cucumber & Mint",
+    "type": "Car Fragrance",
+    "sku": "CBMC",
+    "brand": "Pura"
+  },
+  {
+    "name": "Fairway Morning",
+    "type": "Car Fragrance",
+    "sku": "FQMC",
+    "brand": "Pura"
+  },
+  {
+    "name": "Ivory Woods",
+    "type": "Car Fragrance",
+    "sku": "VWPC",
+    "brand": "Pura"
+  },
+  {
+    "name": "Linens & Surf",
+    "type": "Car Fragrance",
+    "sku": "LMUC",
+    "brand": "Pura"
+  },
+  {
+    "name": "RED CURRANT",
+    "type": "Car Fragrance",
+    "sku": "FZEC",
+    "brand": "Votivo"
+  },
+  {
+    "name": "Red Rock & Amber",
+    "type": "Car Fragrance",
+    "sku": "RRAC",
+    "brand": "Pura"
+  },
+  {
+    "name": "Sweet Grace",
+    "type": "Car Fragrance",
+    "sku": "LWZC",
+    "brand": "Bridgewater Candle Company"
+  },
+  {
+    "name": "Teak & Leather",
+    "type": "Car Fragrance",
+    "sku": "TNLC",
+    "brand": "Pura"
+  },
+  {
+    "name": "White Tea No. 1",
+    "type": "Car Fragrance",
+    "sku": "WHTC",
+    "brand": "Pura"
+  },
+  {
+    "name": "13-Confidence",
+    "type": "Fragrance",
+    "sku": "CGO",
+    "brand": "James Harden"
+  },
+  {
+    "name": "13-Relaxation",
+    "type": "Fragrance",
+    "sku": "MGL",
+    "brand": "James Harden"
+  },
+  {
+    "name": "APRÈS",
+    "type": "Fragrance",
+    "sku": "APS",
+    "brand": "Ellis Brooklyn"
+  },
+  {
+    "name": "Adirondack Chair",
+    "type": "Fragrance",
+    "sku": "ADK",
+    "brand": "Pure Placid"
+  },
+  {
+    "name": "Afternoon Retreat",
+    "type": "Fragrance",
+    "sku": "RZB",
+    "brand": "Bridgewater Candle Company"
+  },
+  {
+    "name": "Aim to Teas",
+    "type": "Fragrance",
+    "sku": "ATT",
+    "brand": "Kenneth Cole"
+  },
+  {
+    "name": "Aloha Orchid",
+    "type": "Fragrance",
+    "sku": "LWQ",
+    "brand": "Capri Blue"
+  },
+  {
+    "name": "Amalfi Lemon & Mint",
+    "type": "Fragrance",
+    "sku": "PJT",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Amber Oud",
+    "type": "Fragrance",
+    "sku": "TPN",
+    "brand": "Pura"
+  },
+  {
+    "name": "Ambered Topaz",
+    "type": "Fragrance",
+    "sku": "ATP",
+    "brand": "Anthropologie"
+  },
+  {
+    "name": "Anna & Olaf in the Enchanted Forest",
+    "type": "Fragrance",
+    "sku": "LHT",
+    "brand": "Disney"
+  },
+  {
+    "name": "Apple Orchard",
+    "type": "Fragrance",
+    "sku": "VKN",
+    "brand": "Pura"
+  },
+  {
+    "name": "Aqua",
+    "type": "Fragrance",
+    "sku": "AQA",
+    "brand": "Soap & Paper Factory"
+  },
+  {
+    "name": "Aqua Coralline",
+    "type": "Fragrance",
+    "sku": "AQC",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Ariel Sea Breeze",
+    "type": "Fragrance",
+    "sku": "AST",
+    "brand": "Disney"
+  },
+  {
+    "name": "Asian Woods",
+    "type": "Fragrance",
+    "sku": "XDN",
+    "brand": "Pura"
+  },
+  {
+    "name": "Atmosphere",
+    "type": "Fragrance",
+    "sku": "AMS",
+    "brand": "Becki Owens"
+  },
+  {
+    "name": "Balsam & Cedar",
+    "type": "Fragrance",
+    "sku": "BMC",
+    "brand": "ILLUME"
+  },
+  {
+    "name": "Bamboo",
+    "type": "Fragrance",
+    "sku": "UDZ",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Bamboo & Green Tea",
+    "type": "Fragrance",
+    "sku": "BMB",
+    "brand": "Paddywax"
+  },
+  {
+    "name": "Bamboo Forest",
+    "type": "Fragrance",
+    "sku": "QOI",
+    "brand": "The Met"
+  },
+  {
+    "name": "Beach Cottage",
+    "type": "Fragrance",
+    "sku": "HBC",
+    "brand": "Homesick"
+  },
+  {
+    "name": "Beach Glow",
+    "type": "Fragrance",
+    "sku": "GLW",
+    "brand": "Becki Owens"
+  },
+  {
+    "name": "Beach Vacay",
+    "type": "Fragrance",
+    "sku": "MBV",
+    "brand": "Moodcast"
+  },
+  {
+    "name": "Beatrix Rose",
+    "type": "Fragrance",
+    "sku": "BEA",
+    "brand": "Caswell-Massey"
+  },
+  {
+    "name": "Belle Rose",
+    "type": "Fragrance",
+    "sku": "DBR",
+    "brand": "Disney"
+  },
+  {
+    "name": "Big Sky",
+    "type": "Fragrance",
+    "sku": "MXJ",
+    "brand": "Abbott"
+  },
+  {
+    "name": "Big Sur",
+    "type": "Fragrance",
+    "sku": "JCR",
+    "brand": "Archipelago"
+  },
+  {
+    "name": "Birchwood Pine",
+    "type": "Fragrance",
+    "sku": "AJV",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Blackberry Absinthe",
+    "type": "Fragrance",
+    "sku": "BBA",
+    "brand": "ILLUME"
+  },
+  {
+    "name": "Blue Jean",
+    "type": "Fragrance",
+    "sku": "BPR",
+    "brand": "Capri Blue"
+  },
+  {
+    "name": "Blue Water Lotus",
+    "type": "Fragrance",
+    "sku": "TWL",
+    "brand": "The Met"
+  },
+  {
+    "name": "Blush Rose",
+    "type": "Fragrance",
+    "sku": "BLR",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "Bondi",
+    "type": "Fragrance",
+    "sku": "BND",
+    "brand": "GUY FOX"
+  },
+  {
+    "name": "CHAMPACA",
+    "type": "Fragrance",
+    "sku": "CMP",
+    "brand": "Votivo"
+  },
+  {
+    "name": "CLEAN CRISP WHITE",
+    "type": "Fragrance",
+    "sku": "CLN",
+    "brand": "Votivo"
+  },
+  {
+    "name": "Cactus Flower",
+    "type": "Fragrance",
+    "sku": "PCF",
+    "brand": "Paddywax"
+  },
+  {
+    "name": "California Sun",
+    "type": "Fragrance",
+    "sku": "BOR",
+    "brand": "Becki Owens"
+  },
+  {
+    "name": "Canvas",
+    "type": "Fragrance",
+    "sku": "YZJ",
+    "brand": "Apotheke"
+  },
+  {
+    "name": "Cardamom",
+    "type": "Fragrance",
+    "sku": "CDM",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Cashmere Sweater",
+    "type": "Fragrance",
+    "sku": "ZMB",
+    "brand": "Pure Placid"
+  },
+  {
+    "name": "Casita Floral",
+    "type": "Fragrance",
+    "sku": "CFL",
+    "brand": "Disney"
+  },
+  {
+    "name": "Cask",
+    "type": "Fragrance",
+    "sku": "CSK",
+    "brand": "Antica Farmacista"
+  },
+  {
+    "name": "Cassis Tulsi",
+    "type": "Fragrance",
+    "sku": "CTU",
+    "brand": "Anthropologie"
+  },
+  {
+    "name": "Catskills",
+    "type": "Fragrance",
+    "sku": "CTS",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Cedar Leaf & Lavender",
+    "type": "Fragrance",
+    "sku": "LVP",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Chamomile Lavender",
+    "type": "Fragrance",
+    "sku": "AJW",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "Champagne",
+    "type": "Fragrance",
+    "sku": "YYJ",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "Charcoal",
+    "type": "Fragrance",
+    "sku": "WRT",
+    "brand": "Apotheke"
+  },
+  {
+    "name": "Citrus Crush",
+    "type": "Fragrance",
+    "sku": "ICC",
+    "brand": "ILLUME"
+  },
+  {
+    "name": "Cliff",
+    "type": "Fragrance",
+    "sku": "CLF",
+    "brand": "Unify Co."
+  },
+  {
+    "name": "Cocoa Almond",
+    "type": "Fragrance",
+    "sku": "CCA",
+    "brand": "K. Hall Designs"
+  },
+  {
+    "name": "Coconut Calm",
+    "type": "Fragrance",
+    "sku": "MZX",
+    "brand": "Becki Owens"
+  },
+  {
+    "name": "Coconut Milk Mango",
+    "type": "Fragrance",
+    "sku": "CNM",
+    "brand": "ILLUME"
+  },
+  {
+    "name": "Coconut Oasis",
+    "type": "Fragrance",
+    "sku": "COA",
+    "brand": "Tommy Bahama"
+  },
+  {
+    "name": "Coconut Santal",
+    "type": "Fragrance",
+    "sku": "CST",
+    "brand": "Capri Blue"
+  },
+  {
+    "name": "Copaline",
+    "type": "Fragrance",
+    "sku": "CPL",
+    "brand": "Joya Studio"
+  },
+  {
+    "name": "Coral",
+    "type": "Fragrance",
+    "sku": "CRL",
+    "brand": "Soap & Paper Factory"
+  },
+  {
+    "name": "Crescent Beach",
+    "type": "Fragrance",
+    "sku": "FVB",
+    "brand": "Abbott"
+  },
+  {
+    "name": "Crystal Pine",
+    "type": "Fragrance",
+    "sku": "KDM",
+    "brand": "Capri Blue"
+  },
+  {
+    "name": "Cypress & Fir",
+    "type": "Fragrance",
+    "sku": "CYF",
+    "brand": "Paddywax"
+  },
+  {
+    "name": "Daydreamer",
+    "type": "Fragrance",
+    "sku": "MDD",
+    "brand": "Moodcast"
+  },
+  {
+    "name": "Del Mar",
+    "type": "Fragrance",
+    "sku": "DEM",
+    "brand": "GUY FOX"
+  },
+  {
+    "name": "Desert Sage",
+    "type": "Fragrance",
+    "sku": "DSG",
+    "brand": "Antica Farmacista"
+  },
+  {
+    "name": "Dew",
+    "type": "Fragrance",
+    "sku": "DEW",
+    "brand": "Unify Co."
+  },
+  {
+    "name": "Driftwood & Chamomile",
+    "type": "Fragrance",
+    "sku": "DWC",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Dusk",
+    "type": "Fragrance",
+    "sku": "DSK",
+    "brand": "Unify Co."
+  },
+  {
+    "name": "Earl Grey Bitters",
+    "type": "Fragrance",
+    "sku": "EGB",
+    "brand": "Apotheke"
+  },
+  {
+    "name": "Eden No. 1",
+    "type": "Fragrance",
+    "sku": "EDN",
+    "brand": "TAFT"
+  },
+  {
+    "name": "Egyptian Sandalwood",
+    "type": "Fragrance",
+    "sku": "JZJ",
+    "brand": "The Met"
+  },
+  {
+    "name": "Elderflower & Vetiver",
+    "type": "Fragrance",
+    "sku": "EVR",
+    "brand": "U.S. Apothecary"
+  },
+  {
+    "name": "Elsa Journeys to Ahtohallan",
+    "type": "Fragrance",
+    "sku": "JRG",
+    "brand": "Disney"
+  },
+  {
+    "name": "Eucalyptus",
+    "type": "Fragrance",
+    "sku": "TEU",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Eucalyptus",
+    "type": "Fragrance",
+    "sku": "ECP",
+    "brand": "Archipelago"
+  },
+  {
+    "name": "Evergreen",
+    "type": "Fragrance",
+    "sku": "EGR",
+    "brand": "Tommy Bahama"
+  },
+  {
+    "name": "Fern + Moss",
+    "type": "Fragrance",
+    "sku": "FRM",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Feu de Bois",
+    "type": "Fragrance",
+    "sku": "QIG",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "Fig Tree",
+    "type": "Fragrance",
+    "sku": "FIG",
+    "brand": "Anthropologie"
+  },
+  {
+    "name": "Fir & Grapefruit",
+    "type": "Fragrance",
+    "sku": "AJP",
+    "brand": "Barr-Co."
+  },
+  {
+    "name": "First Kiss",
+    "type": "Fragrance",
+    "sku": "FIK",
+    "brand": "Moodcast"
+  },
+  {
+    "name": "Frasier Fir",
+    "type": "Fragrance",
+    "sku": "LXN",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Fresh Cut Gardenia",
+    "type": "Fragrance",
+    "sku": "FCG",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "Fresh Sea Salt",
+    "type": "Fragrance",
+    "sku": "IFS",
+    "brand": "ILLUME"
+  },
+  {
+    "name": "Fresh-Cut Basil",
+    "type": "Fragrance",
+    "sku": "FRC",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Gardenia",
+    "type": "Fragrance",
+    "sku": "GDN",
+    "brand": "Caswell-Massey"
+  },
+  {
+    "name": "Gingerbread",
+    "type": "Fragrance",
+    "sku": "GRB",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Gingerbread",
+    "type": "Fragrance",
+    "sku": "GNG",
+    "brand": "K. Hall Designs"
+  },
+  {
+    "name": "Go Fig-ure﻿",
+    "type": "Fragrance",
+    "sku": "GOF",
+    "brand": "Kenneth Cole"
+  },
+  {
+    "name": "Golden Mimosa",
+    "type": "Fragrance",
+    "sku": "HXN",
+    "brand": "Pura"
+  },
+  {
+    "name": "Goldleaf Gardenia﻿",
+    "type": "Fragrance",
+    "sku": "GLG",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Gone Hiking",
+    "type": "Fragrance",
+    "sku": "GHK",
+    "brand": "Homesick"
+  },
+  {
+    "name": "Grapefruit",
+    "type": "Fragrance",
+    "sku": "MXV",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Grapefruit Bloom",
+    "type": "Fragrance",
+    "sku": "FCB",
+    "brand": "Floral Street"
+  },
+  {
+    "name": "Green Tea Citrus",
+    "type": "Fragrance",
+    "sku": "XKN",
+    "brand": "Pura"
+  },
+  {
+    "name": "Green Tea Citrus",
+    "type": "Fragrance",
+    "sku": "XKA",
+    "brand": "Pura"
+  },
+  {
+    "name": "Havana",
+    "type": "Fragrance",
+    "sku": "HAV",
+    "brand": "Archipelago"
+  },
+  {
+    "name": "Havana Vanilla",
+    "type": "Fragrance",
+    "sku": "KAJ",
+    "brand": "Capri Blue"
+  },
+  {
+    "name": "Hawaii",
+    "type": "Fragrance",
+    "sku": "GWO",
+    "brand": "Homesick"
+  },
+  {
+    "name": "Hawaii Rain",
+    "type": "Fragrance",
+    "sku": "HWR",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Heirlūm Pumpkin",
+    "type": "Fragrance",
+    "sku": "HRP",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Highland Frost",
+    "type": "Fragrance",
+    "sku": "HLF",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Himalayan Salt & Rosewater",
+    "type": "Fragrance",
+    "sku": "HSR",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Holiday",
+    "type": "Fragrance",
+    "sku": "VNT",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Holiday Spice",
+    "type": "Fragrance",
+    "sku": "HSP",
+    "brand": "K. Hall Designs"
+  },
+  {
+    "name": "Home Office",
+    "type": "Fragrance",
+    "sku": "HMO",
+    "brand": "Homesick"
+  },
+  {
+    "name": "Homebody",
+    "type": "Fragrance",
+    "sku": "HBM",
+    "brand": "Moodcast"
+  },
+  {
+    "name": "Honey Mint",
+    "type": "Fragrance",
+    "sku": "QPH",
+    "brand": "Barr-Co."
+  },
+  {
+    "name": "Honeycrisp Oakwood",
+    "type": "Fragrance",
+    "sku": "HPD",
+    "brand": "Anthropologie"
+  },
+  {
+    "name": "Honeysuckle",
+    "type": "Fragrance",
+    "sku": "HYS",
+    "brand": "Caswell-Massey"
+  },
+  {
+    "name": "ICY BLUE PINE",
+    "type": "Fragrance",
+    "sku": "JYT",
+    "brand": "Votivo"
+  },
+  {
+    "name": "Ironwood",
+    "type": "Fragrance",
+    "sku": "IRW",
+    "brand": "Antica Farmacista"
+  },
+  {
+    "name": "Italia",
+    "type": "Fragrance",
+    "sku": "ITA",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Jack the Pumpkin King",
+    "type": "Fragrance",
+    "sku": "JPK",
+    "brand": "Disney"
+  },
+  {
+    "name": "Japanese Citrus",
+    "type": "Fragrance",
+    "sku": "JPC",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Jasmine Royal Amber",
+    "type": "Fragrance",
+    "sku": "JRA",
+    "brand": "Disney"
+  },
+  {
+    "name": "Jungle Bloom",
+    "type": "Fragrance",
+    "sku": "JBL",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "Kashmir",
+    "type": "Fragrance",
+    "sku": "KAS",
+    "brand": "Archipelago"
+  },
+  {
+    "name": "Kimono Rose",
+    "type": "Fragrance",
+    "sku": "KMR",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Kiss in the Rain",
+    "type": "Fragrance",
+    "sku": "KSR",
+    "brand": "Bridgewater Candle Company"
+  },
+  {
+    "name": "Lake",
+    "type": "Fragrance",
+    "sku": "CML",
+    "brand": "Caswell-Massey"
+  },
+  {
+    "name": "Land of the Living",
+    "type": "Fragrance",
+    "sku": "DCO",
+    "brand": "Disney"
+  },
+  {
+    "name": "Lavande",
+    "type": "Fragrance",
+    "sku": "LVD",
+    "brand": "Archipelago"
+  },
+  {
+    "name": "Lavender",
+    "type": "Fragrance",
+    "sku": "TLV",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Lavender Fields",
+    "type": "Fragrance",
+    "sku": "LFP",
+    "brand": "Pura"
+  },
+  {
+    "name": "Lemon Leaf",
+    "type": "Fragrance",
+    "sku": "TLL",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Lemon Sage",
+    "type": "Fragrance",
+    "sku": "LNS",
+    "brand": "K. Hall Designs"
+  },
+  {
+    "name": "Lemon, Verbena & Cedar",
+    "type": "Fragrance",
+    "sku": "LVB",
+    "brand": "Antica Farmacista"
+  },
+  {
+    "name": "Let's Toast",
+    "type": "Fragrance",
+    "sku": "HLT",
+    "brand": "Homesick"
+  },
+  {
+    "name": "Lilac",
+    "type": "Fragrance",
+    "sku": "CLL",
+    "brand": "Caswell-Massey"
+  },
+  {
+    "name": "Lime Zest & Matcha",
+    "type": "Fragrance",
+    "sku": "LZM",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Linens & Surf",
+    "type": "Fragrance",
+    "sku": "LMU",
+    "brand": "Pura"
+  },
+  {
+    "name": "Love Potion",
+    "type": "Fragrance",
+    "sku": "LPO",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "MILK",
+    "type": "Fragrance",
+    "sku": "NKL",
+    "brand": "K. Hall Designs"
+  },
+  {
+    "name": "Magnolia Willow",
+    "type": "Fragrance",
+    "sku": "MWL",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Mandarin Coriander",
+    "type": "Fragrance",
+    "sku": "TMC",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Marine",
+    "type": "Fragrance",
+    "sku": "MRN",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "Maui",
+    "type": "Fragrance",
+    "sku": "MAU",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Maui Mango",
+    "type": "Fragrance",
+    "sku": "MGA",
+    "brand": "Tommy Bahama"
+  },
+  {
+    "name": "Mickey Christmas Cozy Cabin",
+    "type": "Fragrance",
+    "sku": "MCC",
+    "brand": "Disney"
+  },
+  {
+    "name": "Mickey Christmas Fireside Feeling",
+    "type": "Fragrance",
+    "sku": "MFF",
+    "brand": "Disney"
+  },
+  {
+    "name": "Mickey Mouse Chocolate Truffle",
+    "type": "Fragrance",
+    "sku": "DKT",
+    "brand": "Disney"
+  },
+  {
+    "name": "Midnight Tulip",
+    "type": "Fragrance",
+    "sku": "MDT",
+    "brand": "Floral Street"
+  },
+  {
+    "name": "Milk + Oatmeal",
+    "type": "Fragrance",
+    "sku": "OTM",
+    "brand": "U.S. Apothecary"
+  },
+  {
+    "name": "Minnie Mouse Bouquet Bloom",
+    "type": "Fragrance",
+    "sku": "CPY",
+    "brand": "Disney"
+  },
+  {
+    "name": "Mirabel Mango Tropical",
+    "type": "Fragrance",
+    "sku": "MTR",
+    "brand": "Disney"
+  },
+  {
+    "name": "Mixed Florals",
+    "type": "Fragrance",
+    "sku": "MXF",
+    "brand": "Eternal Fleur"
+  },
+  {
+    "name": "Moana Horizon Dream",
+    "type": "Fragrance",
+    "sku": "MIB",
+    "brand": "Disney"
+  },
+  {
+    "name": "Monsoon",
+    "type": "Fragrance",
+    "sku": "MON",
+    "brand": "dae"
+  },
+  {
+    "name": "Moroccan Amber",
+    "type": "Fragrance",
+    "sku": "KXG",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Mount Marcy",
+    "type": "Fragrance",
+    "sku": "YTR",
+    "brand": "Pure Placid"
+  },
+  {
+    "name": "Mulan Magnolia Flower",
+    "type": "Fragrance",
+    "sku": "MAG",
+    "brand": "Disney"
+  },
+  {
+    "name": "Napa",
+    "type": "Fragrance",
+    "sku": "AFX",
+    "brand": "Archipelago"
+  },
+  {
+    "name": "New Home",
+    "type": "Fragrance",
+    "sku": "HNH",
+    "brand": "Homesick"
+  },
+  {
+    "name": "New York City",
+    "type": "Fragrance",
+    "sku": "ISP",
+    "brand": "Homesick"
+  },
+  {
+    "name": "Night Gardenia",
+    "type": "Fragrance",
+    "sku": "NTG",
+    "brand": "Anthropologie"
+  },
+  {
+    "name": "Noma",
+    "type": "Fragrance",
+    "sku": "GFN",
+    "brand": "GUY FOX"
+  },
+  {
+    "name": "Ocean Mist & Sea Salt",
+    "type": "Fragrance",
+    "sku": "KDR",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Ocean Tide + Sea Salt",
+    "type": "Fragrance",
+    "sku": "OCN",
+    "brand": "Paddywax"
+  },
+  {
+    "name": "Old Faithful",
+    "type": "Fragrance",
+    "sku": "OLF",
+    "brand": "Caswell-Massey"
+  },
+  {
+    "name": "Orange Blossom, Lilac & Jasmine",
+    "type": "Fragrance",
+    "sku": "DZI",
+    "brand": "Antica Farmacista"
+  },
+  {
+    "name": "Orchid",
+    "type": "Fragrance",
+    "sku": "RCH",
+    "brand": "Caswell-Massey"
+  },
+  {
+    "name": "Original Scent",
+    "type": "Fragrance",
+    "sku": "IOQ",
+    "brand": "Barr-Co."
+  },
+  {
+    "name": "PCH",
+    "type": "Fragrance",
+    "sku": "PCH",
+    "brand": "GUY FOX"
+  },
+  {
+    "name": "PSEUDONYM",
+    "type": "Fragrance",
+    "sku": "YMS",
+    "brand": "Ellis Brooklyn"
+  },
+  {
+    "name": "Pacific Aqua",
+    "type": "Fragrance",
+    "sku": "SPN",
+    "brand": "Pura"
+  },
+  {
+    "name": "Palo Santo",
+    "type": "Fragrance",
+    "sku": "PLT",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Paloma Melon",
+    "type": "Fragrance",
+    "sku": "PLF",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "Paradiso Fig",
+    "type": "Fragrance",
+    "sku": "PFL",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "Paris",
+    "type": "Fragrance",
+    "sku": "PAR",
+    "brand": "Capri Blue"
+  },
+  {
+    "name": "Parisian Cafe",
+    "type": "Fragrance",
+    "sku": "PSN",
+    "brand": "Pura"
+  },
+  {
+    "name": "Patchouli Park",
+    "type": "Fragrance",
+    "sku": "KPP",
+    "brand": "Kenneth Cole"
+  },
+  {
+    "name": "Pear #25",
+    "type": "Fragrance",
+    "sku": "YHV",
+    "brand": "Simpatico"
+  },
+  {
+    "name": "Pearl",
+    "type": "Fragrance",
+    "sku": "PRL",
+    "brand": "Soap & Paper Factory"
+  },
+  {
+    "name": "Peony & Silk",
+    "type": "Fragrance",
+    "sku": "XLN",
+    "brand": "Pura"
+  },
+  {
+    "name": "Perfume Immortelle",
+    "type": "Fragrance",
+    "sku": "SLQ",
+    "brand": "The Met"
+  },
+  {
+    "name": "Pineapple Cilantro",
+    "type": "Fragrance",
+    "sku": "PNC",
+    "brand": "Tommy Bahama"
+  },
+  {
+    "name": "Pineapple Flower",
+    "type": "Fragrance",
+    "sku": "YMD",
+    "brand": "Capri Blue"
+  },
+  {
+    "name": "Pineapple Ginger",
+    "type": "Fragrance",
+    "sku": "APG",
+    "brand": "Archipelago"
+  },
+  {
+    "name": "Pink Peony & Silk",
+    "type": "Fragrance",
+    "sku": "XLJ",
+    "brand": "Pura"
+  },
+  {
+    "name": "Pomegranate Blush",
+    "type": "Fragrance",
+    "sku": "PBL",
+    "brand": "Becki Owens"
+  },
+  {
+    "name": "Prickly Pear",
+    "type": "Fragrance",
+    "sku": "PRK",
+    "brand": "dae"
+  },
+  {
+    "name": "Prosecco",
+    "type": "Fragrance",
+    "sku": "CRS",
+    "brand": "Antica Farmacista"
+  },
+  {
+    "name": "Pumpkin Chai",
+    "type": "Fragrance",
+    "sku": "MBZ",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Pumpkin Dulce",
+    "type": "Fragrance",
+    "sku": "VCW",
+    "brand": "Capri Blue"
+  },
+  {
+    "name": "RED CURRANT",
+    "type": "Fragrance",
+    "sku": "FZE",
+    "brand": "Votivo"
+  },
+  {
+    "name": "RROSE",
+    "type": "Fragrance",
+    "sku": "ROE",
+    "brand": "Ellis Brooklyn"
+  },
+  {
+    "name": "Rapunzel Golden Light",
+    "type": "Fragrance",
+    "sku": "RGL",
+    "brand": "Disney"
+  },
+  {
+    "name": "Red Rose",
+    "type": "Fragrance",
+    "sku": "RRS",
+    "brand": "Eternal Fleur"
+  },
+  {
+    "name": "Reserve",
+    "type": "Fragrance",
+    "sku": "BCR",
+    "brand": "Barr-Co."
+  },
+  {
+    "name": "Rest",
+    "type": "Fragrance",
+    "sku": "RST",
+    "brand": "Malouf"
+  },
+  {
+    "name": "Retreat",
+    "type": "Fragrance",
+    "sku": "LRT",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "Reveler",
+    "type": "Fragrance",
+    "sku": "MRV",
+    "brand": "Moodcast"
+  },
+  {
+    "name": "Rise",
+    "type": "Fragrance",
+    "sku": "RIS",
+    "brand": "Malouf"
+  },
+  {
+    "name": "Roland Pine",
+    "type": "Fragrance",
+    "sku": "JWT",
+    "brand": "Soap & Paper Factory"
+  },
+  {
+    "name": "Rose & Berry",
+    "type": "Fragrance",
+    "sku": "PRB",
+    "brand": "Pure Placid"
+  },
+  {
+    "name": "Rose & Wild Blackberry",
+    "type": "Fragrance",
+    "sku": "VQS",
+    "brand": "Pura"
+  },
+  {
+    "name": "Rose Noir & Oud",
+    "type": "Fragrance",
+    "sku": "MPN",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Rosemary Eucalyptus",
+    "type": "Fragrance",
+    "sku": "RME",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "RÒS",
+    "type": "Fragrance",
+    "sku": "CMR",
+    "brand": "Caswell-Massey"
+  },
+  {
+    "name": "ST. GERMAIN LAVENDER",
+    "type": "Fragrance",
+    "sku": "FGW",
+    "brand": "Votivo"
+  },
+  {
+    "name": "SUPEREGO",
+    "type": "Fragrance",
+    "sku": "MJU",
+    "brand": "Ellis Brooklyn"
+  },
+  {
+    "name": "Sally Black Amber Spice",
+    "type": "Fragrance",
+    "sku": "BAS",
+    "brand": "Disney"
+  },
+  {
+    "name": "Salt",
+    "type": "Fragrance",
+    "sku": "SLT",
+    "brand": "Unify Co."
+  },
+  {
+    "name": "Santa Fe",
+    "type": "Fragrance",
+    "sku": "SNF",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Santal Blush",
+    "type": "Fragrance",
+    "sku": "SBS",
+    "brand": "Anthropologie"
+  },
+  {
+    "name": "Santal Rock Rose",
+    "type": "Fragrance",
+    "sku": "SRL",
+    "brand": "Apotheke"
+  },
+  {
+    "name": "Santal Vanilla",
+    "type": "Fragrance",
+    "sku": "SVN",
+    "brand": "Studio McGee"
+  },
+  {
+    "name": "Santorini",
+    "type": "Fragrance",
+    "sku": "KCZ",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Santorini",
+    "type": "Fragrance",
+    "sku": "EPQ",
+    "brand": "Antica Farmacista"
+  },
+  {
+    "name": "Sea & Dune",
+    "type": "Fragrance",
+    "sku": "SDN",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "Sea Salt Driftwood",
+    "type": "Fragrance",
+    "sku": "DRI",
+    "brand": "Studio McGee"
+  },
+  {
+    "name": "Sea Salt Grapefruit",
+    "type": "Fragrance",
+    "sku": "KZY",
+    "brand": "Apotheke"
+  },
+  {
+    "name": "Sequoia",
+    "type": "Fragrance",
+    "sku": "OCZ",
+    "brand": "Abbott"
+  },
+  {
+    "name": "Siberian Fir",
+    "type": "Fragrance",
+    "sku": "SBF",
+    "brand": "K. Hall Designs"
+  },
+  {
+    "name": "Sicilian Tangerine",
+    "type": "Fragrance",
+    "sku": "GNT",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Sienna Sage",
+    "type": "Fragrance",
+    "sku": "SNG",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Signature Citrus",
+    "type": "Fragrance",
+    "sku": "SCT",
+    "brand": "dae"
+  },
+  {
+    "name": "Signature Island Blend",
+    "type": "Fragrance",
+    "sku": "SIB",
+    "brand": "Tommy Bahama"
+  },
+  {
+    "name": "Simmered Cider",
+    "type": "Fragrance",
+    "sku": "CDR",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Ski Trip",
+    "type": "Fragrance",
+    "sku": "HST",
+    "brand": "Homesick"
+  },
+  {
+    "name": "SoHo",
+    "type": "Fragrance",
+    "sku": "SOH",
+    "brand": "GUY FOX"
+  },
+  {
+    "name": "Sol Tobac",
+    "type": "Fragrance",
+    "sku": "STO",
+    "brand": "Anthropologie"
+  },
+  {
+    "name": "Southern California",
+    "type": "Fragrance",
+    "sku": "SCA",
+    "brand": "Homesick"
+  },
+  {
+    "name": "Spanish Cedar",
+    "type": "Fragrance",
+    "sku": "SCD",
+    "brand": "TAFT"
+  },
+  {
+    "name": "Spiced Woods",
+    "type": "Fragrance",
+    "sku": "UJD",
+    "brand": "The Met"
+  },
+  {
+    "name": "Star Magnolia",
+    "type": "Fragrance",
+    "sku": "KPE",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "Stunner",
+    "type": "Fragrance",
+    "sku": "STN",
+    "brand": "Moodcast"
+  },
+  {
+    "name": "Sugar & Cream",
+    "type": "Fragrance",
+    "sku": "BSC",
+    "brand": "Barr-Co."
+  },
+  {
+    "name": "Sugar Blossom",
+    "type": "Fragrance",
+    "sku": "SBM",
+    "brand": "Becki Owens"
+  },
+  {
+    "name": "Summer by the Lake",
+    "type": "Fragrance",
+    "sku": "SBL",
+    "brand": "Pure Placid"
+  },
+  {
+    "name": "Summit",
+    "type": "Fragrance",
+    "sku": "SMT",
+    "brand": "Unify Co."
+  },
+  {
+    "name": "Sun Kissed",
+    "type": "Fragrance",
+    "sku": "KSD",
+    "brand": "Soap & Paper Factory"
+  },
+  {
+    "name": "Sunday Morning",
+    "type": "Fragrance",
+    "sku": "LMS",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Sunshine Bloom",
+    "type": "Fragrance",
+    "sku": "KLG",
+    "brand": "Floral Street"
+  },
+  {
+    "name": "Sweet Grace",
+    "type": "Fragrance",
+    "sku": "LWX",
+    "brand": "Bridgewater Candle Company"
+  },
+  {
+    "name": "Sweet Grace",
+    "type": "Fragrance",
+    "sku": "LWZ",
+    "brand": "Bridgewater Candle Company"
+  },
+  {
+    "name": "TEAK",
+    "type": "Fragrance",
+    "sku": "VTK",
+    "brand": "Votivo"
+  },
+  {
+    "name": "Tangerine Dream",
+    "type": "Fragrance",
+    "sku": "BOF",
+    "brand": "Becki Owens"
+  },
+  {
+    "name": "Telluride",
+    "type": "Fragrance",
+    "sku": "TGZ",
+    "brand": "Abbott"
+  },
+  {
+    "name": "Terracotta Rose",
+    "type": "Fragrance",
+    "sku": "RVF",
+    "brand": "The Met"
+  },
+  {
+    "name": "Texas",
+    "type": "Fragrance",
+    "sku": "HTX",
+    "brand": "Homesick"
+  },
+  {
+    "name": "The Cape",
+    "type": "Fragrance",
+    "sku": "NZS",
+    "brand": "Abbott"
+  },
+  {
+    "name": "Tinsel & Spice",
+    "type": "Fragrance",
+    "sku": "WXZ",
+    "brand": "Capri Blue"
+  },
+  {
+    "name": "Tobacco & Patchouli",
+    "type": "Fragrance",
+    "sku": "TOB",
+    "brand": "Paddywax"
+  },
+  {
+    "name": "Tomato Tarragon",
+    "type": "Fragrance",
+    "sku": "KTT",
+    "brand": "Apotheke"
+  },
+  {
+    "name": "Tuscan Neroli",
+    "type": "Fragrance",
+    "sku": "KYV",
+    "brand": "Pura"
+  },
+  {
+    "name": "Urban Rapids",
+    "type": "Fragrance",
+    "sku": "KUR",
+    "brand": "Kenneth Cole"
+  },
+  {
+    "name": "VERB",
+    "type": "Fragrance",
+    "sku": "FXZ",
+    "brand": "Ellis Brooklyn"
+  },
+  {
+    "name": "VIC",
+    "type": "Fragrance",
+    "sku": "CVC",
+    "brand": "Caswell-Massey"
+  },
+  {
+    "name": "Vanilla Berry",
+    "type": "Fragrance",
+    "sku": "IFB",
+    "brand": "Becki Owens"
+  },
+  {
+    "name": "Vanilla Bloom",
+    "type": "Fragrance",
+    "sku": "VNB",
+    "brand": "Floral Street"
+  },
+  {
+    "name": "Vanilla Chiffon",
+    "type": "Fragrance",
+    "sku": "JVB",
+    "brand": "Pura"
+  },
+  {
+    "name": "Vanilla Fleur",
+    "type": "Fragrance",
+    "sku": "BVM",
+    "brand": "Soap & Paper Factory"
+  },
+  {
+    "name": "Velvet Pear",
+    "type": "Fragrance",
+    "sku": "RHW",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Velvet Wineberry",
+    "type": "Fragrance",
+    "sku": "JZB",
+    "brand": "Pura"
+  },
+  {
+    "name": "Violet + Yarrow",
+    "type": "Fragrance",
+    "sku": "VYR",
+    "brand": "U.S. Apothecary"
+  },
+  {
+    "name": "Volcano",
+    "type": "Fragrance",
+    "sku": "NDM",
+    "brand": "Capri Blue"
+  },
+  {
+    "name": "WASHED COTTON",
+    "type": "Fragrance",
+    "sku": "LWY",
+    "brand": "K. Hall Designs"
+  },
+  {
+    "name": "Washed Linen",
+    "type": "Fragrance",
+    "sku": "WSL",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Welcome Home",
+    "type": "Fragrance",
+    "sku": "WLH",
+    "brand": "Bridgewater Candle Company"
+  },
+  {
+    "name": "White Amber Mandarin",
+    "type": "Fragrance",
+    "sku": "AAM",
+    "brand": "Anthropologie"
+  },
+  {
+    "name": "White Bergamot",
+    "type": "Fragrance",
+    "sku": "WBR",
+    "brand": "Studio McGee"
+  },
+  {
+    "name": "White Grapefruit",
+    "type": "Fragrance",
+    "sku": "WGR",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "White Tea Blossom",
+    "type": "Fragrance",
+    "sku": "WTB",
+    "brand": "Tommy Bahama"
+  },
+  {
+    "name": "White Tea No. 1",
+    "type": "Fragrance",
+    "sku": "WHT",
+    "brand": "Pura"
+  },
+  {
+    "name": "White Vetiver",
+    "type": "Fragrance",
+    "sku": "VXE",
+    "brand": "Apotheke"
+  },
+  {
+    "name": "Wild Mint & Eucalyptus",
+    "type": "Fragrance",
+    "sku": "WME",
+    "brand": "NEST New York"
+  },
+  {
+    "name": "Wild Sage",
+    "type": "Fragrance",
+    "sku": "SAG",
+    "brand": "Studio McGee"
+  },
+  {
+    "name": "Winter Frost",
+    "type": "Fragrance",
+    "sku": "AWF",
+    "brand": "Archipelago"
+  },
+  {
+    "name": "Winter Mantel",
+    "type": "Fragrance",
+    "sku": "HWM",
+    "brand": "Homesick"
+  },
+  {
+    "name": "Winter Noir",
+    "type": "Fragrance",
+    "sku": "WTN",
+    "brand": "Pura"
+  },
+  {
+    "name": "Winter White",
+    "type": "Fragrance",
+    "sku": "WTW",
+    "brand": "ILLUME"
+  },
+  {
+    "name": "Wonderland Bloom",
+    "type": "Fragrance",
+    "sku": "DCY",
+    "brand": "Floral Street"
+  },
+  {
+    "name": "Woodsmoke",
+    "type": "Fragrance",
+    "sku": "WSM",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Yuzu Citron",
+    "type": "Fragrance",
+    "sku": "WKN",
+    "brand": "Pura"
+  },
+  {
+    "name": "Âmes Sœurs",
+    "type": "Fragrance",
+    "sku": "JAS",
+    "brand": "Joya Studio"
+  }
+]
