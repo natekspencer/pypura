@@ -126,6 +126,12 @@
     "brand": "Disney"
   },
   {
+    "name": "Apple",
+    "type": "Fragrance",
+    "sku": "ACP",
+    "brand": "Simplicity"
+  },
+  {
     "name": "Apple Orchard",
     "type": "Fragrance",
     "sku": "VKN",
@@ -360,6 +366,12 @@
     "brand": "ILLUME"
   },
   {
+    "name": "Citrus Rose",
+    "type": "Fragrance",
+    "sku": "CNR",
+    "brand": "Floral Street"
+  },
+  {
     "name": "Cliff",
     "type": "Fragrance",
     "sku": "CLF",
@@ -370,6 +382,12 @@
     "type": "Fragrance",
     "sku": "CCA",
     "brand": "K. Hall Designs"
+  },
+  {
+    "name": "Coconut",
+    "type": "Fragrance",
+    "sku": "CNP",
+    "brand": "Simplicity"
   },
   {
     "name": "Coconut Calm",
@@ -394,6 +412,12 @@
     "type": "Fragrance",
     "sku": "CST",
     "brand": "Capri Blue"
+  },
+  {
+    "name": "Coffee",
+    "type": "Fragrance",
+    "sku": "CFP",
+    "brand": "Simplicity"
   },
   {
     "name": "Copaline",
@@ -714,6 +738,12 @@
     "brand": "Caswell-Massey"
   },
   {
+    "name": "Honeysuckle",
+    "type": "Fragrance",
+    "sku": "FPP",
+    "brand": "Simplicity"
+  },
+  {
     "name": "ICY BLUE PINE",
     "type": "Fragrance",
     "sku": "JYT",
@@ -843,6 +873,12 @@
     "name": "Linens & Surf",
     "type": "Fragrance",
     "sku": "LMU",
+    "brand": "Pura"
+  },
+  {
+    "name": "Linens & Surf",
+    "type": "Fragrance",
+    "sku": "LSP",
     "brand": "Pura"
   },
   {
@@ -1552,6 +1588,12 @@
     "type": "Fragrance",
     "sku": "CVC",
     "brand": "Caswell-Massey"
+  },
+  {
+    "name": "Vanilla",
+    "type": "Fragrance",
+    "sku": "VNP",
+    "brand": "Simplicity"
   },
   {
     "name": "Vanilla Berry",
