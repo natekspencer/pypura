@@ -12,6 +12,12 @@
     "brand": "Pura"
   },
   {
+    "name": "Dew",
+    "type": "Car Fragrance",
+    "sku": "DEWC",
+    "brand": "Unify Co."
+  },
+  {
     "name": "Fairway Morning",
     "type": "Car Fragrance",
     "sku": "FQMC",
@@ -40,6 +46,12 @@
     "type": "Car Fragrance",
     "sku": "RRAC",
     "brand": "Pura"
+  },
+  {
+    "name": "Salt",
+    "type": "Car Fragrance",
+    "sku": "SLTC",
+    "brand": "Unify Co."
   },
   {
     "name": "Sweet Grace",
@@ -124,6 +136,18 @@
     "type": "Fragrance",
     "sku": "LHT",
     "brand": "Disney"
+  },
+  {
+    "name": "Apple",
+    "type": "Fragrance",
+    "sku": "ACP",
+    "brand": "Simplicity"
+  },
+  {
+    "name": "Apple",
+    "type": "Fragrance",
+    "sku": "ACP",
+    "brand": "Simplicity by Pura"
   },
   {
     "name": "Apple Orchard",
@@ -360,6 +384,12 @@
     "brand": "ILLUME"
   },
   {
+    "name": "Citrus Rose",
+    "type": "Fragrance",
+    "sku": "CNR",
+    "brand": "Floral Street"
+  },
+  {
     "name": "Cliff",
     "type": "Fragrance",
     "sku": "CLF",
@@ -370,6 +400,18 @@
     "type": "Fragrance",
     "sku": "CCA",
     "brand": "K. Hall Designs"
+  },
+  {
+    "name": "Coconut",
+    "type": "Fragrance",
+    "sku": "CNP",
+    "brand": "Simplicity"
+  },
+  {
+    "name": "Coconut",
+    "type": "Fragrance",
+    "sku": "CNP",
+    "brand": "Simplicity by Pura"
   },
   {
     "name": "Coconut Calm",
@@ -394,6 +436,18 @@
     "type": "Fragrance",
     "sku": "CST",
     "brand": "Capri Blue"
+  },
+  {
+    "name": "Coffee",
+    "type": "Fragrance",
+    "sku": "CFP",
+    "brand": "Simplicity"
+  },
+  {
+    "name": "Coffee",
+    "type": "Fragrance",
+    "sku": "CFP",
+    "brand": "Simplicity by Pura"
   },
   {
     "name": "Copaline",
@@ -714,6 +768,18 @@
     "brand": "Caswell-Massey"
   },
   {
+    "name": "Honeysuckle",
+    "type": "Fragrance",
+    "sku": "FPP",
+    "brand": "Simplicity"
+  },
+  {
+    "name": "Honeysuckle",
+    "type": "Fragrance",
+    "sku": "FPP",
+    "brand": "Simplicity by Pura"
+  },
+  {
     "name": "ICY BLUE PINE",
     "type": "Fragrance",
     "sku": "JYT",
@@ -843,6 +909,12 @@
     "name": "Linens & Surf",
     "type": "Fragrance",
     "sku": "LMU",
+    "brand": "Pura"
+  },
+  {
+    "name": "Linens & Surf",
+    "type": "Fragrance",
+    "sku": "LSP",
     "brand": "Pura"
   },
   {
@@ -1434,6 +1506,12 @@
     "brand": "Becki Owens"
   },
   {
+    "name": "Sugared Lemon",
+    "type": "Fragrance",
+    "sku": "LEP",
+    "brand": "Pura"
+  },
+  {
     "name": "Summer by the Lake",
     "type": "Fragrance",
     "sku": "SBL",
@@ -1552,6 +1630,18 @@
     "type": "Fragrance",
     "sku": "CVC",
     "brand": "Caswell-Massey"
+  },
+  {
+    "name": "Vanilla",
+    "type": "Fragrance",
+    "sku": "VNP",
+    "brand": "Simplicity"
+  },
+  {
+    "name": "Vanilla",
+    "type": "Fragrance",
+    "sku": "VNP",
+    "brand": "Simplicity by Pura"
   },
   {
     "name": "Vanilla Berry",
