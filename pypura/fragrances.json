@@ -1,5 +1,11 @@
 [
   {
+    "name": "Chamomile Lavender",
+    "type": "Car Fragrance",
+    "sku": "AJWC",
+    "brand": "LAFCO"
+  },
+  {
     "name": "Coastal Palm",
     "type": "Car Fragrance",
     "sku": "CJIC",
@@ -10,6 +16,12 @@
     "type": "Car Fragrance",
     "sku": "CBMC",
     "brand": "Pura"
+  },
+  {
+    "name": "Del Mar",
+    "type": "Car Fragrance",
+    "sku": "DEMC",
+    "brand": "GUY FOX"
   },
   {
     "name": "Dew",
@@ -52,6 +64,18 @@
     "type": "Car Fragrance",
     "sku": "SLTC",
     "brand": "Unify Co."
+  },
+  {
+    "name": "Sea & Dune",
+    "type": "Car Fragrance",
+    "sku": "SDNC",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "SoHo",
+    "type": "Car Fragrance",
+    "sku": "SOHC",
+    "brand": "GUY FOX"
   },
   {
     "name": "Sweet Grace",
@@ -1086,6 +1110,12 @@
     "brand": "Caswell-Massey"
   },
   {
+    "name": "Orange Blossom Neroli",
+    "type": "Fragrance",
+    "sku": "OBN",
+    "brand": "Apotheke"
+  },
+  {
     "name": "Orange Blossom, Lilac & Jasmine",
     "type": "Fragrance",
     "sku": "DZI",
@@ -1234,6 +1264,12 @@
     "type": "Fragrance",
     "sku": "VCW",
     "brand": "Capri Blue"
+  },
+  {
+    "name": "Pumpkin Laurel",
+    "type": "Fragrance",
+    "sku": "PKL",
+    "brand": "Thymes"
   },
   {
     "name": "RED CURRANT",
