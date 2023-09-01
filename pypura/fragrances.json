@@ -1,5 +1,11 @@
 [
   {
+    "name": "Apple Orchard",
+    "type": "Car Fragrance",
+    "sku": "TPRC",
+    "brand": "Pura"
+  },
+  {
     "name": "Chamomile Lavender",
     "type": "Car Fragrance",
     "sku": "AJWC",
@@ -136,6 +142,12 @@
     "type": "Car Fragrance",
     "sku": "WHTC",
     "brand": "Pura"
+  },
+  {
+    "name": "Winter White",
+    "type": "Car Fragrance",
+    "sku": "WTWC",
+    "brand": "ILLUME"
   },
   {
     "name": "13-Confidence",
@@ -786,6 +798,12 @@
     "brand": "Apotheke"
   },
   {
+    "name": "Chestnut Embers",
+    "type": "Fragrance",
+    "sku": "CNEH",
+    "brand": "Capri Blue"
+  },
+  {
     "name": "Citrus Crush",
     "type": "Fragrance",
     "sku": "ICC",
@@ -957,6 +975,12 @@
     "name": "Cranberry Fizz",
     "type": "Fragrance",
     "sku": "PTZ",
+    "brand": "Pura"
+  },
+  {
+    "name": "Cranberry Fizz",
+    "type": "Fragrance",
+    "sku": "PTZH",
     "brand": "Pura"
   },
   {
@@ -1548,6 +1572,12 @@
     "brand": "Pura"
   },
   {
+    "name": "Holly Berry",
+    "type": "Fragrance",
+    "sku": "HBYH",
+    "brand": "Pura"
+  },
+  {
     "name": "Home Office",
     "type": "Fragrance",
     "sku": "HMO",
@@ -1824,6 +1854,12 @@
     "brand": "Pura"
   },
   {
+    "name": "Lavender Fields",
+    "type": "Fragrance",
+    "sku": "LFPH",
+    "brand": "Pura"
+  },
+  {
     "name": "Leather & Leaves",
     "type": "Fragrance",
     "sku": "LLAH",
@@ -1923,6 +1959,12 @@
     "name": "Love Potion",
     "type": "Fragrance",
     "sku": "LPO",
+    "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Love Potion",
+    "type": "Fragrance",
+    "sku": "LPOH",
     "brand": "Brooklyn Candle Studio"
   },
   {
@@ -2769,6 +2811,12 @@
     "name": "Rose & Berry",
     "type": "Fragrance",
     "sku": "KPBH",
+    "brand": "Pure Placid"
+  },
+  {
+    "name": "Rose & Berry",
+    "type": "Fragrance",
+    "sku": "KBPH",
     "brand": "Pure Placid"
   },
   {
@@ -3654,6 +3702,12 @@
     "brand": "LAFCO"
   },
   {
+    "name": "White Pumpkin",
+    "type": "Fragrance",
+    "sku": "YWPH",
+    "brand": "Pura"
+  },
+  {
     "name": "White Tea Blossom",
     "type": "Fragrance",
     "sku": "WTB",
@@ -3694,6 +3748,12 @@
     "type": "Fragrance",
     "sku": "VXEH",
     "brand": "Apotheke"
+  },
+  {
+    "name": "Wild Citron",
+    "type": "Fragrance",
+    "sku": "CWPH",
+    "brand": "Capri Blue"
   },
   {
     "name": "Wild Mint & Eucalyptus",
