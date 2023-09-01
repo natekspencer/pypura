@@ -94,7 +94,7 @@ class Pura:
 
     def get_devices(self) -> Any:
         """Get devices."""
-        return self.__get("users/devices")
+        return self.__get("users/devices", params={"types": "wall,car,tabletop"})
 
     def set_always_on(self, device_id: str, *, bay: int) -> bool:
         """Set always on."""
