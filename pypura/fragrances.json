@@ -54,10 +54,22 @@
     "brand": "Pura"
   },
   {
+    "name": "Frasier Fir",
+    "type": "Car Fragrance",
+    "sku": "LXNC",
+    "brand": "Thymes"
+  },
+  {
     "name": "Fresh Sea Salt",
     "type": "Car Fragrance",
     "sku": "IFSC",
     "brand": "ILLUME"
+  },
+  {
+    "name": "Honeycrisp Oakwood",
+    "type": "Car Fragrance",
+    "sku": "HPDC",
+    "brand": "Anthropologie"
   },
   {
     "name": "Ivory Woods",
@@ -88,6 +100,12 @@
     "type": "Car Fragrance",
     "sku": "DZIC",
     "brand": "Antica Farmacista"
+  },
+  {
+    "name": "Pumpkin & Sweet Vanilla",
+    "type": "Car Fragrance",
+    "sku": "PSVC",
+    "brand": "Anthropologie"
   },
   {
     "name": "RED CURRANT",
@@ -136,6 +154,12 @@
     "type": "Car Fragrance",
     "sku": "TNLC",
     "brand": "Pura"
+  },
+  {
+    "name": "Volcano",
+    "type": "Car Fragrance",
+    "sku": "NDMC",
+    "brand": "Capri Blue"
   },
   {
     "name": "White Tea No. 1",
@@ -396,6 +420,12 @@
     "brand": "NEST New York"
   },
   {
+    "name": "Autumn Plum",
+    "type": "Fragrance",
+    "sku": "APM",
+    "brand": "NEST New York"
+  },
+  {
     "name": "Balsam & Cedar",
     "type": "Fragrance",
     "sku": "BMC",
@@ -504,6 +534,12 @@
     "brand": "Disney"
   },
   {
+    "name": "Berry Bloom",
+    "type": "Fragrance",
+    "sku": "BRYH",
+    "brand": "Floral Street"
+  },
+  {
     "name": "Big Sky",
     "type": "Fragrance",
     "sku": "MXJ",
@@ -556,6 +592,12 @@
     "type": "Fragrance",
     "sku": "BBAH",
     "brand": "ILLUME"
+  },
+  {
+    "name": "Blackberry Honey",
+    "type": "Fragrance",
+    "sku": "BHAH",
+    "brand": "Apotheke"
   },
   {
     "name": "Blood Orange & Conifer",
@@ -624,6 +666,12 @@
     "brand": "GUY FOX"
   },
   {
+    "name": "Bonfire Nights",
+    "type": "Fragrance",
+    "sku": "BFNH",
+    "brand": "Homesick"
+  },
+  {
     "name": "CHAMPACA",
     "type": "Fragrance",
     "sku": "CMP",
@@ -682,6 +730,12 @@
     "type": "Fragrance",
     "sku": "CDMH",
     "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Cardamom Blossom",
+    "type": "Fragrance",
+    "sku": "HLSH",
+    "brand": "Studio McGee"
   },
   {
     "name": "Cashmere Sweater",
@@ -802,6 +856,18 @@
     "type": "Fragrance",
     "sku": "CNEH",
     "brand": "Capri Blue"
+  },
+  {
+    "name": "Cinnamon Cider",
+    "type": "Fragrance",
+    "sku": "CAMH",
+    "brand": "Aromatique"
+  },
+  {
+    "name": "Cinnamon Woods",
+    "type": "Fragrance",
+    "sku": "CWTH",
+    "brand": "Pura"
   },
   {
     "name": "Citrus Crush",
@@ -1482,6 +1548,12 @@
     "brand": "Homesick"
   },
   {
+    "name": "Hawaii",
+    "type": "Fragrance",
+    "sku": "GWOH",
+    "brand": "Homesick"
+  },
+  {
     "name": "Hawaii Rain",
     "type": "Fragrance",
     "sku": "HWR",
@@ -2076,6 +2148,12 @@
     "brand": "Disney"
   },
   {
+    "name": "Midnight Currant",
+    "type": "Fragrance",
+    "sku": "MCLH",
+    "brand": "LAFCO"
+  },
+  {
     "name": "Midnight Tulip",
     "type": "Fragrance",
     "sku": "MDT",
@@ -2284,6 +2362,12 @@
     "type": "Fragrance",
     "sku": "OCNH",
     "brand": "Paddywax"
+  },
+  {
+    "name": "Oktoberfest",
+    "type": "Fragrance",
+    "sku": "OKFH",
+    "brand": "Homesick"
   },
   {
     "name": "Old Faithful",
@@ -2668,6 +2752,12 @@
     "type": "Fragrance",
     "sku": "PMPH",
     "brand": "Homesick"
+  },
+  {
+    "name": "Pumpkin Spice",
+    "type": "Fragrance",
+    "sku": "PAIH",
+    "brand": "Aromatique"
   },
   {
     "name": "Pumpkin Spice & Black Walnut",
@@ -3708,6 +3798,12 @@
     "brand": "LAFCO"
   },
   {
+    "name": "White Maple Bourbon",
+    "type": "Fragrance",
+    "sku": "WMBH",
+    "brand": "LAFCO"
+  },
+  {
     "name": "White Pumpkin",
     "type": "Fragrance",
     "sku": "YWPH",
@@ -3783,6 +3879,12 @@
     "name": "Wild Sage",
     "type": "Fragrance",
     "sku": "SAGH",
+    "brand": "Studio McGee"
+  },
+  {
+    "name": "Winter Bayberry",
+    "type": "Fragrance",
+    "sku": "HOOH",
     "brand": "Studio McGee"
   },
   {
