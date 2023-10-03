@@ -534,6 +534,12 @@
     "brand": "Disney"
   },
   {
+    "name": "Bergamot Mist",
+    "type": "Fragrance",
+    "sku": "MCFH",
+    "brand": "Disney"
+  },
+  {
     "name": "Berry Bloom",
     "type": "Fragrance",
     "sku": "BRYH",
@@ -1062,6 +1068,12 @@
     "brand": "Abbott"
   },
   {
+    "name": "Crimson Cranberry",
+    "type": "Fragrance",
+    "sku": "CREH",
+    "brand": "Disney"
+  },
+  {
     "name": "Crystal Pine",
     "type": "Fragrance",
     "sku": "KDM",
@@ -1215,6 +1227,12 @@
     "name": "Elsa Journeys to Ahtohallan",
     "type": "Fragrance",
     "sku": "JRGH",
+    "brand": "Disney"
+  },
+  {
+    "name": "Ember Berry",
+    "type": "Fragrance",
+    "sku": "HDSH",
     "brand": "Disney"
   },
   {
@@ -2290,6 +2308,12 @@
     "type": "Fragrance",
     "sku": "AFXH",
     "brand": "Archipelago"
+  },
+  {
+    "name": "Nectarine Haze",
+    "type": "Fragrance",
+    "sku": "SCMH",
+    "brand": "Disney"
   },
   {
     "name": "New Home",
