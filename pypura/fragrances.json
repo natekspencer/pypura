@@ -6,6 +6,12 @@
     "brand": "Pura"
   },
   {
+    "name": "Bamboo",
+    "type": "Car Fragrance",
+    "sku": "UDZC",
+    "brand": "NEST New York"
+  },
+  {
     "name": "Chamomile Lavender",
     "type": "Car Fragrance",
     "sku": "AJWC",
@@ -28,6 +34,12 @@
     "type": "Car Fragrance",
     "sku": "CNMC",
     "brand": "ILLUME"
+  },
+  {
+    "name": "Cranberry Fizz",
+    "type": "Car Fragrance",
+    "sku": "PTCC",
+    "brand": "Pura"
   },
   {
     "name": "Cucumber & Mint",
@@ -64,6 +76,12 @@
     "type": "Car Fragrance",
     "sku": "IFSC",
     "brand": "ILLUME"
+  },
+  {
+    "name": "Holiday",
+    "type": "Car Fragrance",
+    "sku": "VNTC",
+    "brand": "NEST New York"
   },
   {
     "name": "Honeycrisp Oakwood",
@@ -165,6 +183,12 @@
     "name": "White Tea No. 1",
     "type": "Car Fragrance",
     "sku": "WHTC",
+    "brand": "Pura"
+  },
+  {
+    "name": "Winter Noir",
+    "type": "Car Fragrance",
+    "sku": "WTNC",
     "brand": "Pura"
   },
   {
@@ -714,6 +738,12 @@
     "brand": "Becki Owens"
   },
   {
+    "name": "Candied Cranberry",
+    "type": "Fragrance",
+    "sku": "CCBH",
+    "brand": "Becki Owens"
+  },
+  {
     "name": "Canvas",
     "type": "Fragrance",
     "sku": "YZJ",
@@ -724,6 +754,12 @@
     "type": "Fragrance",
     "sku": "YZJH",
     "brand": "Apotheke"
+  },
+  {
+    "name": "Caramel + Clove",
+    "type": "Fragrance",
+    "sku": "CCLH",
+    "brand": "Becki Owens"
   },
   {
     "name": "Cardamom",
@@ -1053,6 +1089,18 @@
     "name": "Cranberry Fizz",
     "type": "Fragrance",
     "sku": "PTZH",
+    "brand": "Pura"
+  },
+  {
+    "name": "Cranberry Fizz",
+    "type": "Fragrance",
+    "sku": "CFP",
+    "brand": "Pura"
+  },
+  {
+    "name": "Cranberry Fizz",
+    "type": "Fragrance",
+    "sku": "CPF",
     "brand": "Pura"
   },
   {
@@ -3120,6 +3168,12 @@
     "brand": "LAFCO"
   },
   {
+    "name": "Sea Pines",
+    "type": "Fragrance",
+    "sku": "SAPH",
+    "brand": "MERSEA"
+  },
+  {
     "name": "Sea Salt Driftwood",
     "type": "Fragrance",
     "sku": "DRI",
@@ -3240,6 +3294,12 @@
     "brand": "Homesick"
   },
   {
+    "name": "Snow",
+    "type": "Fragrance",
+    "sku": "SJNH",
+    "brand": "Simpatico"
+  },
+  {
     "name": "SoHo",
     "type": "Fragrance",
     "sku": "SOH",
@@ -3334,6 +3394,12 @@
     "type": "Fragrance",
     "sku": "KPEH",
     "brand": "LAFCO"
+  },
+  {
+    "name": "Stonehenge",
+    "type": "Fragrance",
+    "sku": "SAOH",
+    "brand": "Archipelago"
   },
   {
     "name": "Stunner",
@@ -3538,6 +3604,18 @@
     "type": "Fragrance",
     "sku": "NZSH",
     "brand": "Abbott"
+  },
+  {
+    "name": "The Smell of Christmas",
+    "type": "Fragrance",
+    "sku": "TSCH",
+    "brand": "Aromatique"
+  },
+  {
+    "name": "The Smell of Tree",
+    "type": "Fragrance",
+    "sku": "SFTH",
+    "brand": "Aromatique"
   },
   {
     "name": "Tinsel & Spice",
@@ -3831,6 +3909,12 @@
     "name": "White Pumpkin",
     "type": "Fragrance",
     "sku": "YWPH",
+    "brand": "Pura"
+  },
+  {
+    "name": "White Pumpkin",
+    "type": "Fragrance",
+    "sku": "YWN",
     "brand": "Pura"
   },
   {
