@@ -596,6 +596,12 @@
   {
     "name": "Birchwood Molasses",
     "type": "Fragrance",
+    "sku": "BCL",
+    "brand": "LAFCO"
+  },
+  {
+    "name": "Birchwood Molasses",
+    "type": "Fragrance",
     "sku": "BCLH",
     "brand": "LAFCO"
   },
