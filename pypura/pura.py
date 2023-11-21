@@ -188,11 +188,10 @@ class Pura:
         response = requests.request(
             method, urljoin(BASE_URL, url), auth=self.get_auth(), timeout=10, **kwargs
         )
-        json = response.json()
         if (status_code := response.status_code) != 200:
-            _LOGGER.error("Status: %s - %s", status_code, json)
+            _LOGGER.error("Status: %s - %s", status_code, response.text)
             response.raise_for_status()
-        return json
+        return response.json()
 
     def __get(self, url: str, **kwargs: Any) -> Any:
         """Make a get request."""
