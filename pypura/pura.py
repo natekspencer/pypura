@@ -96,6 +96,23 @@ class Pura:
         """Get devices."""
         return self.__get("users/devices", params={"types": "wall,car,plus"})
 
+    def get_fragrance_details(self, fragrance_code: str) -> Any:
+        """Get fragrance details."""
+        return self.__get(
+            f"https://trypura.io/fragrance/api/mobileAppInfo/{fragrance_code}"
+        )
+
+    def get_latest_firmware_details(self, device_type: str, device_version: str) -> Any:
+        """Get latest firmware details."""
+        return self.__get(
+            "https://prod.api.purascents.com/api/firmware/config",
+            headers={
+                "pura-device-type": device_type,
+                "pura-device-version": device_version,
+            },
+            text_response=True,
+        )
+
     def set_always_on(self, device_id: str, *, bay: int) -> bool:
         """Set always on."""
         json = {"bay": bay}
@@ -184,6 +201,7 @@ class Pura:
 
     def __request(self, method: str, url: str, **kwargs: Any) -> Any:
         """Make a request."""
+        text_response = kwargs.pop("text_response", False)
         _LOGGER.debug("Making %s request to %s with %s", method, url, kwargs)
         response = requests.request(
             method, urljoin(BASE_URL, url), auth=self.get_auth(), timeout=10, **kwargs
@@ -191,7 +209,7 @@ class Pura:
         if (status_code := response.status_code) != 200:
             _LOGGER.error("Status: %s - %s", status_code, response.text)
             response.raise_for_status()
-        return response.json()
+        return response.text if text_response else response.json()
 
     def __get(self, url: str, **kwargs: Any) -> Any:
         """Make a get request."""
