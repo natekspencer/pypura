@@ -12,6 +12,12 @@
     "brand": "NEST New York"
   },
   {
+    "name": "Birchwood Pine",
+    "type": "Car Fragrance",
+    "sku": "AJVC",
+    "brand": "NEST New York"
+  },
+  {
     "name": "Chamomile Lavender",
     "type": "Car Fragrance",
     "sku": "AJWC",
@@ -864,6 +870,12 @@
     "brand": "LAFCO"
   },
   {
+    "name": "Chamomile Mint",
+    "type": "Fragrance",
+    "sku": "INMH",
+    "brand": "Pura"
+  },
+  {
     "name": "Champaca",
     "type": "Fragrance",
     "sku": "CMP",
@@ -930,6 +942,12 @@
     "brand": "ILLUME"
   },
   {
+    "name": "Citrus Leaves",
+    "type": "Fragrance",
+    "sku": "CLMH",
+    "brand": "Pura"
+  },
+  {
     "name": "Citrus Rose",
     "type": "Fragrance",
     "sku": "CNR",
@@ -952,6 +970,12 @@
     "type": "Fragrance",
     "sku": "CLNH",
     "brand": "Votivo"
+  },
+  {
+    "name": "Clementine Mango",
+    "type": "Fragrance",
+    "sku": "MENH",
+    "brand": "Pura"
   },
   {
     "name": "Cliff",
@@ -1138,6 +1162,12 @@
     "type": "Fragrance",
     "sku": "KDMH",
     "brand": "Capri Blue"
+  },
+  {
+    "name": "Cucumber & Peach",
+    "type": "Fragrance",
+    "sku": "CMMH",
+    "brand": "Pura"
   },
   {
     "name": "Cypress & Fir",
@@ -1414,6 +1444,12 @@
     "type": "Fragrance",
     "sku": "FBCH",
     "brand": "Anthropologie"
+  },
+  {
+    "name": "Fresh Bergamot",
+    "type": "Fragrance",
+    "sku": "BGOH",
+    "brand": "Pura"
   },
   {
     "name": "Fresh Cut Gardenia",
@@ -1882,6 +1918,12 @@
     "type": "Fragrance",
     "sku": "JRAH",
     "brand": "Disney"
+  },
+  {
+    "name": "Juicy Acai",
+    "type": "Fragrance",
+    "sku": "PETH",
+    "brand": "Pura"
   },
   {
     "name": "Jungle Bloom",
@@ -2640,6 +2682,12 @@
     "brand": "Simpatico"
   },
   {
+    "name": "Pear No. 25",
+    "type": "Fragrance",
+    "sku": "YHVH",
+    "brand": "Simpatico"
+  },
+  {
     "name": "Pearl",
     "type": "Fragrance",
     "sku": "PRL",
@@ -2715,6 +2763,12 @@
     "name": "Pink Peony & Silk",
     "type": "Fragrance",
     "sku": "XLJ",
+    "brand": "Pura"
+  },
+  {
+    "name": "Pink Pomelo",
+    "type": "Fragrance",
+    "sku": "PPOH",
     "brand": "Pura"
   },
   {
@@ -3306,6 +3360,12 @@
     "brand": "Simpatico"
   },
   {
+    "name": "Snow No. 85",
+    "type": "Fragrance",
+    "sku": "SJNH",
+    "brand": "Simpatico"
+  },
+  {
     "name": "SoHo",
     "type": "Fragrance",
     "sku": "SOH",
@@ -3850,6 +3910,12 @@
     "type": "Fragrance",
     "sku": "WSAH",
     "brand": "Paddywax"
+  },
+  {
+    "name": "Water Lily",
+    "type": "Fragrance",
+    "sku": "PTMH",
+    "brand": "Pura"
   },
   {
     "name": "Welcome Home",
