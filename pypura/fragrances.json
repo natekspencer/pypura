@@ -12,6 +12,12 @@
     "brand": "NEST New York"
   },
   {
+    "name": "Beach Glow",
+    "type": "Car Fragrance",
+    "sku": "GLWC",
+    "brand": "Becki Owens"
+  },
+  {
     "name": "Birchwood Pine",
     "type": "Car Fragrance",
     "sku": "AJVC",
@@ -30,10 +36,28 @@
     "brand": "LAFCO"
   },
   {
+    "name": "Cinnamon Woods",
+    "type": "Car Fragrance",
+    "sku": "CWTC",
+    "brand": "Pura"
+  },
+  {
     "name": "Coastal Palm",
     "type": "Car Fragrance",
     "sku": "CJIC",
     "brand": "Pura"
+  },
+  {
+    "name": "Coconut",
+    "type": "Car Fragrance",
+    "sku": "CNPC",
+    "brand": "Simplicity by Pura"
+  },
+  {
+    "name": "Coconut Calm",
+    "type": "Car Fragrance",
+    "sku": "MZXC",
+    "brand": "Becki Owens"
   },
   {
     "name": "Coconut Milk Mango",
@@ -66,6 +90,12 @@
     "brand": "Unify Co."
   },
   {
+    "name": "Eden No. 1",
+    "type": "Car Fragrance",
+    "sku": "EDNC",
+    "brand": "TAFT"
+  },
+  {
     "name": "Fairway Morning",
     "type": "Car Fragrance",
     "sku": "FQMC",
@@ -82,6 +112,12 @@
     "type": "Car Fragrance",
     "sku": "IFSC",
     "brand": "ILLUME"
+  },
+  {
+    "name": "Hawaii",
+    "type": "Car Fragrance",
+    "sku": "GWOC",
+    "brand": "Homesick"
   },
   {
     "name": "Holiday",
@@ -150,6 +186,12 @@
     "brand": "Pura"
   },
   {
+    "name": "Road Trip",
+    "type": "Car Fragrance",
+    "sku": "RDTC",
+    "brand": "Homesick"
+  },
+  {
     "name": "Salt",
     "type": "Car Fragrance",
     "sku": "SLTC",
@@ -166,6 +208,12 @@
     "type": "Car Fragrance",
     "sku": "SOHC",
     "brand": "GUY FOX"
+  },
+  {
+    "name": "Spanish Cedar",
+    "type": "Car Fragrance",
+    "sku": "SCDC",
+    "brand": "TAFT"
   },
   {
     "name": "Sweet Grace",
@@ -642,6 +690,12 @@
     "brand": "Apotheke"
   },
   {
+    "name": "Blackberry Honey",
+    "type": "Fragrance",
+    "sku": "BHA",
+    "brand": "Apotheke"
+  },
+  {
     "name": "Blood Orange & Conifer",
     "type": "Fragrance",
     "sku": "BDGH",
@@ -1068,6 +1122,12 @@
     "brand": "Capri Blue"
   },
   {
+    "name": "Coconut Sugar",
+    "type": "Fragrance",
+    "sku": "CMSH",
+    "brand": "MERSEA"
+  },
+  {
     "name": "Coffee",
     "type": "Fragrance",
     "sku": "CFP",
@@ -1180,6 +1240,12 @@
     "type": "Fragrance",
     "sku": "CYFH",
     "brand": "Paddywax"
+  },
+  {
+    "name": "Cyprus Sea Salt",
+    "type": "Fragrance",
+    "sku": "CSSH",
+    "brand": "Thymes"
   },
   {
     "name": "Daydreamer",
@@ -1806,6 +1872,12 @@
     "brand": "Anthropologie"
   },
   {
+    "name": "Honeydew Crush",
+    "type": "Fragrance",
+    "sku": "CBLH",
+    "brand": "Capri Blue"
+  },
+  {
     "name": "Honeysuckle",
     "type": "Fragrance",
     "sku": "HYS",
@@ -2056,6 +2128,12 @@
     "type": "Fragrance",
     "sku": "LLAH",
     "brand": "Anthropologie"
+  },
+  {
+    "name": "Lemon",
+    "type": "Fragrance",
+    "sku": "LMVH",
+    "brand": "Simplicity by Pura"
   },
   {
     "name": "Lemon Leaf",
@@ -2356,6 +2434,12 @@
     "type": "Fragrance",
     "sku": "MONH",
     "brand": "dae"
+  },
+  {
+    "name": "Moon",
+    "type": "Fragrance",
+    "sku": "MSVH",
+    "brand": "Unify Co."
   },
   {
     "name": "Morning Mint",
@@ -2778,6 +2862,12 @@
     "brand": "Pura"
   },
   {
+    "name": "Pink Pomelo",
+    "type": "Fragrance",
+    "sku": "PPO",
+    "brand": "Pura"
+  },
+  {
     "name": "Pomegranate + Spruce",
     "type": "Fragrance",
     "sku": "PRSH",
@@ -3018,6 +3108,12 @@
     "brand": "Malouf"
   },
   {
+    "name": "Riviera Fig",
+    "type": "Fragrance",
+    "sku": "RGOH",
+    "brand": "Thymes"
+  },
+  {
     "name": "Roland Pine",
     "type": "Fragrance",
     "sku": "JWT",
@@ -3136,6 +3232,12 @@
     "type": "Fragrance",
     "sku": "SLTH",
     "brand": "Unify Co."
+  },
+  {
+    "name": "Saltaire",
+    "type": "Fragrance",
+    "sku": "ALRH",
+    "brand": "MERSEA"
   },
   {
     "name": "Sandalwood Vanilla",
@@ -3420,6 +3522,12 @@
     "brand": "TAFT"
   },
   {
+    "name": "Sparkling Currant",
+    "type": "Fragrance",
+    "sku": "SPCH",
+    "brand": "Aromatique"
+  },
+  {
     "name": "Spiced Pomander",
     "type": "Fragrance",
     "sku": "SPO",
@@ -3543,6 +3651,12 @@
     "name": "Summit",
     "type": "Fragrance",
     "sku": "SMTH",
+    "brand": "Unify Co."
+  },
+  {
+    "name": "Sun",
+    "type": "Fragrance",
+    "sku": "UNSH",
     "brand": "Unify Co."
   },
   {
@@ -3921,6 +4035,12 @@
     "name": "Water Lily",
     "type": "Fragrance",
     "sku": "PTMH",
+    "brand": "Pura"
+  },
+  {
+    "name": "Water Lily",
+    "type": "Fragrance",
+    "sku": "PTM",
     "brand": "Pura"
   },
   {
