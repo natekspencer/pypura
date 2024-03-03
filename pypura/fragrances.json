@@ -1434,6 +1434,12 @@
     "brand": "Brooklyn Candle Studio"
   },
   {
+    "name": "Fern Moss",
+    "type": "Fragrance",
+    "sku": "FMSH",
+    "brand": "Anthropologie"
+  },
+  {
     "name": "Festival",
     "type": "Fragrance",
     "sku": "FTVH",
@@ -3880,6 +3886,12 @@
     "type": "Fragrance",
     "sku": "CVCH",
     "brand": "Caswell-Massey"
+  },
+  {
+    "name": "Valencia Orange",
+    "type": "Fragrance",
+    "sku": "VOSH",
+    "brand": "Aromatique"
   },
   {
     "name": "Vanilla",
