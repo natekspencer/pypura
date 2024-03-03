@@ -190,7 +190,13 @@ class Pura:
             end = start + end.seconds
         if end <= start:
             raise PuraApiException("Timer 'end' time must be greater than 'start' time")
-        json = {"bay": bay, "intensity": intensity, "start": start, "end": end}
+        json = {
+            "bay": bay,
+            "intensity": intensity,
+            "start": start,
+            "end": end,
+            "validateOverride": True,
+        }
         resp = self.__post(f"devices/{device_id}/timer", json=json)
         return resp.get("success") is True
 
