@@ -416,13 +416,13 @@
   {
     "name": "Apple Orchard",
     "type": "Fragrance",
-    "sku": "VKN",
+    "sku": "TPRH",
     "brand": "Pura"
   },
   {
     "name": "Apple Orchard",
     "type": "Fragrance",
-    "sku": "TPRH",
+    "sku": "VKN",
     "brand": "Pura"
   },
   {
@@ -494,13 +494,13 @@
   {
     "name": "Autumn Plum",
     "type": "Fragrance",
-    "sku": "APMH",
+    "sku": "APM",
     "brand": "NEST New York"
   },
   {
     "name": "Autumn Plum",
     "type": "Fragrance",
-    "sku": "APM",
+    "sku": "APMH",
     "brand": "NEST New York"
   },
   {
@@ -686,13 +686,13 @@
   {
     "name": "Blackberry Honey",
     "type": "Fragrance",
-    "sku": "BHAH",
+    "sku": "BHA",
     "brand": "Apotheke"
   },
   {
     "name": "Blackberry Honey",
     "type": "Fragrance",
-    "sku": "BHA",
+    "sku": "BHAH",
     "brand": "Apotheke"
   },
   {
@@ -824,6 +824,12 @@
   {
     "name": "Caramel + Clove",
     "type": "Fragrance",
+    "sku": "CCL",
+    "brand": "Becki Owens"
+  },
+  {
+    "name": "Caramel + Clove",
+    "type": "Fragrance",
     "sku": "CCLH",
     "brand": "Becki Owens"
   },
@@ -838,6 +844,12 @@
     "type": "Fragrance",
     "sku": "CDMH",
     "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Cardamom Blossom",
+    "type": "Fragrance",
+    "sku": "HLS",
+    "brand": "Studio McGee"
   },
   {
     "name": "Cardamom Blossom",
@@ -1172,18 +1184,6 @@
   {
     "name": "Cranberry Fizz",
     "type": "Fragrance",
-    "sku": "PTZ",
-    "brand": "Pura"
-  },
-  {
-    "name": "Cranberry Fizz",
-    "type": "Fragrance",
-    "sku": "PTZH",
-    "brand": "Pura"
-  },
-  {
-    "name": "Cranberry Fizz",
-    "type": "Fragrance",
     "sku": "CFP",
     "brand": "Pura"
   },
@@ -1191,6 +1191,18 @@
     "name": "Cranberry Fizz",
     "type": "Fragrance",
     "sku": "CPF",
+    "brand": "Pura"
+  },
+  {
+    "name": "Cranberry Fizz",
+    "type": "Fragrance",
+    "sku": "PTZ",
+    "brand": "Pura"
+  },
+  {
+    "name": "Cranberry Fizz",
+    "type": "Fragrance",
+    "sku": "PTZH",
     "brand": "Pura"
   },
   {
@@ -1244,19 +1256,25 @@
   {
     "name": "Cyprus Sea Salt",
     "type": "Fragrance",
+    "sku": "CSS",
+    "brand": "Thymes"
+  },
+  {
+    "name": "Cyprus Sea Salt",
+    "type": "Fragrance",
     "sku": "CSSH",
     "brand": "Thymes"
   },
   {
     "name": "Daydreamer",
     "type": "Fragrance",
-    "sku": "MDD",
+    "sku": "DRMH",
     "brand": "Moodcast"
   },
   {
     "name": "Daydreamer",
     "type": "Fragrance",
-    "sku": "DRMH",
+    "sku": "MDD",
     "brand": "Moodcast"
   },
   {
@@ -1388,26 +1406,26 @@
   {
     "name": "Eucalyptus",
     "type": "Fragrance",
-    "sku": "TEU",
-    "brand": "Thymes"
-  },
-  {
-    "name": "Eucalyptus",
-    "type": "Fragrance",
     "sku": "ECP",
     "brand": "Archipelago"
   },
   {
     "name": "Eucalyptus",
     "type": "Fragrance",
-    "sku": "TEUH",
+    "sku": "ECPH",
+    "brand": "Archipelago"
+  },
+  {
+    "name": "Eucalyptus",
+    "type": "Fragrance",
+    "sku": "TEU",
     "brand": "Thymes"
   },
   {
     "name": "Eucalyptus",
     "type": "Fragrance",
-    "sku": "ECPH",
-    "brand": "Archipelago"
+    "sku": "TEUH",
+    "brand": "Thymes"
   },
   {
     "name": "Evergreen",
@@ -1586,26 +1604,26 @@
   {
     "name": "Gingerbread",
     "type": "Fragrance",
-    "sku": "GRB",
-    "brand": "Thymes"
-  },
-  {
-    "name": "Gingerbread",
-    "type": "Fragrance",
     "sku": "GNG",
     "brand": "K. Hall Designs"
   },
   {
     "name": "Gingerbread",
     "type": "Fragrance",
-    "sku": "GRBH",
+    "sku": "GNGH",
+    "brand": "K. Hall Designs"
+  },
+  {
+    "name": "Gingerbread",
+    "type": "Fragrance",
+    "sku": "GRB",
     "brand": "Thymes"
   },
   {
     "name": "Gingerbread",
     "type": "Fragrance",
-    "sku": "GNGH",
-    "brand": "K. Hall Designs"
+    "sku": "GRBH",
+    "brand": "Thymes"
   },
   {
     "name": "Go Fig-ure﻿",
@@ -1682,12 +1700,6 @@
   {
     "name": "Green Tea Citrus",
     "type": "Fragrance",
-    "sku": "XKN",
-    "brand": "Pura"
-  },
-  {
-    "name": "Green Tea Citrus",
-    "type": "Fragrance",
     "sku": "XKA",
     "brand": "Pura"
   },
@@ -1695,6 +1707,12 @@
     "name": "Green Tea Citrus",
     "type": "Fragrance",
     "sku": "XKAH",
+    "brand": "Pura"
+  },
+  {
+    "name": "Green Tea Citrus",
+    "type": "Fragrance",
+    "sku": "XKN",
     "brand": "Pura"
   },
   {
@@ -1892,20 +1910,14 @@
   {
     "name": "Honeysuckle",
     "type": "Fragrance",
-    "sku": "FPP",
-    "brand": "Simplicity"
+    "sku": "HYSH",
+    "brand": "Caswell-Massey"
   },
   {
     "name": "Honeysuckle",
     "type": "Fragrance",
     "sku": "FPP",
     "brand": "Simplicity by Pura"
-  },
-  {
-    "name": "Honeysuckle",
-    "type": "Fragrance",
-    "sku": "HYSH",
-    "brand": "Caswell-Massey"
   },
   {
     "name": "Honeysuckle",
@@ -1996,6 +2008,12 @@
     "type": "Fragrance",
     "sku": "JRAH",
     "brand": "Disney"
+  },
+  {
+    "name": "Juicy Acai",
+    "type": "Fragrance",
+    "sku": "PET",
+    "brand": "Pura"
   },
   {
     "name": "Juicy Acai",
@@ -2102,13 +2120,13 @@
   {
     "name": "Lavender Balsam",
     "type": "Fragrance",
-    "sku": "LBAH",
+    "sku": "LBA",
     "brand": "Anthropologie"
   },
   {
     "name": "Lavender Balsam",
     "type": "Fragrance",
-    "sku": "LBA",
+    "sku": "LBAH",
     "brand": "Anthropologie"
   },
   {
@@ -2120,13 +2138,13 @@
   {
     "name": "Lavender Fields",
     "type": "Fragrance",
-    "sku": "NGLH",
+    "sku": "LFPH",
     "brand": "Pura"
   },
   {
     "name": "Lavender Fields",
     "type": "Fragrance",
-    "sku": "LFPH",
+    "sku": "NGLH",
     "brand": "Pura"
   },
   {
@@ -2222,13 +2240,13 @@
   {
     "name": "Linens & Surf",
     "type": "Fragrance",
-    "sku": "LSP",
+    "sku": "LMUH",
     "brand": "Pura"
   },
   {
     "name": "Linens & Surf",
     "type": "Fragrance",
-    "sku": "LMUH",
+    "sku": "LSP",
     "brand": "Pura"
   },
   {
@@ -2798,13 +2816,13 @@
   {
     "name": "Peony & Silk",
     "type": "Fragrance",
-    "sku": "XLN",
+    "sku": "XLJH",
     "brand": "Pura"
   },
   {
     "name": "Peony & Silk",
     "type": "Fragrance",
-    "sku": "XLJH",
+    "sku": "XLN",
     "brand": "Pura"
   },
   {
@@ -2864,13 +2882,13 @@
   {
     "name": "Pink Pomelo",
     "type": "Fragrance",
-    "sku": "PPOH",
+    "sku": "PPO",
     "brand": "Pura"
   },
   {
     "name": "Pink Pomelo",
     "type": "Fragrance",
-    "sku": "PPO",
+    "sku": "PPOH",
     "brand": "Pura"
   },
   {
@@ -3134,7 +3152,7 @@
   {
     "name": "Rose & Berry",
     "type": "Fragrance",
-    "sku": "PRB",
+    "sku": "KBPH",
     "brand": "Pure Placid"
   },
   {
@@ -3146,7 +3164,7 @@
   {
     "name": "Rose & Berry",
     "type": "Fragrance",
-    "sku": "KBPH",
+    "sku": "PRB",
     "brand": "Pure Placid"
   },
   {
@@ -3248,13 +3266,13 @@
   {
     "name": "Sandalwood Vanilla",
     "type": "Fragrance",
-    "sku": "SVAH",
+    "sku": "SVA",
     "brand": "Anthropologie"
   },
   {
     "name": "Sandalwood Vanilla",
     "type": "Fragrance",
-    "sku": "SVA",
+    "sku": "SVAH",
     "brand": "Anthropologie"
   },
   {
@@ -3308,26 +3326,26 @@
   {
     "name": "Santorini",
     "type": "Fragrance",
-    "sku": "KCZ",
-    "brand": "Brooklyn Candle Studio"
-  },
-  {
-    "name": "Santorini",
-    "type": "Fragrance",
     "sku": "EPQ",
     "brand": "Antica Farmacista"
   },
   {
     "name": "Santorini",
     "type": "Fragrance",
-    "sku": "KCZH",
+    "sku": "EPQH",
+    "brand": "Antica Farmacista"
+  },
+  {
+    "name": "Santorini",
+    "type": "Fragrance",
+    "sku": "KCZ",
     "brand": "Brooklyn Candle Studio"
   },
   {
     "name": "Santorini",
     "type": "Fragrance",
-    "sku": "EPQH",
-    "brand": "Antica Farmacista"
+    "sku": "KCZH",
+    "brand": "Brooklyn Candle Studio"
   },
   {
     "name": "Sea & Dune",
@@ -3944,13 +3962,13 @@
   {
     "name": "Vanilla Chiffon",
     "type": "Fragrance",
-    "sku": "JVN",
+    "sku": "JVBH",
     "brand": "Pura"
   },
   {
     "name": "Vanilla Chiffon",
     "type": "Fragrance",
-    "sku": "JVBH",
+    "sku": "JVN",
     "brand": "Pura"
   },
   {
@@ -4046,13 +4064,13 @@
   {
     "name": "Water Lily",
     "type": "Fragrance",
-    "sku": "PTMH",
+    "sku": "PTM",
     "brand": "Pura"
   },
   {
     "name": "Water Lily",
     "type": "Fragrance",
-    "sku": "PTM",
+    "sku": "PTMH",
     "brand": "Pura"
   },
   {
@@ -4118,13 +4136,13 @@
   {
     "name": "White Pumpkin",
     "type": "Fragrance",
-    "sku": "YWPH",
+    "sku": "YWN",
     "brand": "Pura"
   },
   {
     "name": "White Pumpkin",
     "type": "Fragrance",
-    "sku": "YWN",
+    "sku": "YWPH",
     "brand": "Pura"
   },
   {
