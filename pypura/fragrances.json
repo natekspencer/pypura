@@ -702,6 +702,12 @@
     "brand": "Anthropologie"
   },
   {
+    "name": "Blue Amber",
+    "type": "Fragrance",
+    "sku": "ZLY",
+    "brand": "Pura"
+  },
+  {
     "name": "Blue Cypress & Snow",
     "type": "Fragrance",
     "sku": "BSN",
@@ -2144,6 +2150,12 @@
   {
     "name": "Lavender Fields",
     "type": "Fragrance",
+    "sku": "NGL",
+    "brand": "Pura"
+  },
+  {
+    "name": "Lavender Fields",
+    "type": "Fragrance",
     "sku": "NGLH",
     "brand": "Pura"
   },
@@ -2696,6 +2708,12 @@
   {
     "name": "Pacific Aqua",
     "type": "Fragrance",
+    "sku": "SPV",
+    "brand": "Pura"
+  },
+  {
+    "name": "Pacific Aqua",
+    "type": "Fragrance",
     "sku": "SPVH",
     "brand": "Pura"
   },
@@ -2872,6 +2890,12 @@
     "type": "Fragrance",
     "sku": "APGH",
     "brand": "Archipelago"
+  },
+  {
+    "name": "Pink Jasmine",
+    "type": "Fragrance",
+    "sku": "DZW",
+    "brand": "Pura"
   },
   {
     "name": "Pink Peony & Silk",
@@ -4311,6 +4335,12 @@
     "name": "Yuzu Citron",
     "type": "Fragrance",
     "sku": "WKN",
+    "brand": "Pura"
+  },
+  {
+    "name": "Yuzu Citron",
+    "type": "Fragrance",
+    "sku": "WKP",
     "brand": "Pura"
   },
   {
