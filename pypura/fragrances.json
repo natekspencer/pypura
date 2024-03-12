@@ -864,6 +864,12 @@
     "brand": "Studio McGee"
   },
   {
+    "name": "Cardamom Vanilla",
+    "type": "Fragrance",
+    "sku": "CDNH",
+    "brand": "Allos"
+  },
+  {
     "name": "Cashmere Sweater",
     "type": "Fragrance",
     "sku": "ZMB",
@@ -1606,6 +1612,12 @@
     "type": "Fragrance",
     "sku": "GDNH",
     "brand": "Caswell-Massey"
+  },
+  {
+    "name": "Ginger Clementine",
+    "type": "Fragrance",
+    "sku": "GCMH",
+    "brand": "Allos"
   },
   {
     "name": "Gingerbread",
@@ -2422,6 +2434,12 @@
     "type": "Fragrance",
     "sku": "CPYH",
     "brand": "Disney"
+  },
+  {
+    "name": "Mint Leaves",
+    "type": "Fragrance",
+    "sku": "MLRH",
+    "brand": "Allos"
   },
   {
     "name": "Mirabel Mango Tropical",
@@ -4330,6 +4348,12 @@
     "type": "Fragrance",
     "sku": "WSMH",
     "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Ylang Pistachio",
+    "type": "Fragrance",
+    "sku": "YLNH",
+    "brand": "Allos"
   },
   {
     "name": "Yuzu Citron",
