@@ -138,6 +138,12 @@
     "brand": "Pura"
   },
   {
+    "name": "Lemon",
+    "type": "Car Fragrance",
+    "sku": "LMVC",
+    "brand": "Simplicity by Pura"
+  },
+  {
     "name": "Lemon Verbena",
     "type": "Car Fragrance",
     "sku": "LVBC",
@@ -204,6 +210,12 @@
     "brand": "LAFCO"
   },
   {
+    "name": "Sea Salt Grapefruit",
+    "type": "Car Fragrance",
+    "sku": "KZYK",
+    "brand": "Apotheke"
+  },
+  {
     "name": "SoHo",
     "type": "Car Fragrance",
     "sku": "SOHC",
@@ -238,6 +250,12 @@
     "type": "Car Fragrance",
     "sku": "WHTC",
     "brand": "Pura"
+  },
+  {
+    "name": "White Vetiver",
+    "type": "Car Fragrance",
+    "sku": "VXEC",
+    "brand": "Apotheke"
   },
   {
     "name": "Winter Noir",
@@ -1534,6 +1552,12 @@
     "type": "Fragrance",
     "sku": "LXNH",
     "brand": "Thymes"
+  },
+  {
+    "name": "French Lilac",
+    "type": "Fragrance",
+    "sku": "LLFH",
+    "brand": "LAFCO"
   },
   {
     "name": "Fresh Balsam & Cedarwood",
