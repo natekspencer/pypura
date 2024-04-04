@@ -1,4 +1,5 @@
 """pypura module."""
+
 from .exceptions import PuraApiException, PuraAuthenticationError
 from .pura import Pura
 from .utils import fragrance_name
