@@ -1,4 +1,5 @@
 """Tests module."""
+
 from pypura import __version__
 
 
