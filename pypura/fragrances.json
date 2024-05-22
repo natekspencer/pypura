@@ -1,5 +1,11 @@
 [
   {
+    "name": "Ambered Topaz",
+    "type": "Car Fragrance",
+    "sku": "ATPC",
+    "brand": "Anthropologie"
+  },
+  {
     "name": "Apple Orchard",
     "type": "Car Fragrance",
     "sku": "TPRC",
@@ -114,6 +120,12 @@
     "brand": "ILLUME"
   },
   {
+    "name": "Grapefruit",
+    "type": "Car Fragrance",
+    "sku": "MXVC",
+    "brand": "NEST New York"
+  },
+  {
     "name": "Hawaii",
     "type": "Car Fragrance",
     "sku": "GWOC",
@@ -160,6 +172,12 @@
     "type": "Car Fragrance",
     "sku": "LMUC",
     "brand": "Pura"
+  },
+  {
+    "name": "Night Gardenia",
+    "type": "Car Fragrance",
+    "sku": "NTGC",
+    "brand": "Anthropologie"
   },
   {
     "name": "Orange Blossom, Lilac & Jasmine",
@@ -1114,6 +1132,12 @@
     "type": "Fragrance",
     "sku": "CNPH",
     "brand": "Simplicity by Pura"
+  },
+  {
+    "name": "Coconut & Palm",
+    "type": "Fragrance",
+    "sku": "PLVH",
+    "brand": "NEST New York"
   },
   {
     "name": "Coconut Calm",
@@ -2280,6 +2304,12 @@
     "brand": "NEST New York"
   },
   {
+    "name": "Limoncello Cupcake",
+    "type": "Fragrance",
+    "sku": "LMCH",
+    "brand": "HomeWorx by Slatkin + Co."
+  },
+  {
     "name": "Linens & Surf",
     "type": "Fragrance",
     "sku": "LMU",
@@ -2958,6 +2988,12 @@
     "brand": "Pura"
   },
   {
+    "name": "Pistachio Gelato",
+    "type": "Fragrance",
+    "sku": "PGIH",
+    "brand": "Pura"
+  },
+  {
     "name": "Pomegranate + Spruce",
     "type": "Fragrance",
     "sku": "PRSH",
@@ -3414,6 +3450,12 @@
     "brand": "Brooklyn Candle Studio"
   },
   {
+    "name": "Santorini Olive & Citron",
+    "type": "Fragrance",
+    "sku": "SONH",
+    "brand": "NEST New York"
+  },
+  {
     "name": "Sea & Dune",
     "type": "Fragrance",
     "sku": "SDN",
@@ -3454,6 +3496,12 @@
     "type": "Fragrance",
     "sku": "KZYC",
     "brand": "Apotheke"
+  },
+  {
+    "name": "Sea Salt Lavender",
+    "type": "Fragrance",
+    "sku": "STLH",
+    "brand": "HomeWorx by Slatkin + Co."
   },
   {
     "name": "Sequoia",
@@ -3550,6 +3598,12 @@
     "type": "Fragrance",
     "sku": "HSTH",
     "brand": "Homesick"
+  },
+  {
+    "name": "Skinny Dip",
+    "type": "Fragrance",
+    "sku": "SYNH",
+    "brand": "Moodcast"
   },
   {
     "name": "Snow",
