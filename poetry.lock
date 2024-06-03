@@ -563,13 +563,13 @@ testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
 name = "pycognito"
-version = "2024.2.0"
+version = "2024.5.1"
 description = "Python class to integrate Boto3's Cognito client so it is easy to login users. With SRP support."
 optional = false
-python-versions = "*"
+python-versions = ">=3.8"
 files = [
-    {file = "pycognito-2024.2.0-py3-none-any.whl", hash = "sha256:19814ca0cd40e47ab797dec4c2a5bae6c6df8c8e6c3ced191d22008d66eb3df1"},
-    {file = "pycognito-2024.2.0.tar.gz", hash = "sha256:ff46fe3682ead8eb727bd5107c36a28ccef0950a13c7f4bab0cb59aa38cbabda"},
+    {file = "pycognito-2024.5.1-py3-none-any.whl", hash = "sha256:c821895dc62b7aea410fdccae4f96d8be7cab374182339f50a03de0fcb93f9ea"},
+    {file = "pycognito-2024.5.1.tar.gz", hash = "sha256:e211c66698c2c3dc8680e95107c2b4a922f504c3f7c179c27b8ee1ab0fc23ae4"},
 ]
 
 [package.dependencies]
