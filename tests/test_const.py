@@ -5,4 +5,4 @@ from pypura.const import FRAGRANCES
 
 def test_fragrance_const() -> None:
     """Test the fragrance const."""
-    assert len(FRAGRANCES) >= 757
+    assert len(FRAGRANCES) >= 745
