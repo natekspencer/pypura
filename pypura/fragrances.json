@@ -114,6 +114,12 @@
     "brand": "TAFT"
   },
   {
+    "name": "Eucalyptus",
+    "type": "Car Fragrance",
+    "sku": "ECPC",
+    "brand": "Archipelago"
+  },
+  {
     "name": "Fairway Morning",
     "type": "Car Fragrance",
     "sku": "FQMC",
@@ -436,6 +442,12 @@
     "type": "Fragrance",
     "sku": "LHTH",
     "brand": "Disney"
+  },
+  {
+    "name": "Aperol Spritz",
+    "type": "Fragrance",
+    "sku": "AAPH",
+    "brand": "Antica Farmacista"
   },
   {
     "name": "Apple",
@@ -924,10 +936,22 @@
     "brand": "Studio McGee"
   },
   {
+    "name": "Cardamom Milk",
+    "type": "Fragrance",
+    "sku": "MDIH",
+    "brand": "Otherland"
+  },
+  {
     "name": "Cardamom Vanilla",
     "type": "Fragrance",
     "sku": "CDNH",
     "brand": "Allos"
+  },
+  {
+    "name": "Cardamom Vanilla",
+    "type": "Fragrance",
+    "sku": "CDNH",
+    "brand": "Allos™"
   },
   {
     "name": "Cashmere Sweater",
@@ -1518,6 +1542,12 @@
     "brand": "Tommy Bahama"
   },
   {
+    "name": "Fallen Fir",
+    "type": "Fragrance",
+    "sku": "FIRH",
+    "brand": "Otherland"
+  },
+  {
     "name": "Fern + Moss",
     "type": "Fragrance",
     "sku": "FRM",
@@ -1714,6 +1744,12 @@
     "type": "Fragrance",
     "sku": "GCMH",
     "brand": "Allos"
+  },
+  {
+    "name": "Ginger Clementine",
+    "type": "Fragrance",
+    "sku": "GCMH",
+    "brand": "Allos™"
   },
   {
     "name": "Gingerbread",
@@ -2550,6 +2586,12 @@
     "brand": "Allos"
   },
   {
+    "name": "Mint Leaves",
+    "type": "Fragrance",
+    "sku": "MLRH",
+    "brand": "Allos™"
+  },
+  {
     "name": "Mirabel Mango Tropical",
     "type": "Fragrance",
     "sku": "MTR",
@@ -3208,6 +3250,12 @@
     "type": "Fragrance",
     "sku": "RGLH",
     "brand": "Disney"
+  },
+  {
+    "name": "Raspberry Cassis",
+    "type": "Fragrance",
+    "sku": "RBSH",
+    "brand": "Archipelago"
   },
   {
     "name": "Rattan",
@@ -4504,6 +4552,12 @@
     "type": "Fragrance",
     "sku": "YLNH",
     "brand": "Allos"
+  },
+  {
+    "name": "Ylang Pistachio",
+    "type": "Fragrance",
+    "sku": "YLNH",
+    "brand": "Allos™"
   },
   {
     "name": "Yuzu Citron",

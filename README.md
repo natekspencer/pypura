@@ -1,5 +1,9 @@
-![Release](https://img.shields.io/github/v/release/natekspencer/pypura?style=for-the-badge)
+[![PyPI - Version](https://img.shields.io/pypi/v/pypura?style=for-the-badge)](https://pypi.org/project/pypura/)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pypura?style=for-the-badge)
 [![Buy Me A Coffee/Beer](https://img.shields.io/badge/Buy_Me_A_☕/🍺-F16061?style=for-the-badge&logo=ko-fi&logoColor=white&labelColor=grey)](https://ko-fi.com/natekspencer)
+
+![Pepy Total Downlods](https://img.shields.io/pepy/dt/pypura?style=flat-square)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/pypura?style=flat-square)
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://brands.home-assistant.io/pura/dark_logo.png">
