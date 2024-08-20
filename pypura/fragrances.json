@@ -216,6 +216,12 @@
     "brand": "Anthropologie"
   },
   {
+    "name": "Pumpkin Chai",
+    "type": "Car Fragrance",
+    "sku": "MBZC",
+    "brand": "NEST New York"
+  },
+  {
     "name": "RED CURRANT",
     "type": "Car Fragrance",
     "sku": "FZEC",
@@ -270,6 +276,12 @@
     "brand": "TAFT"
   },
   {
+    "name": "Sweet Cherry",
+    "type": "Car Fragrance",
+    "sku": "SELC",
+    "brand": "Pura"
+  },
+  {
     "name": "Sweet Grace",
     "type": "Car Fragrance",
     "sku": "LWZC",
@@ -286,6 +298,12 @@
     "type": "Car Fragrance",
     "sku": "NDMC",
     "brand": "Capri Blue"
+  },
+  {
+    "name": "White Pumpkin",
+    "type": "Car Fragrance",
+    "sku": "YWPC",
+    "brand": "Pura"
   },
   {
     "name": "White Tea No. 1",
@@ -888,6 +906,12 @@
     "brand": "Becki Owens"
   },
   {
+    "name": "Canopy",
+    "type": "Fragrance",
+    "sku": "CFSH",
+    "brand": "Otherland"
+  },
+  {
     "name": "Canvas",
     "type": "Fragrance",
     "sku": "YZJ",
@@ -1282,6 +1306,12 @@
     "type": "Fragrance",
     "sku": "CRLH",
     "brand": "Soap & Paper Factory"
+  },
+  {
+    "name": "Cozy Cashmere",
+    "type": "Fragrance",
+    "sku": "ZCMH",
+    "brand": "Pura"
   },
   {
     "name": "Cranberry Fizz",
@@ -2748,6 +2778,12 @@
     "brand": "Anthropologie"
   },
   {
+    "name": "Noel",
+    "type": "Fragrance",
+    "sku": "NOEH",
+    "brand": "Unify Co."
+  },
+  {
     "name": "Noma",
     "type": "Fragrance",
     "sku": "GFN",
@@ -3958,6 +3994,12 @@
     "type": "Fragrance",
     "sku": "KLGH",
     "brand": "Floral Street"
+  },
+  {
+    "name": "Sweet Cherry",
+    "type": "Fragrance",
+    "sku": "SELH",
+    "brand": "Pura"
   },
   {
     "name": "Sweet Grace",
