@@ -3132,6 +3132,12 @@
     "brand": "Pura"
   },
   {
+    "name": "Plum & Fir Balsam",
+    "type": "Fragrance",
+    "sku": "UPBH",
+    "brand": "Anthropologie"
+  },
+  {
     "name": "Pomegranate + Spruce",
     "type": "Fragrance",
     "sku": "PRSH",
@@ -4396,6 +4402,12 @@
     "type": "Fragrance",
     "sku": "WBRH",
     "brand": "Studio McGee"
+  },
+  {
+    "name": "White Birch & Pumpkin",
+    "type": "Fragrance",
+    "sku": "WBAH",
+    "brand": "Anthropologie"
   },
   {
     "name": "White Gilded Pumpkin",
