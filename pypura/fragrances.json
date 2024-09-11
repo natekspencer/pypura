@@ -2970,6 +2970,12 @@
     "brand": "LAFCO"
   },
   {
+    "name": "Paper White",
+    "type": "Fragrance",
+    "sku": "PRWH",
+    "brand": "Studio McGee"
+  },
+  {
     "name": "Paradiso Fig",
     "type": "Fragrance",
     "sku": "PFL",
@@ -4324,6 +4330,12 @@
     "type": "Fragrance",
     "sku": "VYRH",
     "brand": "U.S. Apothecary"
+  },
+  {
+    "name": "Violet Fig",
+    "type": "Fragrance",
+    "sku": "RVAH",
+    "brand": "Studio McGee"
   },
   {
     "name": "Volcano",
