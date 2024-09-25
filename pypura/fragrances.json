@@ -144,6 +144,12 @@
     "brand": "NEST New York"
   },
   {
+    "name": "Havana Vanilla",
+    "type": "Car Fragrance",
+    "sku": "KAJC",
+    "brand": "Capri Blue"
+  },
+  {
     "name": "Hawaii",
     "type": "Car Fragrance",
     "sku": "GWOC",
