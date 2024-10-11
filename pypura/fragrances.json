@@ -296,6 +296,12 @@
   {
     "name": "Sweet Grace",
     "type": "Car Fragrance",
+    "sku": "LWCC",
+    "brand": "Bridgewater Candle Company"
+  },
+  {
+    "name": "Sweet Grace",
+    "type": "Car Fragrance",
     "sku": "LWZC",
     "brand": "Bridgewater Candle Company"
   },
