@@ -662,6 +662,12 @@
   {
     "name": "Beach Cottage",
     "type": "Fragrance",
+    "sku": "HBCC",
+    "brand": "Homesick"
+  },
+  {
+    "name": "Beach Cottage",
+    "type": "Fragrance",
     "sku": "HBCH",
     "brand": "Homesick"
   },
