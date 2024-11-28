@@ -4562,6 +4562,12 @@
   {
     "name": "Winter Bayberry",
     "type": "Fragrance",
+    "sku": "HOIH",
+    "brand": "Studio McGee"
+  },
+  {
+    "name": "Winter Bayberry",
+    "type": "Fragrance",
     "sku": "HOOH",
     "brand": "Studio McGee"
   },
