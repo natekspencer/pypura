@@ -24,6 +24,12 @@
     "brand": "Becki Owens"
   },
   {
+    "name": "Beach Vacay",
+    "type": "Car Fragrance",
+    "sku": "MBVC",
+    "brand": "Moodcast"
+  },
+  {
     "name": "Birchwood Pine",
     "type": "Car Fragrance",
     "sku": "AJVC",
@@ -604,6 +610,12 @@
     "type": "Fragrance",
     "sku": "APMH",
     "brand": "NEST New York"
+  },
+  {
+    "name": "BFF",
+    "type": "Fragrance",
+    "sku": "BFFH",
+    "brand": "Moodcast"
   },
   {
     "name": "Balsam & Cedar",
@@ -4149,6 +4161,12 @@
     "name": "The Smell of Christmas",
     "type": "Fragrance",
     "sku": "TSCH",
+    "brand": "Aromatique"
+  },
+  {
+    "name": "The Smell of Spring",
+    "type": "Fragrance",
+    "sku": "TSMH",
     "brand": "Aromatique"
   },
   {
