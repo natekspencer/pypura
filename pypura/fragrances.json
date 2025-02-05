@@ -228,6 +228,12 @@
     "brand": "Antica Farmacista"
   },
   {
+    "name": "Original Scent",
+    "type": "Car Fragrance",
+    "sku": "IOQC",
+    "brand": "Barr-Co."
+  },
+  {
     "name": "Pumpkin & Sweet Vanilla",
     "type": "Car Fragrance",
     "sku": "PSVC",
@@ -298,6 +304,12 @@
     "type": "Car Fragrance",
     "sku": "SCDC",
     "brand": "TAFT"
+  },
+  {
+    "name": "Sun Kissed",
+    "type": "Car Fragrance",
+    "sku": "KSDC",
+    "brand": "Soap & Paper Factory"
   },
   {
     "name": "Sweet Cherry",
@@ -622,6 +634,12 @@
     "type": "Fragrance",
     "sku": "BFFH",
     "brand": "Moodcast"
+  },
+  {
+    "name": "Bali",
+    "type": "Fragrance",
+    "sku": "ALIH",
+    "brand": "Brooklyn Candle Studio"
   },
   {
     "name": "Balsam & Cedar",
@@ -4564,6 +4582,12 @@
     "type": "Fragrance",
     "sku": "CWPH",
     "brand": "Capri Blue"
+  },
+  {
+    "name": "Wild Honeysuckle",
+    "type": "Fragrance",
+    "sku": "WYSH",
+    "brand": "LAFCO"
   },
   {
     "name": "Wild Mint & Eucalyptus",
