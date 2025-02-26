@@ -690,6 +690,12 @@
     "brand": "The Met"
   },
   {
+    "name": "Banana Birch",
+    "type": "Fragrance",
+    "sku": "BNAH",
+    "brand": "Pura"
+  },
+  {
     "name": "Beach Cottage",
     "type": "Fragrance",
     "sku": "HBC",
@@ -2880,6 +2886,12 @@
     "brand": "Paddywax"
   },
   {
+    "name": "Ochre Heart",
+    "type": "Fragrance",
+    "sku": "OCRH",
+    "brand": "Pura x Dutjahn"
+  },
+  {
     "name": "Oktoberfest",
     "type": "Fragrance",
     "sku": "OKFH",
@@ -3852,6 +3864,12 @@
     "brand": "Simpatico"
   },
   {
+    "name": "So Many Colours",
+    "type": "Fragrance",
+    "sku": "OMYH",
+    "brand": "Pura x Dutjahn"
+  },
+  {
     "name": "SoHo",
     "type": "Fragrance",
     "sku": "SOH",
@@ -3874,6 +3892,12 @@
     "type": "Fragrance",
     "sku": "STOH",
     "brand": "Anthropologie"
+  },
+  {
+    "name": "Somewhere Land",
+    "type": "Fragrance",
+    "sku": "SLOH",
+    "brand": "Pura x Dutjahn"
   },
   {
     "name": "Southern California",
@@ -4240,6 +4264,12 @@
     "type": "Fragrance",
     "sku": "KTTH",
     "brand": "Apotheke"
+  },
+  {
+    "name": "Touch the Night Sky",
+    "type": "Fragrance",
+    "sku": "TUNH",
+    "brand": "Pura x Dutjahn"
   },
   {
     "name": "Tuscan Neroli",
