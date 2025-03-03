@@ -260,6 +260,12 @@
   {
     "name": "Red Currant",
     "type": "Car Fragrance",
+    "sku": "FLCC",
+    "brand": "Votivo"
+  },
+  {
+    "name": "Red Currant",
+    "type": "Car Fragrance",
     "sku": "FZEC",
     "brand": "Votivo"
   },
@@ -466,6 +472,12 @@
     "type": "Fragrance",
     "sku": "PJTH",
     "brand": "NEST New York"
+  },
+  {
+    "name": "Amalfi Lemon & Mint - Collective Test",
+    "type": "Fragrance",
+    "sku": "PJT",
+    "brand": "Staging"
   },
   {
     "name": "Amber Oud",
