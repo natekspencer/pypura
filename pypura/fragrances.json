@@ -288,10 +288,22 @@
     "brand": "Unify Co."
   },
   {
+    "name": "Santal Vanilla",
+    "type": "Car Fragrance",
+    "sku": "SVNC",
+    "brand": "Studio McGee"
+  },
+  {
     "name": "Sea & Dune",
     "type": "Car Fragrance",
     "sku": "SDNC",
     "brand": "LAFCO"
+  },
+  {
+    "name": "Sea Salt Driftwood",
+    "type": "Car Fragrance",
+    "sku": "DRIC",
+    "brand": "Studio McGee"
   },
   {
     "name": "Sea Salt Grapefruit",
@@ -346,6 +358,12 @@
     "type": "Car Fragrance",
     "sku": "NDMC",
     "brand": "Capri Blue"
+  },
+  {
+    "name": "White Bergamot",
+    "type": "Car Fragrance",
+    "sku": "WBRC",
+    "brand": "Studio McGee"
   },
   {
     "name": "White Pumpkin",
@@ -2256,6 +2274,12 @@
     "brand": "Brooklyn Candle Studio"
   },
   {
+    "name": "Jasmine Honeysuckle",
+    "type": "Fragrance",
+    "sku": "HNYH",
+    "brand": "Studio McGee"
+  },
+  {
     "name": "Jasmine Royal Amber",
     "type": "Fragrance",
     "sku": "JRA",
@@ -3760,6 +3784,12 @@
     "type": "Fragrance",
     "sku": "STLH",
     "brand": "HomeWorx by Slatkin + Co."
+  },
+  {
+    "name": "Seaside Terrace",
+    "type": "Fragrance",
+    "sku": "STEH",
+    "brand": "Studio McGee"
   },
   {
     "name": "Sequoia",
