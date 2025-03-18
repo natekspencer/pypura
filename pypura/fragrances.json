@@ -2760,6 +2760,18 @@
     "brand": "Disney"
   },
   {
+    "name": "Mocha Moments",
+    "type": "Fragrance",
+    "sku": "OYBH",
+    "brand": "Pura x Pantone"
+  },
+  {
+    "name": "Mocha Suede",
+    "type": "Fragrance",
+    "sku": "OPBH",
+    "brand": "Pura x Pantone"
+  },
+  {
     "name": "Monsoon",
     "type": "Fragrance",
     "sku": "MON",
