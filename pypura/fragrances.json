@@ -360,6 +360,12 @@
     "brand": "Capri Blue"
   },
   {
+    "name": "Washed Linen",
+    "type": "Car Fragrance",
+    "sku": "WSLC",
+    "brand": "Thymes"
+  },
+  {
     "name": "White Bergamot",
     "type": "Car Fragrance",
     "sku": "WBRC",
@@ -2760,6 +2766,18 @@
     "brand": "Disney"
   },
   {
+    "name": "Mocha Moments",
+    "type": "Fragrance",
+    "sku": "OYBH",
+    "brand": "Pura x Pantone"
+  },
+  {
+    "name": "Mocha Suede",
+    "type": "Fragrance",
+    "sku": "OPBH",
+    "brand": "Pura x Pantone"
+  },
+  {
     "name": "Monsoon",
     "type": "Fragrance",
     "sku": "MON",
@@ -4338,6 +4356,12 @@
     "brand": "Kenneth Cole"
   },
   {
+    "name": "Utah",
+    "type": "Fragrance",
+    "sku": "UTAH",
+    "brand": "Homesick"
+  },
+  {
     "name": "VERB",
     "type": "Fragrance",
     "sku": "FXZ",
@@ -4576,6 +4600,12 @@
     "type": "Fragrance",
     "sku": "WBAH",
     "brand": "Anthropologie"
+  },
+  {
+    "name": "White Flower No. 42",
+    "type": "Fragrance",
+    "sku": "WFIH",
+    "brand": "Simpatico"
   },
   {
     "name": "White Gilded Pumpkin",
