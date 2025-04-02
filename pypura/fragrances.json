@@ -162,6 +162,12 @@
     "brand": "Homesick"
   },
   {
+    "name": "Himalayan Salt & Rosewater",
+    "type": "Car Fragrance",
+    "sku": "HSRC",
+    "brand": "NEST New York"
+  },
+  {
     "name": "Holiday",
     "type": "Car Fragrance",
     "sku": "VNTC",
@@ -388,6 +394,12 @@
     "type": "Car Fragrance",
     "sku": "VXEC",
     "brand": "Apotheke"
+  },
+  {
+    "name": "Wild Mint & Eucalyptus",
+    "type": "Car Fragrance",
+    "sku": "WMEC",
+    "brand": "NEST New York"
   },
   {
     "name": "Winter Noir",
@@ -4192,6 +4204,12 @@
     "type": "Fragrance",
     "sku": "LWZH",
     "brand": "Bridgewater Candle Company"
+  },
+  {
+    "name": "Sweet Tonka & Vanilla",
+    "type": "Fragrance",
+    "sku": "TSNH",
+    "brand": "Anthropologie"
   },
   {
     "name": "TEAK",
