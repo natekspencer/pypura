@@ -66,6 +66,18 @@
     "brand": "Pura"
   },
   {
+    "name": "Citrus & Cream",
+    "type": "Car Fragrance",
+    "sku": "CAYC",
+    "brand": "Becki Owens"
+  },
+  {
+    "name": "Clean Crisp White",
+    "type": "Car Fragrance",
+    "sku": "CXYC",
+    "brand": "Votivo"
+  },
+  {
     "name": "Coastal Palm",
     "type": "Car Fragrance",
     "sku": "CJIC",
@@ -162,6 +174,12 @@
     "brand": "Homesick"
   },
   {
+    "name": "Himalayan Salt & Rosewater",
+    "type": "Car Fragrance",
+    "sku": "HSRC",
+    "brand": "NEST New York"
+  },
+  {
     "name": "Holiday",
     "type": "Car Fragrance",
     "sku": "VNTC",
@@ -196,6 +214,12 @@
     "type": "Car Fragrance",
     "sku": "LVBC",
     "brand": "Antica Farmacista"
+  },
+  {
+    "name": "Let's Celebrate",
+    "type": "Car Fragrance",
+    "sku": "LTCC",
+    "brand": "Bridgewater Candle Company"
   },
   {
     "name": "Linens & Surf",
@@ -388,6 +412,12 @@
     "type": "Car Fragrance",
     "sku": "VXEC",
     "brand": "Apotheke"
+  },
+  {
+    "name": "Wild Mint & Eucalyptus",
+    "type": "Car Fragrance",
+    "sku": "WMEC",
+    "brand": "NEST New York"
   },
   {
     "name": "Winter Noir",
@@ -762,6 +792,12 @@
     "brand": "Becki Owens"
   },
   {
+    "name": "Beach House Linen",
+    "type": "Fragrance",
+    "sku": "BHLH",
+    "brand": "Tommy Bahama"
+  },
+  {
     "name": "Beach Vacay",
     "type": "Fragrance",
     "sku": "MBV",
@@ -1048,6 +1084,12 @@
     "type": "Fragrance",
     "sku": "CDMH",
     "brand": "Brooklyn Candle Studio"
+  },
+  {
+    "name": "Cardamom Blossom",
+    "type": "Fragrance",
+    "sku": "HLMH",
+    "brand": "Studio McGee"
   },
   {
     "name": "Cardamom Blossom",
@@ -2070,6 +2112,12 @@
     "brand": "Thymes"
   },
   {
+    "name": "Hibiscus & Pink Guava",
+    "type": "Fragrance",
+    "sku": "GSYH",
+    "brand": "Anthropologie"
+  },
+  {
     "name": "Highland Frost",
     "type": "Fragrance",
     "sku": "HLF",
@@ -2502,6 +2550,12 @@
     "brand": "Homesick"
   },
   {
+    "name": "Let’s Celebrate",
+    "type": "Fragrance",
+    "sku": "LTCH",
+    "brand": "Bridgewater Candle Company"
+  },
+  {
     "name": "Lilac",
     "type": "Fragrance",
     "sku": "CLL",
@@ -2572,6 +2626,12 @@
     "type": "Fragrance",
     "sku": "NKLH",
     "brand": "K. Hall Designs"
+  },
+  {
+    "name": "Madame X",
+    "type": "Fragrance",
+    "sku": "MXYH",
+    "brand": "The Met"
   },
   {
     "name": "Magnolia Willow",
@@ -2964,6 +3024,12 @@
     "brand": "Caswell-Massey"
   },
   {
+    "name": "Orange",
+    "type": "Fragrance",
+    "sku": "IMPH",
+    "brand": "Simplicity by Pura"
+  },
+  {
     "name": "Orange Blossom Neroli",
     "type": "Fragrance",
     "sku": "OBN",
@@ -3246,6 +3312,12 @@
     "brand": "Pura"
   },
   {
+    "name": "Pink Mimosa",
+    "type": "Fragrance",
+    "sku": "POMH",
+    "brand": "Votivo"
+  },
+  {
     "name": "Pink Peony & Silk",
     "type": "Fragrance",
     "sku": "XLJ",
@@ -3442,6 +3514,12 @@
     "type": "Fragrance",
     "sku": "OTVH",
     "brand": "Otherland"
+  },
+  {
+    "name": "Red Currant",
+    "type": "Fragrance",
+    "sku": "FLCH",
+    "brand": "Votivo"
   },
   {
     "name": "Red Currant",
@@ -4192,6 +4270,12 @@
     "type": "Fragrance",
     "sku": "LWZH",
     "brand": "Bridgewater Candle Company"
+  },
+  {
+    "name": "Sweet Tonka & Vanilla",
+    "type": "Fragrance",
+    "sku": "TSNH",
+    "brand": "Anthropologie"
   },
   {
     "name": "TEAK",
