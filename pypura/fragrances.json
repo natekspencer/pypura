@@ -1452,6 +1452,12 @@
     "brand": "Soap & Paper Factory"
   },
   {
+    "name": "Cotton Ginseng",
+    "type": "Fragrance",
+    "sku": "GYNH",
+    "brand": "Aromatique"
+  },
+  {
     "name": "Cozy Cashmere",
     "type": "Fragrance",
     "sku": "ZCMH",
@@ -1714,6 +1720,12 @@
     "type": "Fragrance",
     "sku": "EGRH",
     "brand": "Tommy Bahama"
+  },
+  {
+    "name": "Evergreen in Snow",
+    "type": "Fragrance",
+    "sku": "JFYH",
+    "brand": "Scents of Wood"
   },
   {
     "name": "Fallen Fir",
@@ -2344,6 +2356,12 @@
     "type": "Fragrance",
     "sku": "JRAH",
     "brand": "Disney"
+  },
+  {
+    "name": "Joshua in Glow",
+    "type": "Fragrance",
+    "sku": "JLGH",
+    "brand": "Scents of Wood"
   },
   {
     "name": "Juicy Acai",
@@ -4090,6 +4108,12 @@
     "type": "Fragrance",
     "sku": "UJDH",
     "brand": "The Met"
+  },
+  {
+    "name": "Spruce in Mist",
+    "type": "Fragrance",
+    "sku": "SIMH",
+    "brand": "Scents of Wood"
   },
   {
     "name": "St. Germain Lavender",
