@@ -95,17 +95,7 @@ class Pura:
 
     def get_devices(self) -> Any:
         """Get devices."""
-        return self.__get("users/devices", params={"types": "wall,car,plus"})
-
-    def get_devices_v2(self) -> Any:
-        """Get devices."""
         return self.__get("v2/users/devices")
-
-    def get_fragrance_details(self, fragrance_code: str) -> Any:
-        """Get fragrance details."""
-        return self.__get(
-            f"https://trypura.io/fragrance/api/mobileAppInfo/{fragrance_code}"
-        )
 
     def get_latest_firmware_details(self, device_type: str, device_version: str) -> Any:
         """Get latest firmware details."""
