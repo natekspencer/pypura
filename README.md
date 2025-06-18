@@ -20,7 +20,7 @@ Python package for interacting with Pura smart fragrance diffusers
 
 I'm not employed by Pura, and provide this library purely for your own enjoyment and home automation needs.
 
-If you don't already own a Pura diffuser, please consider using [my referal code (s3zjukz)](http://rwrd.io/s3zjukz) to get $6 off your first order of $50+ (as well as a tip to me in appreciation)!
+If you don't already own a Pura diffuser, please consider using [my referal code (JG5JN31)](http://rwrd.io/ref_JG5JN31) to get $20 off your first order of $50+ (as well as a tip to me in appreciation)!
 
 If you already own a Pura diffuser and still want to donate, consider buying me a coffee ☕ (or beer 🍺) instead by using the link below or [sponsor me on Github](https://github.com/sponsors/natekspencer):
 
