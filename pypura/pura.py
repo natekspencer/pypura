@@ -2,19 +2,20 @@
 
 from __future__ import annotations
 
-import logging
 from datetime import datetime, timedelta
-from typing import Any, Final
+import logging
+from typing import Any, Awaitable, Callable, Final
 from urllib.parse import urljoin
 
-import requests
 from botocore.exceptions import ClientError
 from pycognito import Cognito
 from pycognito.utils import RequestsSrpAuth, TokenType
+import requests
 
 from .const import CLIENT_ID, USER_POOL_ID
 from .exceptions import PuraApiException, PuraAuthenticationError
 from .utils import decode
+from .ws_subscriber import WebSocketSubscriber
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -199,6 +200,17 @@ class Pura:
         """Stop all."""
         resp = self.__post(f"devices/{device_id}/stop-all")
         return resp.get("success") is True
+
+    def subscribe_for_updates(
+        self, on_message: Callable[[dict], Awaitable[None]]
+    ) -> WebSocketSubscriber:
+        """Open a web socket connection to receive updates."""
+        if not (token := self.get_tokens().get("id_token")):
+            raise PuraAuthenticationError("Unauthenticated")
+
+        subscriber = WebSocketSubscriber(token)
+        subscriber.start(on_message)
+        return subscriber
 
     def __request(self, method: str, url: str, **kwargs: Any) -> Any:
         """Make a request."""
