@@ -1,17 +1,22 @@
-[tool.poetry]
+[project]
 name = "pypura"
-version = "0.0.0"
 description = "Python package for interacting with Pura smart fragrance diffuser"
-authors = ["Nathan Spencer <natekspencer@gmail.com>"]
-license = "MIT"
 readme = "README.md"
-include = ["pypura/py.typed"]
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    { name = "Nathan Spencer", email = "natekspencer@gmail.com" }
+]
+dynamic = [ "version" ]
+dependencies = [
+    "boto3 (>=1.28)",
+    "pycognito (>=2024.2.0)",
+    "aiohttp (>=3.12.15)"
+]
 
-[tool.poetry.dependencies]
-python = ">3.10,<4"
-boto3 = "^1.28"
-pycognito = "^2024.2.0"
-aiohttp = "^3.12.15"
+[tool.poetry]
+version = "0.0.0"
+include = ["pypura/py.typed"]
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.3.0"
