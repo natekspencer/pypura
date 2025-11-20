@@ -139,6 +139,12 @@ class Pura:
         resp = self.__post(f"devices/{device_id}/awayMode", json=json)
         return resp.get("success") is True
 
+    def set_diffusion_mode(self, device_id: str, *, mode: str) -> bool:
+        """Set diffusion mode."""
+        json = {"mode": mode}
+        resp = self.__post(f"v3/diffusion/{device_id}/mode", json=json)
+        return resp.get("success") is True
+
     def set_intensity(
         self, device_id: str, *, bay: int, controller: str, intensity: int
     ) -> bool:
