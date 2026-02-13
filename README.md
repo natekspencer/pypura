@@ -1,6 +1,6 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://brands.home-assistant.io/pura/dark_logo.png">
-  <img alt="Pura logo" src="https://brands.home-assistant.io/pura/logo.png" style="max-height: 100px;">
+  <img alt="Pura logo" src="https://brands.home-assistant.io/pura/logo.png" width="280">
 </picture>
 
 # pypura
