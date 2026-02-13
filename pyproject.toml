@@ -6,9 +6,9 @@ requires-python = ">=3.10"
 readme = "README.md"
 license = "MIT"
 dependencies = [
-    "boto3 (>=1.28)",
-    "pycognito (>=2024.2.0)",
-    "aiohttp (>=3.12.15)",
+    "aiohttp>=3.12.15",
+    "boto3>=1.28",
+    "pycognito>=2024.2.0",
 ]
 dynamic = ["version"]
 
@@ -34,9 +34,6 @@ pattern = true
 [tool.hatch.build.targets.sdist]
 include = ["pypura"]
 
-[tool.hatch.build.targets.wheel]
-packages = ["pypura"]
-
 [tool.hatch.version]
 source = "uv-dynamic-versioning"
 
@@ -48,9 +45,6 @@ split-on-trailing-comma = false
 
 [tool.uv]
 cache-keys = [{ file = "pyproject.toml" }, { git = { commit = true, tags = true }}]
-
-[tool.uv.build-backend]
-source-include = ["pypura/py.typed"]
 
 [tool.uv-dynamic-versioning]
 pattern = "default-unprefixed"
