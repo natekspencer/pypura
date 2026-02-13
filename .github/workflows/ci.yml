@@ -38,7 +38,7 @@ jobs:
           uv run ruff format pypura tests --check
 
       - name: Run mypy
-        run: uv run mypy --install-types --non-interactive pypura tests
+        run: uv run mypy pypura tests
 
       - name: Test with pytest
         run: uv run pytest --cov=pypura

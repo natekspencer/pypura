@@ -20,6 +20,7 @@ dev = [
     "tox>=4.34.1,<5",
     "ruff>=0.5.0,<0.15",
     "pre-commit>=4.5.1,<5",
+    "types-requests>=2.32.4.20260107",
 ]
 
 [build-system]
