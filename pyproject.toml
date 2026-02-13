@@ -31,6 +31,12 @@ build-backend = "hatchling.build"
 path = "pypura/__init__.py"
 pattern = true
 
+[tool.hatch.build.targets.sdist]
+include = ["pypura"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["pypura"]
+
 [tool.hatch.version]
 source = "uv-dynamic-versioning"
 
