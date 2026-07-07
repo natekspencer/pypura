@@ -30,4 +30,4 @@ If you don't already own a Pura diffuser, please consider using [my referral cod
 
 ## 📈 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=natekspencer/pypura)](https://www.star-history.com/#natekspencer/pypura)
+[![Star History Chart](https://api.star-history.com/chart?repos=natekspencer/pypura&type=date&legend=top-left&sealed_token=QUT4yU3UM2DIOWVqLFCqOPvl2ogLrZW1FSnoTH24Mhg9elHa0HixoL16MRNZ2fO7ar6ljQb-IdhOKbLSO-apJ8xWwwNBnWgr0T3g4aBg26LB0G2sLdA_eKjN-GX3LoLaiHvZxIyyEtYNZt3uzas7dYg78zkxPypjazbJkY038FgrY9Ycn6c6l22Wr61X)](https://www.star-history.com/?repos=natekspencer%2Fpypura)
