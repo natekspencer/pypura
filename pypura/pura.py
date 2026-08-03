@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+from collections.abc import Awaitable, Callable
 from datetime import datetime, timedelta
 import logging
-from typing import Any, Awaitable, Callable, Final
+from typing import Any, Final
 from urllib.parse import urljoin
 
 from botocore.exceptions import ClientError
