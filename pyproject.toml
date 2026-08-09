@@ -1,6 +1,6 @@
 [project]
 name = "pypura"
-description = "Python package for interacting with Pura smart fragrance diffuser"
+description = "Python package for interacting with Pura smart fragrance diffusers over the cloud"
 authors = [{ name = "Nathan Spencer", email = "natekspencer@gmail.com" }]
 requires-python = ">=3.10"
 readme = "README.md"
@@ -18,7 +18,7 @@ dev = [
     "pytest>=7.3.1,<10.0.0",
     "pytest-cov>=4,<8",
     "tox>=4.34.1,<5",
-    "ruff>=0.15.1",
+    "ruff>=0.16.2",
     "pre-commit>=4.5.1,<5",
     "types-requests>=2.32.4.20260107",
 ]

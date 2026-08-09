@@ -48,8 +48,8 @@ class WebSocketSubscriber:
                             data = msg.data
                         try:
                             await on_message(data)
-                        except Exception as e:  # pylint: disable=broad-except
-                            _LOGGER.exception("Error handling WebSocket message: %s", e)
+                        except Exception:  # pylint: disable=broad-except
+                            _LOGGER.exception("Error handling WebSocket message")
                     elif msg.type == aiohttp.WSMsgType.ERROR:
                         _LOGGER.debug("WebSocket error: %s", msg.data)
                         break
