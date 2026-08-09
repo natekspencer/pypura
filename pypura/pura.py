@@ -97,7 +97,7 @@ class Pura:
 
     def get_devices(self) -> Any:
         """Get devices."""
-        return self.__get("v2/users/devices")
+        return self.__get("v3/accounts/v2/devices")
 
     def get_latest_firmware_details(self, device_type: str, device_version: str) -> Any:
         """Get latest firmware details."""
