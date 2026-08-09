@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import asyncio
+from collections.abc import Awaitable, Callable
 import contextlib
 import json
 import logging
-from typing import Awaitable, Callable, Final
+from typing import Final
 
 import aiohttp
 
@@ -47,8 +48,8 @@ class WebSocketSubscriber:
                             data = msg.data
                         try:
                             await on_message(data)
-                        except Exception as e:  # pylint: disable=broad-except
-                            _LOGGER.exception("Error handling WebSocket message: %s", e)
+                        except Exception:  # pylint: disable=broad-except
+                            _LOGGER.exception("Error handling WebSocket message")
                     elif msg.type == aiohttp.WSMsgType.ERROR:
                         _LOGGER.debug("WebSocket error: %s", msg.data)
                         break

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import logging
 from base64 import b64decode
+import logging
 from typing import Final
 
 _LOGGER = logging.getLogger(__name__)
