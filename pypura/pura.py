@@ -223,9 +223,19 @@ class Pura:
         """Make a request."""
         text_response = kwargs.pop("text_response", False)
         _LOGGER.debug("Making %s request to %s with %s", method, url, kwargs)
-        response = requests.request(
-            method, urljoin(BASE_URL, url), auth=self.get_auth(), timeout=10, **kwargs
-        )
+        try:
+            response = requests.request(
+                method,
+                urljoin(BASE_URL, url),
+                auth=self.get_auth(),
+                timeout=10,
+                **kwargs,
+            )
+        except ClientError as err:
+            _LOGGER.error(err)
+            if err.response["Error"]["Code"] == "NotAuthorizedException":
+                raise PuraAuthenticationError(err) from err
+            raise
         if (status_code := response.status_code) != 200:
             _LOGGER.error("Status: %s - %s", status_code, response.text)
             response.raise_for_status()
