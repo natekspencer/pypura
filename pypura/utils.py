@@ -3,12 +3,8 @@
 from __future__ import annotations
 
 from base64 import b64decode
-import copy
 import logging
 from typing import Any, Final
-
-from deepdiff import DeepDiff
-from deepdiff.helper import COLORED_COMPACT_VIEW
 
 from .const import DEVICE_VERSION_MODEL_MAP, MODEL_TYPE_MAP
 
@@ -130,10 +126,6 @@ def _merge_device_record(
     if event_type == EVENT_INSERT:
         if device_id in devices:
             _LOGGER.debug("Device %s exists, updating", device_id)
-            if _LOGGER.isEnabledFor(logging.DEBUG):
-                _LOGGER.debug(
-                    DeepDiff(devices[device_id], record, view=COLORED_COMPACT_VIEW)
-                )
             deep_merge(devices[device_id], record)
         else:
             _LOGGER.debug("Insert device %s", device_id)
@@ -143,11 +135,7 @@ def _merge_device_record(
         if device_id in devices:
             _LOGGER.debug("Updated device %s", device_id)
             if _LOGGER.isEnabledFor(logging.DEBUG):
-                old = copy.deepcopy(devices[device_id])
                 deep_merge(devices[device_id], record)
-                _LOGGER.debug(
-                    DeepDiff(old, devices[device_id], view=COLORED_COMPACT_VIEW)
-                )
             else:
                 deep_merge(devices[device_id], record)
         else:
