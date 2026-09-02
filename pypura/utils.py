@@ -174,7 +174,7 @@ def _merge_schedule_record(
         _LOGGER.debug("Schedule missing: %s", update)
         return
 
-    record_id = record.get("recordId")
+    record_id = record.get("id")
     if (schedules := device.get("schedules")) is None:
         device["schedules"] = schedules = []
 
