@@ -35,8 +35,11 @@ class WebSocketSubscriber:
     async def connect(self, on_message: Callable[[dict], Awaitable[None]]) -> None:
         """Connect to the websocket."""
         headers = {"Authorization": f"Bearer {self.token}"}
+        ws_timeout = aiohttp.ClientWSTimeout(ws_receive=60)
 
-        async with self.session.ws_connect(WEBSOCKET_URL, headers=headers) as ws:
+        async with self.session.ws_connect(
+            WEBSOCKET_URL, headers=headers, timeout=ws_timeout, heartbeat=30
+        ) as ws:
             self._running = True
             _LOGGER.debug("Connected to websocket")
             try:
@@ -53,6 +56,8 @@ class WebSocketSubscriber:
                     elif msg.type == aiohttp.WSMsgType.ERROR:
                         _LOGGER.debug("WebSocket error: %s", msg.data)
                         break
+            except asyncio.TimeoutError:
+                print("WebSocket receive timed out!")
             finally:
                 self._running = False
                 _LOGGER.debug("WebSocket disconnected")
