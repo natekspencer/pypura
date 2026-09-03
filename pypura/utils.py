@@ -208,6 +208,7 @@ def _merge_device_update(device: dict[str, Any], update: dict[str, Any]) -> None
             _merge_device_update(device[key], value)
         elif (
             key == "code"
+            and "fragrance" not in update
             and "fragrance" in device
             and device["fragrance"].get("fragranceCode") != value
         ):
