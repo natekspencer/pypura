@@ -94,7 +94,7 @@ def get_model_name(device: dict[str, Any]) -> str:
         model = DEVICE_VERSION_MODEL_MAP.get(
             MODEL_TYPE_MAP.get(device.get("model", 0), "")
         )
-    return f"Pura {model}" if model else "Pura"
+    return model or "Pura"
 
 
 def has_fragrance(device: dict[str, Any], bay: int) -> bool:
@@ -126,33 +126,34 @@ def parse_intensity(intensity: int | str) -> str:
 
 def merge_websocket_update(
     devices: dict[str, dict[str, Any]], update: dict[str, Any]
-) -> None:
+) -> bool:
     """Merge a device update from a websocket message with the full device list.
 
-    Mutates `devices` in place.
+    Mutates `devices` in place and returns a bool value indicating whether the update
+    was applied.
     """
     if not (device_id := update.get("deviceId")):
         _LOGGER.warning("Received unknown update: %s", update)
-        return
+        return False
 
     event_type = update.get("eventType")
     record_type = update.get("recordType")
 
     if record_type == RECORD_TYPE_DEVICE:
-        _merge_device_record(devices, device_id, event_type, update)
-        return
+        return _merge_device_record(devices, device_id, event_type, update)
 
     device = devices.get(device_id)
     if device is None:
         _LOGGER.debug("Device %s does not exist, skipping: %s", device_id, update)
-        return
+        return False
 
     if record_type == RECORD_TYPE_TIMER:
-        _merge_timer_record(device, device_id, event_type, update)
+        return _merge_timer_record(device, device_id, event_type, update)
     elif record_type == RECORD_TYPE_SCHEDULE:
-        _merge_schedule_record(device, device_id, event_type, update)
+        return _merge_schedule_record(device, device_id, event_type, update)
     else:
         _LOGGER.warning("Received unknown update: %s", update)
+        return False
 
 
 def _merge_device_record(
@@ -160,18 +161,19 @@ def _merge_device_record(
     device_id: str,
     event_type: str | None,
     update: dict[str, Any],
-) -> None:
+) -> bool:
     """Merge a device record."""
     if event_type == EVENT_REMOVE:
         if devices.pop(device_id, None) is not None:
             _LOGGER.debug("Removed device %s", device_id)
-        else:
-            _LOGGER.debug("Device %s does not exist, no need to remove", device_id)
-        return
+            return True
+
+        _LOGGER.debug("Device %s does not exist, no need to remove", device_id)
+        return False
 
     if not isinstance(record := update.get("deviceRecord"), dict):
         _LOGGER.debug("Cannot update device %s: %s", device_id, update)
-        return
+        return False
 
     if not record.get("deviceId"):
         # deviceId may be unpopulated on deviceRecord inserts, so we set it
@@ -181,20 +183,25 @@ def _merge_device_record(
         if device_id in devices:
             _LOGGER.debug("Device %s exists, updating", device_id)
             _merge_device_update(devices[device_id], record)
-        else:
-            _LOGGER.debug("Insert device %s", device_id)
-            model_type = MODEL_TYPE_MAP.get(record.get("model", 0))
-            devices[device_id] = record | {"modelType": model_type}
-    elif event_type == EVENT_MODIFY:
+            return True
+        _LOGGER.debug("Insert device %s", device_id)
+        model_type = MODEL_TYPE_MAP.get(record.get("model", 0))
+        devices[device_id] = record | {"modelType": model_type}
+        return True
+
+    if event_type == EVENT_MODIFY:
         if device_id in devices:
             _LOGGER.debug("Updated device %s", device_id)
             _merge_device_update(devices[device_id], record)
-        else:
-            _LOGGER.debug(
-                "Device %s does not exist, skipping update: %s", device_id, record
-            )
-    else:
-        _LOGGER.warning("Received unknown update: %s", update)
+            return True
+
+        _LOGGER.debug(
+            "Device %s does not exist, skipping update: %s", device_id, record
+        )
+        return False
+
+    _LOGGER.warning("Received unknown update: %s", update)
+    return False
 
 
 def _merge_device_update(device: dict[str, Any], update: dict[str, Any]) -> None:
@@ -223,16 +230,20 @@ def _merge_timer_record(
     device_id: str,
     event_type: str | None,
     update: dict[str, Any],
-) -> None:
+) -> bool:
     """Merge a timer record."""
     if event_type == EVENT_REMOVE:
         _LOGGER.debug("Removed timer from device %s", device_id)
         device["timer"] = None
-    elif event_type in (EVENT_INSERT, EVENT_MODIFY):
+        return True
+
+    if event_type in (EVENT_INSERT, EVENT_MODIFY):
         _LOGGER.debug("%s timer on device %s", event_type.capitalize(), device_id)
         device["timer"] = update.get("timerRecord")
-    else:
-        _LOGGER.warning("Received unknown update: %s", update)
+        return True
+
+    _LOGGER.warning("Received unknown update: %s", update)
+    return False
 
 
 def _merge_schedule_record(
@@ -240,15 +251,15 @@ def _merge_schedule_record(
     device_id: str,
     event_type: str | None,
     update: dict[str, Any],
-) -> None:
+) -> bool:
     """Merge a schedule record."""
     if not (record := update.get("scheduleRecord")):
         _LOGGER.debug("Schedule missing: %s", update)
-        return
+        return False
 
     if (record_id := record.get("id")) is None:
         _LOGGER.debug("Schedule ID missing: %s", update)
-        return
+        return False
 
     if (schedules := device.get("schedules")) is None:
         device["schedules"] = schedules = []
@@ -258,7 +269,7 @@ def _merge_schedule_record(
             schedule for schedule in schedules if schedule.get("id") != record_id
         ]
         _LOGGER.debug("Removed schedule from device %s", device_id)
-        return
+        return True
 
     if event_type in (EVENT_INSERT, EVENT_MODIFY):
         for idx, schedule in enumerate(schedules):
@@ -267,6 +278,7 @@ def _merge_schedule_record(
                 break
         else:
             schedules.append(record)
-        return
+        return True
 
     _LOGGER.warning("Received unknown update: %s", update)
+    return False

@@ -46,8 +46,8 @@ def test_dig(path: str, expected: Any) -> None:
         ({"displayName": {"name": "Bedroom"}}, "Bedroom"),
         ({"displayName": {"name": "Bedroom"}, "roomName": "Main Bedroom"}, "Bedroom"),
         ({"roomName": "Upstairs Bedroom"}, "Upstairs Bedroom"),
-        ({"model": 2}, "Pura Car"),
-        ({"model": 3}, "Pura Home Plus"),
+        ({"model": 2}, "Car"),
+        ({"model": 3}, "Home Plus"),
         ({}, "Pura"),
     ],
 )
@@ -84,21 +84,21 @@ def test_get_fragrance_remaining(
 
 
 @pytest.mark.parametrize(
-    ("device", "name"),
+    ("device", "model"),
     [
-        ({"deviceVer": "v48"}, "Pura Home v4"),
-        ({"deviceVer": "wall_5"}, "Pura Home v5"),
+        ({"deviceVer": "v48"}, "Home v4"),
+        ({"deviceVer": "wall_5"}, "Home v5"),
         ({"deviceVer": "unknown"}, "Pura"),
-        ({"model": 2}, "Pura Car"),
-        ({"model": 3}, "Pura Home Plus"),
-        ({"model": 4}, "Pura Home Mini"),
+        ({"model": 2}, "Car"),
+        ({"model": 3}, "Home Plus"),
+        ({"model": 4}, "Home Mini"),
         ({"model": -1}, "Pura"),
         ({}, "Pura"),
     ],
 )
-def test_get_model_name(device: dict[str, Any], name: str) -> None:
+def test_get_model_name(device: dict[str, Any], model: str) -> None:
     """Test get model name."""
-    assert get_model_name(device) == name
+    assert get_model_name(device) == model
 
 
 @pytest.mark.parametrize(
