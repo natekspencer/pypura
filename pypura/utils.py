@@ -26,21 +26,6 @@ def decode(value: str) -> str:
     return b64decode(value).decode(ENCODING)
 
 
-def deep_merge(dict1: dict, dict2: dict) -> dict:
-    """Merge two device dictionaries recursively."""
-    for key, value in dict2.items():
-        if key in dict1 and isinstance(dict1[key], dict) and isinstance(value, dict):
-            deep_merge(dict1[key], value)
-        elif key not in dict1:
-            dict1[key] = value
-        elif dict1[key] != value:
-            dict1[key] = value
-            if key == "code" and not value and "fragrance" in dict1:
-                del dict1["fragrance"]
-
-    return dict1
-
-
 def dig(obj: Any, path: str) -> Any | None:
     """Safely retrieve nested dictionary fields using a dot-separated path."""
     cur = obj
@@ -54,7 +39,7 @@ def dig(obj: Any, path: str) -> Any | None:
 
 def get_device_name(data: dict[str, Any]) -> str:
     """Get the device name from a dictionary."""
-    if not (name := (data.get("displayName") or {}).get("name")):
+    if not (name := dig(data, "displayName.name") or data.get("roomName")):
         return "Diffuser"
     return name if "diffuser" in name.lower() else f"{name} Diffuser"
 
@@ -70,26 +55,26 @@ def get_model_name(data: dict[str, Any]) -> str:
 
 def merge_websocket_update(
     devices: dict[str, dict[str, Any]], update: dict[str, Any]
-) -> dict[str, dict[str, Any]]:
+) -> None:
     """Merge a device update from a websocket message with the full device list.
 
-    Mutates and returns `devices` in place.
+    Mutates `devices` in place.
     """
     if not (device_id := update.get("deviceId")):
         _LOGGER.warning("Received unknown update: %s", update)
-        return devices
+        return
 
     event_type = update.get("eventType")
     record_type = update.get("recordType")
 
     if record_type == RECORD_TYPE_DEVICE:
         _merge_device_record(devices, device_id, event_type, update)
-        return devices
+        return
 
     device = devices.get(device_id)
     if device is None:
         _LOGGER.debug("Device %s does not exist, skipping: %s", device_id, update)
-        return devices
+        return
 
     if record_type == RECORD_TYPE_TIMER:
         _merge_timer_record(device, device_id, event_type, update)
@@ -97,8 +82,6 @@ def merge_websocket_update(
         _merge_schedule_record(device, device_id, event_type, update)
     else:
         _LOGGER.warning("Received unknown update: %s", update)
-
-    return devices
 
 
 def _merge_device_record(
@@ -126,7 +109,7 @@ def _merge_device_record(
     if event_type == EVENT_INSERT:
         if device_id in devices:
             _LOGGER.debug("Device %s exists, updating", device_id)
-            deep_merge(devices[device_id], record)
+            _merge_device_update(devices[device_id], record)
         else:
             _LOGGER.debug("Insert device %s", device_id)
             model_type = MODEL_TYPE_MAP.get(record.get("model", 0))
@@ -134,16 +117,26 @@ def _merge_device_record(
     elif event_type == EVENT_MODIFY:
         if device_id in devices:
             _LOGGER.debug("Updated device %s", device_id)
-            if _LOGGER.isEnabledFor(logging.DEBUG):
-                deep_merge(devices[device_id], record)
-            else:
-                deep_merge(devices[device_id], record)
+            _merge_device_update(devices[device_id], record)
         else:
             _LOGGER.debug(
                 "Device %s does not exist, skipping update: %s", device_id, record
             )
     else:
         _LOGGER.warning("Received unknown update: %s", update)
+
+
+def _merge_device_update(device: dict, update: dict) -> None:
+    """Merge a device update."""
+    for key, value in update.items():
+        if key in device and isinstance(device[key], dict) and isinstance(value, dict):
+            _merge_device_update(device[key], value)
+        elif key not in device:
+            device[key] = value
+        elif device[key] != value:
+            device[key] = value
+            if key == "code" and not value and "fragrance" in device:
+                del device["fragrance"]
 
 
 def _merge_timer_record(
