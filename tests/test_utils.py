@@ -3,6 +3,7 @@
 import copy
 from typing import Any
 
+from freezegun.api import FrozenDateTimeFactory
 import pytest
 
 from pypura.utils import (
@@ -16,8 +17,11 @@ from pypura.utils import (
     dig,
     get_device_name,
     get_fragrance_name,
+    get_fragrance_remaining,
     get_model_name,
+    has_fragrance,
     merge_websocket_update,
+    parse_intensity,
 )
 
 
@@ -26,17 +30,18 @@ def test_decode() -> None:
     assert decode("ZGVjb2RlZA==") == "decoded"
 
 
-def test_dig() -> None:
+@pytest.mark.parametrize(
+    ("path", "expected"),
+    [("a", "a"), ("b.b1", "b1"), ("c", ["c0", "c1", "c2"]), ("c.c2", None)],
+)
+def test_dig(path: str, expected: Any) -> None:
     """Test `dig` function."""
     data = {"a": "a", "b": {"b1": "b1"}, "c": ["c0", "c1", "c2"]}
-    assert dig(data, "a") == "a"
-    assert dig(data, "b.b1") == "b1"
-    assert dig(data, "c") == ["c0", "c1", "c2"]
-    assert dig(data, "c.c2") is None
+    assert dig(data, path) == expected
 
 
 @pytest.mark.parametrize(
-    ("data", "expected"),
+    ("device", "name"),
     [
         ({"displayName": {"name": "Bedroom"}}, "Bedroom Diffuser"),
         (
@@ -47,13 +52,40 @@ def test_dig() -> None:
         ({}, "Diffuser"),
     ],
 )
-def test_get_device_name(data: dict[str, Any], expected: str) -> None:
+def test_get_device_name(device: dict[str, Any], name: str) -> None:
     """Test get device name."""
-    assert get_device_name(data) == expected
+    assert get_device_name(device) == name
 
 
 @pytest.mark.parametrize(
-    ("data", "expected"),
+    ("bay_data", "remaining"),
+    [
+        ({}, None),
+        ({"remaining": {"percent": 23}}, 23),
+        ({"remaining": {"percent": 45.5}}, 45.5),
+        ({"fragrance": {"expectedLifeHours": 100}}, 100),
+        ({"fragrance": {"expectedLifeHours": 100}, "wearingTime": 90000}, 75),
+        (
+            {
+                "fragrance": {"expectedLifeHours": 100},
+                "wearingTime": 90000,
+                "activeAt": 1788449400,
+            },
+            81,
+        ),
+    ],
+)
+def test_get_fragrance_remaining(
+    freezer: FrozenDateTimeFactory, bay_data: dict[str, Any], remaining: float | None
+) -> None:
+    """Test get fragrance remaining."""
+    freezer.move_to("2026-09-03 09:30:00")
+    device = _wall_device(KITCHEN_ID, bay1=bay_data)
+    assert get_fragrance_remaining(device, 1) == remaining
+
+
+@pytest.mark.parametrize(
+    ("device", "name"),
     [
         ({"deviceVer": "v48"}, "Pura Home v4"),
         ({"deviceVer": "wall_5"}, "Pura Home v5"),
@@ -65,9 +97,25 @@ def test_get_device_name(data: dict[str, Any], expected: str) -> None:
         ({}, "Pura"),
     ],
 )
-def test_get_model_name(data: dict[str, Any], expected: str) -> None:
+def test_get_model_name(device: dict[str, Any], name: str) -> None:
     """Test get model name."""
-    assert get_model_name(data) == expected
+    assert get_model_name(device) == name
+
+
+@pytest.mark.parametrize(
+    ("intensity", "name"),
+    [
+        (0, "off"),
+        (1, "subtle"),
+        (3, "light"),
+        (5, "medium"),
+        (7, "pronounced"),
+        (10, "strong"),
+    ],
+)
+def test_parse_intensity(intensity: int | str, name: str) -> None:
+    """Test get model name."""
+    assert parse_intensity(intensity) == name
 
 
 KITCHEN_ID = "AAAAAAAAAA10"  # wall, dual-bay, oscillation-capable
@@ -393,7 +441,8 @@ def test_device_insert_new_device_sets_model_type(
 
     assert NEW_DEVICE_ID in devices
     assert devices[NEW_DEVICE_ID]["deviceId"] == NEW_DEVICE_ID  # backfilled
-    assert devices[NEW_DEVICE_ID]["modelType"] is not None
+    assert devices[NEW_DEVICE_ID]["model"] == 3
+    assert devices[NEW_DEVICE_ID]["modelType"] == "plus"
     assert len(devices) == 5
 
 
@@ -443,12 +492,14 @@ def test_device_fragrance_swap(
 ) -> None:
     """A device fragrance swap is updated successfully."""
     kitchen = devices[KITCHEN_ID]
+    assert has_fragrance(kitchen, 1)
     assert get_fragrance_name(kitchen, 1) == "Test"
 
     record = _wall_device(KITCHEN_ID, bay1=data)
     update = _device_update(KITCHEN_ID, EVENT_MODIFY, record)
     merge_websocket_update(devices, update)
 
+    assert has_fragrance(kitchen, 1) == bool(expected)
     assert get_fragrance_name(kitchen, 1) == expected
 
 

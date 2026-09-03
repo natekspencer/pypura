@@ -21,6 +21,7 @@ dev = [
     "ruff>=0.16.2",
     "pre-commit>=4.5.1,<5",
     "types-requests>=2.32.4.20260107",
+    "pytest-freezer>=0.4.9",
 ]
 
 [build-system]

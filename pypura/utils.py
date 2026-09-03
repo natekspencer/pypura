@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from base64 import b64decode
+from datetime import datetime, timezone
 import logging
 from typing import Any, Final
 
@@ -45,11 +46,38 @@ def get_device_name(device: dict[str, Any]) -> str:
 
 
 def get_fragrance_name(device: dict, bay: int | str) -> str | None:
-    """Return the fragrance name."""
+    """Get the fragrance name."""
     bay_data = device.get(f"bay{bay}") or {}
-    if (fragrance := bay_data.get("fragrance") or {}) and "name" in fragrance:
-        return str(fragrance["name"])
+    if (fragrance := bay_data.get("fragrance") or {}) and (
+        name := fragrance.get("name")
+    ):
+        return str(name)
     return f"Fragrance: {code}" if (code := bay_data.get("code")) else None
+
+
+def get_fragrance_remaining(device: dict, bay: int | str) -> float | None:
+    """Get the fragrance remaining."""
+    bay_data = device.get(f"bay{bay}") or {}
+    if (remaining := bay_data.get("remaining")) and "percent" in remaining:
+        return float(remaining["percent"])
+    if (fragrance := bay_data.get("fragrance")) and "expectedLifeHours" in fragrance:
+        expected_life: int = fragrance["expectedLifeHours"] * 3600
+        return (
+            max(expected_life - get_fragrance_runtime(device, bay), 0) / expected_life
+        ) * 100
+    return None
+
+
+def get_fragrance_runtime(device: dict, bay: int | str) -> int:
+    """Get the fragrance runtime."""
+    bay_data = device.get(f"bay{bay}") or {}
+    wearing_time: int = bay_data.get("wearingTime") or 0
+    if (active_at := bay_data.get("activeAt")) and not device.get("lastConnectedAt"):
+        active_time = datetime.now(timezone.utc) - datetime.fromtimestamp(
+            active_at, timezone.utc
+        )
+        wearing_time += int(active_time.total_seconds())
+    return wearing_time
 
 
 def get_model_name(device: dict[str, Any]) -> str:
@@ -59,6 +87,33 @@ def get_model_name(device: dict[str, Any]) -> str:
             MODEL_TYPE_MAP.get(device.get("model", 0), "")
         )
     return f"Pura {model}" if model else "Pura"
+
+
+def has_fragrance(device: dict[str, Any], bay: int) -> bool:
+    """Check if the specified bay has a fragrance."""
+    return bool((bay_data := device.get(f"bay{bay}")) and bay_data.get("code"))
+
+
+def parse_intensity(intensity: int | str) -> str:
+    """Parse the intensity into a string representation.
+
+    1 = subtle,
+    2-3 = light,
+    4-5 = medium,
+    6-7 = pronounced,
+    8-10 = strong
+    """
+    if intensity and isinstance(intensity, int):
+        if intensity <= 1:
+            return "subtle"
+        if intensity <= 3:
+            return "light"
+        if intensity <= 5:
+            return "medium"
+        if intensity <= 7:
+            return "pronounced"
+        return "strong"
+    return intensity or "off"
 
 
 def merge_websocket_update(
@@ -143,12 +198,11 @@ def _merge_device_update(device: dict[str, Any], update: dict[str, Any]) -> None
     for key, value in update.items():
         if key in device and isinstance(device[key], dict) and isinstance(value, dict):
             _merge_device_update(device[key], value)
-        elif key not in device:
+        elif key == "code" and "fragrance" in device and "fragrance" not in update:
             device[key] = value
-        elif device[key] != value:
+            del device["fragrance"]
+        elif key not in device or device[key] != value:
             device[key] = value
-            if key == "code" and "fragrance" in device and "fragrance" not in update:
-                del device["fragrance"]
 
 
 def _merge_timer_record(
