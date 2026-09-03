@@ -41,8 +41,8 @@ def dig(obj: Any, path: str) -> Any | None:
 def get_device_name(device: dict[str, Any]) -> str:
     """Get the device name from a dictionary."""
     if not (name := dig(device, "displayName.name") or device.get("roomName")):
-        return "Diffuser"
-    return name if "diffuser" in name.lower() else f"{name} Diffuser"
+        return get_model_name(device)
+    return str(name)
 
 
 def get_fragrance_name(device: dict, bay: int | str) -> str | None:

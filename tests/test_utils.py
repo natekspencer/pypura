@@ -43,13 +43,12 @@ def test_dig(path: str, expected: Any) -> None:
 @pytest.mark.parametrize(
     ("device", "name"),
     [
-        ({"displayName": {"name": "Bedroom"}}, "Bedroom Diffuser"),
-        (
-            {"displayName": {"name": "Bedroom"}, "roomName": "Upstairs Bedroom"},
-            "Bedroom Diffuser",
-        ),
-        ({"roomName": "Upstairs Bedroom"}, "Upstairs Bedroom Diffuser"),
-        ({}, "Diffuser"),
+        ({"displayName": {"name": "Bedroom"}}, "Bedroom"),
+        ({"displayName": {"name": "Bedroom"}, "roomName": "Main Bedroom"}, "Bedroom"),
+        ({"roomName": "Upstairs Bedroom"}, "Upstairs Bedroom"),
+        ({"model": 2}, "Pura Car"),
+        ({"model": 3}, "Pura Home Plus"),
+        ({}, "Pura"),
     ],
 )
 def test_get_device_name(device: dict[str, Any], name: str) -> None:
