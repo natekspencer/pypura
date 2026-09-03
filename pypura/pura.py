@@ -95,9 +95,14 @@ class Pura:
         """Logout of all clients (including app)."""
         self.get_user().logout()
 
-    def get_devices(self) -> Any:
+    def get_devices(self) -> dict[str, dict[str, Any]]:
         """Get devices."""
-        return self.__get("v3/accounts/v2/devices")
+        response = self.__get("v3/accounts/v2/devices")
+        return {
+            device["deviceId"]: device | {"modelType": model_type}
+            for model_type, devices in response.items()
+            for device in devices
+        }
 
     def get_latest_firmware_details(self, device_type: str, device_version: str) -> Any:
         """Get latest firmware details."""
