@@ -71,7 +71,7 @@ def test_get_device_name(device: dict[str, Any], name: str) -> None:
                 "wearingTime": 90000,
                 "activeAt": 1788449400,
             },
-            81,
+            74.5,
         ),
     ],
 )
@@ -79,7 +79,7 @@ def test_get_fragrance_remaining(
     freezer: FrozenDateTimeFactory, bay_data: dict[str, Any], remaining: float | None
 ) -> None:
     """Test get fragrance remaining."""
-    freezer.move_to("2026-09-03 09:30:00")
+    freezer.move_to("2026-09-03 10:00:00 -06:00")
     device = _wall_device(KITCHEN_ID, bay1=bay_data)
     assert get_fragrance_remaining(device, 1) == remaining
 

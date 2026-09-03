@@ -69,7 +69,15 @@ def get_fragrance_remaining(device: dict, bay: int | str) -> float | None:
 
 
 def get_fragrance_runtime(device: dict, bay: int | str) -> int:
-    """Get the fragrance runtime."""
+    """Get the fragrance runtime for a bay, in seconds.
+
+    Returns the bay's stored `wearingTime`, plus elapsed time since
+    `activeAt` if the vial is currently active.
+
+    The `activeAt` addition is skipped when `lastConnectedAt` is set.
+    `lastConnectedAt` is only populated on Bluetooth-only devices (car
+    diffusers).
+    """
     bay_data = device.get(f"bay{bay}") or {}
     wearing_time: int = bay_data.get("wearingTime") or 0
     if (active_at := bay_data.get("activeAt")) and not device.get("lastConnectedAt"):
@@ -198,7 +206,11 @@ def _merge_device_update(device: dict[str, Any], update: dict[str, Any]) -> None
     for key, value in update.items():
         if key in device and isinstance(device[key], dict) and isinstance(value, dict):
             _merge_device_update(device[key], value)
-        elif key == "code" and "fragrance" in device and "fragrance" not in update:
+        elif (
+            key == "code"
+            and "fragrance" in device
+            and device["fragrance"].get("fragranceCode") != value
+        ):
             device[key] = value
             del device["fragrance"]
         elif key not in device or device[key] != value:
