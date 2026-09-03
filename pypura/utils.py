@@ -37,18 +37,26 @@ def dig(obj: Any, path: str) -> Any | None:
     return cur
 
 
-def get_device_name(data: dict[str, Any]) -> str:
+def get_device_name(device: dict[str, Any]) -> str:
     """Get the device name from a dictionary."""
-    if not (name := dig(data, "displayName.name") or data.get("roomName")):
+    if not (name := dig(device, "displayName.name") or device.get("roomName")):
         return "Diffuser"
     return name if "diffuser" in name.lower() else f"{name} Diffuser"
 
 
-def get_model_name(data: dict[str, Any]) -> str:
+def get_fragrance_name(device: dict, bay: int | str) -> str | None:
+    """Return the fragrance name."""
+    bay_data = device.get(f"bay{bay}") or {}
+    if (fragrance := bay_data.get("fragrance") or {}) and "name" in fragrance:
+        return str(fragrance["name"])
+    return f"Fragrance: {code}" if (code := bay_data.get("code")) else None
+
+
+def get_model_name(device: dict[str, Any]) -> str:
     """Get the device model name from a dictionary."""
-    if not (model := DEVICE_VERSION_MODEL_MAP.get(data.get("deviceVer", ""))):
+    if not (model := DEVICE_VERSION_MODEL_MAP.get(device.get("deviceVer", ""))):
         model = DEVICE_VERSION_MODEL_MAP.get(
-            MODEL_TYPE_MAP.get(data.get("model", 0), "")
+            MODEL_TYPE_MAP.get(device.get("model", 0), "")
         )
     return f"Pura {model}" if model else "Pura"
 
@@ -126,8 +134,12 @@ def _merge_device_record(
         _LOGGER.warning("Received unknown update: %s", update)
 
 
-def _merge_device_update(device: dict, update: dict) -> None:
-    """Merge a device update."""
+def _merge_device_update(device: dict[str, Any], update: dict[str, Any]) -> None:
+    """Recursively merge a device update into an existing device dict.
+
+    Mutates `device` in place. Any changed "code" value invalidates the
+    sibling "fragrance" entry if missing from the update.
+    """
     for key, value in update.items():
         if key in device and isinstance(device[key], dict) and isinstance(value, dict):
             _merge_device_update(device[key], value)
@@ -135,7 +147,7 @@ def _merge_device_update(device: dict, update: dict) -> None:
             device[key] = value
         elif device[key] != value:
             device[key] = value
-            if key == "code" and not value and "fragrance" in device:
+            if key == "code" and "fragrance" in device and "fragrance" not in update:
                 del device["fragrance"]
 
 

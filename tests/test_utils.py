@@ -15,6 +15,7 @@ from pypura.utils import (
     decode,
     dig,
     get_device_name,
+    get_fragrance_name,
     get_model_name,
     merge_websocket_update,
 )
@@ -134,6 +135,7 @@ def _wall_device(device_id: str, **overrides: Any) -> dict[str, Any]:
             "max": 0,
             "min": 0,
             "msg": "",
+            "fragrance": {"name": "Test"},
         },
         "schedules": [],
         "timer": None,
@@ -170,6 +172,7 @@ def _car_device(device_id: str, **overrides: Any) -> dict[str, Any]:
             "refillId": None,
             "wearingTime": 88298,
             "activeAt": 0,
+            "fragrance": {"name": "Test"},
         },
     }
     base.update(overrides)
@@ -390,6 +393,7 @@ def test_device_insert_new_device_sets_model_type(
 
     assert NEW_DEVICE_ID in devices
     assert devices[NEW_DEVICE_ID]["deviceId"] == NEW_DEVICE_ID  # backfilled
+    assert devices[NEW_DEVICE_ID]["modelType"] is not None
     assert len(devices) == 5
 
 
@@ -425,23 +429,27 @@ def test_device_unknown_event_type_is_noop(devices: dict[str, dict[str, Any]]) -
     assert devices == before
 
 
-def test_device_fragrance_swap(devices: dict[str, dict[str, Any]]) -> None:
-    """A device fragrance swap sequence is handled successfully."""
-    old_bay1 = copy.deepcopy(devices[KITCHEN_ID]["bay1"])
-    new_bay1 = {"code": None}
+@pytest.mark.parametrize(
+    ("data", "expected"),
+    [
+        ({"code": "UNKNOWN"}, "Fragrance: UNKNOWN"),
+        ({"code": "NEW"}, "Fragrance: NEW"),
+        ({"code": "NEW", "fragrance": {"name": "New"}}, "New"),
+        ({"code": ""}, None),
+    ],
+)
+def test_device_fragrance_swap(
+    devices: dict[str, dict[str, Any]], data: dict[str, Any], expected: str | None
+) -> None:
+    """A device fragrance swap is updated successfully."""
+    kitchen = devices[KITCHEN_ID]
+    assert get_fragrance_name(kitchen, 1) == "Test"
 
-    record = _wall_device(KITCHEN_ID, bay1=new_bay1)
+    record = _wall_device(KITCHEN_ID, bay1=data)
     update = _device_update(KITCHEN_ID, EVENT_MODIFY, record)
     merge_websocket_update(devices, update)
 
-    assert devices[KITCHEN_ID]["bay1"]["code"] is None
-    assert "fragrance" not in devices[KITCHEN_ID]["bay1"]
-
-    record = _wall_device(KITCHEN_ID, bay1=old_bay1)
-    update = _device_update(KITCHEN_ID, EVENT_MODIFY, record)
-    merge_websocket_update(devices, update)
-
-    assert devices[KITCHEN_ID]["bay1"] == old_bay1
+    assert get_fragrance_name(kitchen, 1) == expected
 
 
 def test_timer_insert_sets_timer(devices: dict[str, dict[str, Any]]) -> None:
