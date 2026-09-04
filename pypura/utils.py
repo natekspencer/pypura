@@ -52,7 +52,7 @@ def get_fragrance_name(device: dict, bay: int | str) -> str | None:
         name := fragrance.get("name")
     ):
         return str(name)
-    return f"Fragrance: {code}" if (code := bay_data.get("code")) else None
+    return f"Unknown ({code})" if (code := bay_data.get("code")) else None
 
 
 def get_fragrance_remaining(device: dict, bay: int | str) -> float | None:
