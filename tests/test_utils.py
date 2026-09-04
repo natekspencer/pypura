@@ -480,8 +480,8 @@ def test_device_unknown_event_type_is_noop(devices: dict[str, dict[str, Any]]) -
 @pytest.mark.parametrize(
     ("data", "expected"),
     [
-        ({"code": "UNKNOWN"}, "Fragrance: UNKNOWN"),
-        ({"code": "NEW"}, "Fragrance: NEW"),
+        ({"code": "UKWN"}, "Unknown (UKWN)"),
+        ({"code": "NEW"}, "Unknown (NEW)"),
         ({"code": "NEW", "fragrance": {"name": "New"}}, "New"),
         ({"code": ""}, None),
     ],
