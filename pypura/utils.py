@@ -182,7 +182,7 @@ def _merge_device_record(
     if record.get("controller") == "schedule" and "scheduleId" in record:
         # the get_devices endpoint reports the controller as a schedule id when a
         # schedule is active while websocket updates report the controller as "schedule"
-        # with a scheduleId prop, so we normalize this
+        # with a scheduleId property, so we normalize this
         record["controller"] = record["scheduleId"]
 
     if event_type == EVENT_INSERT:
