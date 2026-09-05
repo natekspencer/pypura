@@ -179,6 +179,12 @@ def _merge_device_record(
         # deviceId may be unpopulated on deviceRecord inserts, so we set it
         record["deviceId"] = device_id
 
+    if record.get("controller") == "schedule" and "scheduleId" in record:
+        # the get_devices endpoint reports the controller as a schedule id when a
+        # schedule is active while websocket updates report the controller as "schedule"
+        # with a scheduleId prop, so we normalize this
+        record["controller"] = record["scheduleId"]
+
     if event_type == EVENT_INSERT:
         if device_id in devices:
             _LOGGER.debug("Device %s exists, updating", device_id)
