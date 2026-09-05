@@ -176,7 +176,7 @@ class Pura:
             "controller": controller,
         }
         resp = self.__post(f"v3/devices/{device_id}/nightlight", json=json)
-        return resp.get("success") is True
+        return resp is not None
 
     def set_timer(
         self,
