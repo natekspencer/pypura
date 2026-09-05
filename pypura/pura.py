@@ -22,7 +22,7 @@ _LOGGER = logging.getLogger(__name__)
 
 BASE_URL: Final = "https://trypura.io/mobile/api/"
 
-TIMER_DURATION_DEFAULT = timedelta(hours=4)
+TIMER_DURATION_DEFAULT = timedelta(minutes=30)
 
 
 class Pura:
@@ -116,13 +116,29 @@ class Pura:
         )
 
     def set_always_on(self, device_id: str, *, bay: int) -> bool:
-        """Set always on."""
+        """Enable always-on mode for a bay on a device.
+
+        Args:
+            device_id: The ID of the device to update.
+            bay: The bay number on the device to update.
+
+        Returns:
+            True if always-on mode was set successfully.
+        """
         json = {"bay": bay}
         resp = self.__post(f"devices/{device_id}/always-on", json=json)
         return resp.get("success") is True
 
     def set_ambient_mode(self, device_id: str, *, ambient_mode: bool) -> bool:
-        """Set away mode."""
+        """Set ambient mode for a device.
+
+        Args:
+            device_id: The ID of the device to update.
+            ambient_mode: Whether ambient mode should be on or off.
+
+        Returns:
+            True if ambient mode was set successfully.
+        """
         json = {"ambientMode": ambient_mode}
         resp = self.__post(f"devices/{device_id}/ambientMode", json=json)
         return resp.get("success") is True
@@ -136,7 +152,23 @@ class Pura:
         longitude: float | None = None,
         radius: int | None = None,
     ) -> bool:
-        """Set away mode."""
+        """Set away mode for a device, optionally using a geofence.
+
+        Args:
+            device_id: The ID of the device to update.
+            away_mode: Whether away mode should be on or off. If `True`,
+                `latitude`, `longitude`, and `radius` must all be
+                provided to define the geofence.
+            latitude: Latitude of the geofence center. Required if
+                `away_mode` is `True`.
+            longitude: Longitude of the geofence center. Required if
+                `away_mode` is `True`.
+            radius: Radius of the geofence, in meters. Required if
+                `away_mode` is `True`.
+
+        Returns:
+            True if away mode was set successfully.
+        """
         json: dict[str, Any] = {"awayMode": away_mode}
         if away_mode:
             json.update(
@@ -146,7 +178,16 @@ class Pura:
         return resp.get("success") is True
 
     def set_diffusion_mode(self, device_id: str, *, mode: str) -> bool:
-        """Set diffusion mode."""
+        """Set the diffusion mode for a device.
+
+        Args:
+            device_id: The ID of the device to update.
+            mode: The diffusion mode to use ("oscillation-multi-bay" or
+                "standard").
+
+        Returns:
+            True if the diffusion mode was set successfully.
+        """
         json = {"mode": mode}
         resp = self.__post(f"v3/diffusion/{device_id}/mode", json=json)
         return resp.get("success") is True
@@ -154,10 +195,21 @@ class Pura:
     def set_intensity(
         self, device_id: str, *, bay: int, controller: str, intensity: int
     ) -> bool:
-        """Set intensity."""
+        """Set the intensity for a bay on a device.
+
+        Args:
+            device_id: The ID of the device to update.
+            bay: The bay number on the device to update.
+            controller: The controller to use ("default", "timer", or a
+                schedule ID/index).
+            intensity: The intensity level, from 1 to 10.
+
+        Returns:
+            True if the intensity was set successfully.
+        """
         json = {"bay": bay, "controller": controller, "intensity": intensity}
-        resp = self.__post(f"devices/{device_id}/intensity", json=json)
-        return resp.get("success") is True
+        resp = self.__put(f"v3/devices/{device_id}/v2/intensity", json=json)
+        return resp is not None
 
     def set_nightlight(
         self,
@@ -168,7 +220,20 @@ class Pura:
         color: str,
         controller: str,
     ) -> bool:
-        """Set nightlight."""
+        """Set the nightlight state for a device.
+
+        Args:
+            device_id: The ID of the device to update.
+            active: Whether the nightlight should be on or off.
+            brightness: The brightness level, from 1 to 10.
+            color: The nightlight color, as an uppercase hex string
+                (e.g. "1A46FF").
+            controller: The controller to use  ("default", "timer", or a
+                schedule ID/index).
+
+        Returns:
+            True if the nightlight was set successfully.
+        """
         json = {
             "active": active,
             "brightness": brightness,
@@ -187,7 +252,21 @@ class Pura:
         start: datetime | int | None = None,
         end: datetime | timedelta | int = TIMER_DURATION_DEFAULT,
     ) -> bool:
-        """Set timer."""
+        """Set a timer for a bay on a device.
+
+        Args:
+            device_id: The ID of the device to update.
+            bay: The bay number on the device to update.
+            intensity: The intensity level, from 1 to 10.
+            start: When the timer should start, as a `datetime`, a Unix
+                timestamp, or `None` to start immediately.
+            end: When the timer should end, as a `datetime`, a
+                `timedelta` from `start`, or a Unix timestamp. Defaults
+                to 30 minutes.
+
+        Returns:
+            True if the timer was set successfully.
+        """
         if not start:
             start = datetime.now(timezone.utc)
         if isinstance(start, datetime):
@@ -253,3 +332,7 @@ class Pura:
     def __post(self, url: str, **kwargs: Any) -> Any:
         """Make a post request."""
         return self.__request("post", url, **kwargs)
+
+    def __put(self, url: str, **kwargs: Any) -> Any:
+        """Make a put request."""
+        return self.__request("put", url, **kwargs)
