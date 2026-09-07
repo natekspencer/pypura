@@ -104,16 +104,69 @@ class Pura:
             for device in devices
         }
 
-    def get_latest_firmware_details(self, device_type: str, device_version: str) -> Any:
-        """Get latest firmware details."""
-        return self.__get(
-            "https://prod.api.purascents.com/api/firmware/config",
-            headers={
-                "pura-device-type": device_type,
-                "pura-device-version": device_version,
-            },
-            text_response=True,
+    def get_latest_firmware_details(
+        self, device_id: str, device_type: int, device_version: str
+    ) -> dict[str, int | str]:
+        """Get the latest available firmware details for a device.
+
+        Args:
+            device_id: The ID of the device to check.
+            device_type: The type of the device.
+                (1 = wall, 2 = car, 3 = plus, 4 = mini)
+            device_version: The device's hardware/firmware version, as
+                reported by the API's `deviceVer` field. For wall, plus,
+                and mini devices, this is passed through as-is. For car
+                devices, the firmware check only accepts "v1" or "v2",
+                so raw values are mapped accordingly: the original car
+                maps to "v1" and the car pro maps to "v2".
+
+        Returns:
+            A dict of firmware details for the device. Car devices
+            (`device_type` 2) return `file`, `host`, `version`, `major`,
+            `minor`, and `patch`. Wall, plus, and mini devices return
+            `file`, `host`, `version`, `interval`, and `size`.
+        """
+        if device_type == 2 and device_version not in ("v1", "v2"):
+            device_version = "v1" if device_version == "1" else "v2"
+        resp: dict[str, int | str] = self.__get(
+            f"v3/firmware/{device_id}/config",
+            params={"deviceType": device_type, "deviceVersion": device_version},
         )
+        return resp
+
+    def request_ota_update(
+        self,
+        device_id: str,
+        device_type: int,
+        device_version: str | None = None,
+        current_ota_version: int | None = None,
+    ) -> dict[str, bool | int | str]:
+        """Request an OTA (over-the-air) firmware update for a device.
+
+        Args:
+            device_id: The ID of the device to request an update for.
+            device_type: The type of the device.
+                (1 = wall, 2 = car, 3 = plus, 4 = mini)
+            device_version: The device's hardware/firmware version, as
+                reported by the API's `deviceVer` field, if known.
+            current_ota_version: The device's current OTA version, as
+                reported by the API's `otaVer` field, if known.
+
+        Returns:
+            A dict describing the outcome of the request, including
+            whether an OTA update will be pushed to the device (`willOTA`)
+            and, if so, the version that will be pushed
+            (`prescribedOTAVersion`).
+        """
+        json: dict[str, str | int] = {"deviceType": device_type}
+        if device_version:
+            json["deviceVersion"] = device_version
+        if current_ota_version:
+            json["currentOTAVersion"] = current_ota_version
+        resp: dict[str, bool | int | str] = self.__post(
+            f"devices/{device_id}/ota/status", json=json
+        )
+        return resp
 
     def set_always_on(self, device_id: str, *, bay: int) -> bool:
         """Enable always-on mode for a bay on a device.
