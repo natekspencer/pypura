@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from base64 import b64decode
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 import logging
 from typing import Any, Final
 
@@ -81,9 +81,7 @@ def get_fragrance_runtime(device: dict, bay: int | str) -> int:
     bay_data = device.get(f"bay{bay}") or {}
     wearing_time: int = bay_data.get("wearingTime") or 0
     if (active_at := bay_data.get("activeAt")) and not device.get("lastConnectedAt"):
-        active_time = datetime.now(timezone.utc) - datetime.fromtimestamp(
-            active_at, timezone.utc
-        )
+        active_time = datetime.now(UTC) - datetime.fromtimestamp(active_at, UTC)
         wearing_time += int(active_time.total_seconds())
     return wearing_time
 
