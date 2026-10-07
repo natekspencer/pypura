@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Callable
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 import logging
 from typing import Any, Final
 from urllib.parse import urljoin
@@ -321,7 +321,7 @@ class Pura:
             True if the timer was set successfully.
         """
         if not start:
-            start = datetime.now(timezone.utc)
+            start = datetime.now(UTC)
         if isinstance(start, datetime):
             start = int(start.timestamp())
         if isinstance(end, datetime):
