@@ -327,7 +327,7 @@ class Pura:
         if isinstance(end, datetime):
             end = int(end.timestamp())
         elif isinstance(end, timedelta):
-            end = start + end.seconds
+            end = start + int(end.total_seconds())
         if end <= start:
             raise PuraApiException("Timer 'end' time must be greater than 'start' time")
         json = {
