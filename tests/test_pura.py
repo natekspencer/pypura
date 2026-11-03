@@ -40,11 +40,12 @@ def test_set_timer_timedelta_end(end: timedelta) -> None:
     )
 
 
-def test_set_timer_rejects_non_positive_duration() -> None:
-    """Test a zero-length timer is rejected before calling the API."""
+@pytest.mark.parametrize("end", [timedelta(0), timedelta(seconds=-1)])
+def test_set_timer_rejects_non_positive_duration(end: timedelta) -> None:
+    """Test a zero-length or negative timer is rejected before calling the API."""
     with (
         patch.object(Pura, "_Pura__post") as post,
         pytest.raises(PuraApiException),
     ):
-        Pura().set_timer("device", bay=1, intensity=5, start=START, end=timedelta(0))
+        Pura().set_timer("device", bay=1, intensity=5, start=START, end=end)
     post.assert_not_called()
