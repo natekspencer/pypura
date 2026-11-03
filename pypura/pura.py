@@ -7,6 +7,7 @@ from datetime import UTC, datetime, timedelta
 import logging
 from typing import Any, Final
 from urllib.parse import urljoin
+import warnings
 
 from botocore.exceptions import ClientError
 from pycognito import Cognito
@@ -311,34 +312,38 @@ class Pura:
             device_id: The ID of the device to update.
             bay: The bay number on the device to update.
             intensity: The intensity level, from 1 to 10.
-            start: When the timer should start, as a `datetime`, a Unix
-                timestamp, or `None` to start immediately.
+            start: Deprecated and ignored. Timers always start immediately,
+                as the API replaces any other start time with the current
+                time.
             end: When the timer should end, as a `datetime`, a
-                `timedelta` from `start`, or a Unix timestamp. Defaults
-                to 30 minutes.
+                `timedelta` from now, or a Unix timestamp. Defaults to
+                30 minutes.
 
         Returns:
             True if the timer was set successfully.
         """
-        if not start:
-            start = datetime.now(UTC)
-        if isinstance(start, datetime):
-            start = int(start.timestamp())
+        if start is not None:
+            warnings.warn(
+                "'start' is deprecated and ignored, timers always start immediately",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+        now = int(datetime.now(UTC).timestamp())
         if isinstance(end, datetime):
             end = int(end.timestamp())
         elif isinstance(end, timedelta):
-            end = start + int(end.total_seconds())
-        if end <= start:
-            raise PuraApiException("Timer 'end' time must be greater than 'start' time")
+            end = now + int(end.total_seconds())
+        if end <= now:
+            raise PuraApiException("Timer 'end' time must be in the future")
         json = {
             "bay": bay,
             "intensity": intensity,
-            "start": start,
+            "start": now,
             "end": end,
             "validateOverride": True,
         }
-        resp = self.__post(f"devices/{device_id}/timer", json=json)
-        return resp.get("success") is True
+        resp = self.__post(f"v3/devices/{device_id}/v2/timer", json=json)
+        return bool(resp.get("timer"))
 
     def stop_all(self, device_id: str) -> bool:
         """Stop all."""
@@ -373,8 +378,8 @@ class Pura:
             if err.response["Error"]["Code"] == "NotAuthorizedException":
                 raise PuraAuthenticationError(err) from err
             raise
-        if (status_code := response.status_code) != 200:
-            _LOGGER.error("Status: %s - %s", status_code, response.text)
+        if not response.ok:
+            _LOGGER.error("Status: %s - %s", response.status_code, response.text)
             response.raise_for_status()
         return response.text if text_response else response.json()
 
