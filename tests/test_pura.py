@@ -6,9 +6,11 @@ from datetime import UTC, datetime, timedelta
 import logging
 from unittest.mock import MagicMock, patch
 
+from botocore.exceptions import ClientError, EndpointConnectionError
 import pytest
+import requests
 
-from pypura import Pura, PuraApiException
+from pypura import Pura, PuraApiException, PuraAuthenticationError
 
 START = datetime(2026, 1, 1, tzinfo=UTC)
 START_TS = int(START.timestamp())
@@ -99,3 +101,136 @@ def test_request_accepts_created_status(caplog: pytest.LogCaptureFixture) -> Non
         assert Pura().set_timer("device", bay=1, intensity=5)
 
     assert not caplog.records
+
+
+def _client_error(code: str) -> ClientError:
+    """Return a Cognito client error."""
+    return ClientError({"Error": {"Code": code, "Message": code}}, "InitiateAuth")
+
+
+@pytest.mark.parametrize(
+    ("error", "expected"),
+    [
+        (requests.ConnectionError("failed"), PuraApiException),
+        (requests.Timeout("timed out"), PuraApiException),
+        (EndpointConnectionError(endpoint_url="url"), PuraApiException),
+        (_client_error("InternalErrorException"), PuraApiException),
+        (_client_error("NotAuthorizedException"), PuraAuthenticationError),
+    ],
+)
+def test_request_errors_are_wrapped(
+    error: Exception, expected: type[PuraApiException]
+) -> None:
+    """Test failures to make a request raise a Pura exception."""
+    with (
+        patch.object(Pura, "get_auth"),
+        patch("pypura.pura.requests.request", side_effect=error),
+        pytest.raises(expected) as raised,
+    ):
+        Pura().get_devices()
+
+    assert type(raised.value) is expected
+    assert raised.value.__cause__ is error
+
+
+@pytest.mark.parametrize(
+    ("status", "expected"),
+    [
+        (400, PuraApiException),
+        (401, PuraAuthenticationError),
+        (403, PuraApiException),
+        (500, PuraApiException),
+    ],
+)
+def test_request_error_status_raises(
+    status: int, expected: type[PuraApiException]
+) -> None:
+    """Test an error status raises a Pura exception."""
+    response = requests.Response()
+    response.status_code = status
+
+    with (
+        patch.object(Pura, "get_auth"),
+        patch.object(Pura, "get_user"),
+        patch("pypura.pura.requests.request", return_value=response),
+        pytest.raises(expected, match=str(status)) as raised,
+    ):
+        Pura().get_devices()
+
+    assert type(raised.value) is expected
+
+
+def _response(status: int, content: bytes = b"{}") -> requests.Response:
+    """Return a response."""
+    response = requests.Response()
+    response.status_code = status
+    response._content = content
+    return response
+
+
+def test_request_retries_once_after_refreshing_tokens() -> None:
+    """Test a rejected token is refreshed, so a brief 401 doesn't need a new login."""
+    with (
+        patch.object(Pura, "get_auth"),
+        patch.object(Pura, "get_user") as get_user,
+        patch(
+            "pypura.pura.requests.request",
+            side_effect=[_response(401), _response(200)],
+        ) as request,
+    ):
+        assert Pura().get_devices() == {}
+
+    get_user.return_value.renew_access_token.assert_called_once_with()
+    assert request.call_count == 2
+
+
+def test_request_stops_after_second_unauthorized() -> None:
+    """Test a token that is still rejected after refreshing is an auth error."""
+    with (
+        patch.object(Pura, "get_auth"),
+        patch.object(Pura, "get_user") as get_user,
+        patch("pypura.pura.requests.request", return_value=_response(401)) as request,
+        pytest.raises(PuraAuthenticationError),
+    ):
+        Pura().get_devices()
+
+    get_user.return_value.renew_access_token.assert_called_once_with()
+    assert request.call_count == 2
+
+
+@pytest.mark.parametrize(
+    ("error", "expected"),
+    [
+        (_client_error("NotAuthorizedException"), PuraAuthenticationError),
+        (_client_error("InternalErrorException"), PuraApiException),
+        (EndpointConnectionError(endpoint_url="url"), PuraApiException),
+    ],
+)
+def test_request_refresh_failure(
+    error: Exception, expected: type[PuraApiException]
+) -> None:
+    """Test a failed token refresh only needs a new login if it was rejected."""
+    with (
+        patch.object(Pura, "get_auth"),
+        patch.object(Pura, "get_user") as get_user,
+        patch("pypura.pura.requests.request", return_value=_response(401)),
+        pytest.raises(expected) as raised,
+    ):
+        get_user.return_value.renew_access_token.side_effect = error
+        Pura().get_devices()
+
+    assert type(raised.value) is expected
+
+
+def test_request_invalid_json_raises() -> None:
+    """Test a response that isn't JSON raises a Pura exception."""
+    response = requests.Response()
+    response.status_code = 200
+    response._content = b"not json"
+
+    with (
+        patch.object(Pura, "get_auth"),
+        patch("pypura.pura.requests.request", return_value=response),
+        pytest.raises(PuraApiException, match="Invalid response"),
+    ):
+        Pura().get_devices()

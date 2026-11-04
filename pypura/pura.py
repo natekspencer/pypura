@@ -9,7 +9,7 @@ from typing import Any, Final
 from urllib.parse import urljoin
 
 from aiohttp import ClientSession
-from botocore.exceptions import ClientError
+from botocore.exceptions import BotoCoreError, ClientError
 from pycognito import Cognito
 from pycognito.utils import RequestsSrpAuth, TokenType
 import requests
@@ -355,11 +355,31 @@ class Pura:
         return subscriber
 
     def __request(self, method: str, url: str, **kwargs: Any) -> Any:
-        """Make a request."""
-        text_response = kwargs.pop("text_response", False)
+        """Make a request, refreshing the tokens and retrying once if unauthorized."""
         _LOGGER.debug("Making %s request to %s with %s", method, url, kwargs)
+        response = self.__send(method, url, **kwargs)
+        if response.status_code == 401:
+            _LOGGER.debug("Unauthorized, refreshing the tokens and retrying")
+            response = self.__send(method, url, refresh_tokens=True, **kwargs)
+        if not response.ok:
+            _LOGGER.error("Status: %s - %s", response.status_code, response.text)
+            message = f"Request failed with status {response.status_code}"
+            if response.status_code == 401:
+                raise PuraAuthenticationError(message)
+            raise PuraApiException(message)
         try:
-            response = requests.request(
+            return response.json()
+        except ValueError as err:
+            raise PuraApiException(f"Invalid response: {err}") from err
+
+    def __send(
+        self, method: str, url: str, *, refresh_tokens: bool = False, **kwargs: Any
+    ) -> requests.Response:
+        """Send a request, raising a Pura exception if it can't be made."""
+        try:
+            if refresh_tokens:
+                self.get_user().renew_access_token()
+            return requests.request(
                 method,
                 urljoin(BASE_URL, url),
                 auth=self.get_auth(),
@@ -370,11 +390,9 @@ class Pura:
             _LOGGER.error(err)
             if err.response["Error"]["Code"] == "NotAuthorizedException":
                 raise PuraAuthenticationError(err) from err
-            raise
-        if not response.ok:
-            _LOGGER.error("Status: %s - %s", response.status_code, response.text)
-            response.raise_for_status()
-        return response.text if text_response else response.json()
+            raise PuraApiException(err) from err
+        except (BotoCoreError, requests.RequestException) as err:
+            raise PuraApiException(err) from err
 
     def __get(self, url: str, **kwargs: Any) -> Any:
         """Make a get request."""
