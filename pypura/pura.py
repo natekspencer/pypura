@@ -8,6 +8,7 @@ import logging
 from typing import Any, Final
 from urllib.parse import urljoin
 
+from aiohttp import ClientSession
 from botocore.exceptions import ClientError
 from pycognito import Cognito
 from pycognito.utils import RequestsSrpAuth, TokenType
@@ -340,13 +341,16 @@ class Pura:
         return resp.get("success") is True
 
     def subscribe_for_updates(
-        self, on_message: Callable[[dict], Awaitable[None]]
+        self,
+        on_message: Callable[[dict], Awaitable[None]],
+        *,
+        session: ClientSession | None = None,
     ) -> WebSocketSubscriber:
         """Open a web socket connection to receive updates."""
         if not (token := self.get_tokens().get("id_token")):
             raise PuraAuthenticationError("Unauthenticated")
 
-        subscriber = WebSocketSubscriber(token)
+        subscriber = WebSocketSubscriber(token=token, session=session)
         subscriber.start(on_message)
         return subscriber
 

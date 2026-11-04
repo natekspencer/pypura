@@ -25,6 +25,7 @@ class WebSocketSubscriber:
     def __init__(self, token: str, session: aiohttp.ClientSession | None = None):
         """Initialize a websocket subscriber."""
         self.token = token
+        self._owns_session = session is None
         self.session = session if session else aiohttp.ClientSession()
 
     @property
@@ -59,11 +60,15 @@ class WebSocketSubscriber:
 
     def start(self, on_message: Callable[[dict], Awaitable[None]]) -> None:
         """Start the subscriber in the background."""
+        if self._owns_session and self.session.closed:
+            self.session = aiohttp.ClientSession()
         self._task = asyncio.create_task(self.connect(on_message))
 
     async def stop(self) -> None:
-        """Stop the subscriber."""
+        """Stop the subscriber, closing the session if it created it."""
         if self._task:
             self._task.cancel()
             with contextlib.suppress(asyncio.CancelledError):
                 await self._task
+        if self._owns_session:
+            await self.session.close()
