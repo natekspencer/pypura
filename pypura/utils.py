@@ -101,24 +101,24 @@ def has_fragrance(device: dict[str, Any], bay: int) -> bool:
 
 
 def parse_intensity(intensity: int | str) -> str:
-    """Parse the intensity into a string representation.
+    """Parse the intensity into a string representation, matching the Pura app.
 
-    1 = subtle,
-    2-3 = light,
-    4-5 = medium,
-    6-7 = pronounced,
-    8-10 = strong
+    1-2 = gentle,
+    3-4 = subtle,
+    5-6 = medium,
+    7-8 = strong,
+    9-10 = intense
     """
     if intensity and isinstance(intensity, int):
-        if intensity <= 1:
+        if intensity <= 2:
+            return "gentle"
+        if intensity <= 4:
             return "subtle"
-        if intensity <= 3:
-            return "light"
-        if intensity <= 5:
+        if intensity <= 6:
             return "medium"
-        if intensity <= 7:
-            return "pronounced"
-        return "strong"
+        if intensity <= 8:
+            return "strong"
+        return "intense"
     return intensity or "off"
 
 
