@@ -22,6 +22,13 @@ DEVICE_VERSION_MODEL_MAP: Final[dict[str, str]] = {
     "plus": "Home Plus",
     "wall": "Home",
 }
+INTENSITY_LEVELS: Final[dict[str, int]] = {
+    "gentle": 1,
+    "subtle": 3,
+    "medium": 5,
+    "strong": 7,
+    "intense": 10,
+}
 MODEL_TYPE_MAP: Final[dict[int, str]] = {
     1: "wall",
     2: "car",

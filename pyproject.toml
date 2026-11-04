@@ -10,6 +10,7 @@ dependencies = [
     "boto3>=1.28",
     "pycognito>=2024.2.0",
     "pyjwt>=2.0",
+    "requests>=2.0",
 ]
 dynamic = ["version"]
 

@@ -6,6 +6,7 @@ from typing import Any
 from freezegun.api import FrozenDateTimeFactory
 import pytest
 
+from pypura.const import INTENSITY_LEVELS
 from pypura.utils import (
     EVENT_INSERT,
     EVENT_MODIFY,
@@ -104,6 +105,7 @@ def test_get_model_name(device: dict[str, Any], model: str) -> None:
 @pytest.mark.parametrize(
     ("intensity", "name"),
     [
+        (None, "off"),
         (0, "off"),
         (1, "gentle"),
         (2, "gentle"),
@@ -117,9 +119,15 @@ def test_get_model_name(device: dict[str, Any], model: str) -> None:
         (10, "intense"),
     ],
 )
-def test_parse_intensity(intensity: int | str, name: str) -> None:
-    """Test get model name."""
+def test_parse_intensity(intensity: int | str | None, name: str) -> None:
+    """Test parsing the intensity into its name."""
     assert parse_intensity(intensity) == name
+
+
+def test_intensity_levels_match_parse_intensity() -> None:
+    """Test each intensity level is reported back under the same name."""
+    for name, level in INTENSITY_LEVELS.items():
+        assert parse_intensity(level) == name
 
 
 KITCHEN_ID = "AAAAAAAAAA10"  # wall, dual-bay, oscillation-capable

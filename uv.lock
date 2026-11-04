@@ -1537,6 +1537,7 @@ dependencies = [
     { name = "boto3" },
     { name = "pycognito" },
     { name = "pyjwt" },
+    { name = "requests" },
 ]
 
 [package.dev-dependencies]
@@ -1557,6 +1558,7 @@ requires-dist = [
     { name = "boto3", specifier = ">=1.28" },
     { name = "pycognito", specifier = ">=2024.2.0" },
     { name = "pyjwt", specifier = ">=2.0" },
+    { name = "requests", specifier = ">=2.0" },
 ]
 
 [package.metadata.requires-dev]

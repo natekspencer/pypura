@@ -100,7 +100,7 @@ def has_fragrance(device: dict[str, Any], bay: int) -> bool:
     return bool((bay_data := device.get(f"bay{bay}")) and bay_data.get("code"))
 
 
-def parse_intensity(intensity: int | str) -> str:
+def parse_intensity(intensity: int | str | None) -> str:
     """Parse the intensity into a string representation, matching the Pura app.
 
     1-2 = gentle,

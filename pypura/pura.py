@@ -145,7 +145,11 @@ class Pura:
             self.get_user().logout()
 
     def get_devices(self) -> dict[str, dict[str, Any]]:
-        """Get devices."""
+        """Get devices, keyed by device ID.
+
+        Each device has a `modelType` of "wall", "car", "plus", "mini", or
+        "luxe". An account with no devices returns an empty dict.
+        """
         response = self.__get("v3/accounts/v2/devices")
         try:
             return {
@@ -177,6 +181,8 @@ class Pura:
             (`device_type` 2) return `file`, `host`, `version`, `major`,
             `minor`, and `patch`. Wall, plus, and mini devices return
             `file`, `host`, `version`, `interval`, and `size`.
+            Don't join `host` and `file` without checking them: `host` only
+            has a scheme for car devices, and `file` can be a full URL.
         """
         if device_type == 2 and device_version not in ("v1", "v2"):
             device_version = "v1" if device_version == "1" else "v2"
@@ -192,7 +198,7 @@ class Pura:
         device_type: int,
         device_version: str | None = None,
         current_ota_version: int | None = None,
-    ) -> dict[str, bool | int | str]:
+    ) -> dict[str, bool | int | str | None]:
         """Request an OTA (over-the-air) firmware update for a device.
 
         Args:
@@ -205,17 +211,18 @@ class Pura:
                 reported by the API's `otaVer` field, if known.
 
         Returns:
-            A dict describing the outcome of the request, including
-            whether an OTA update will be pushed to the device (`willOTA`)
-            and, if so, the version that will be pushed
-            (`prescribedOTAVersion`).
+            A dict describing the outcome of the request, with `deviceId`,
+            `success`, whether an OTA update will be pushed to the device
+            (`willOTA`), the version that will be pushed
+            (`prescribedOTAVersion`), and `willShareStatus`. Car devices
+            return None for `prescribedOTAVersion` and `willShareStatus`.
         """
         json: dict[str, str | int] = {"deviceType": device_type}
         if device_version:
             json["deviceVersion"] = device_version
         if current_ota_version:
             json["currentOTAVersion"] = current_ota_version
-        resp: dict[str, bool | int | str] = self.__post(
+        resp: dict[str, bool | int | str | None] = self.__post(
             f"devices/{device_id}/ota/status", json=json
         )
         return resp
@@ -307,7 +314,9 @@ class Pura:
             device_id: The ID of the device to update.
             bay: The bay number on the device to update.
             controller: The controller to use ("default", "timer", or a
-                schedule ID/index).
+                schedule ID/index). Use "default" when the device's
+                `diffusionMode` is "oscillation-multi-bay", as each bay then
+                keeps its own intensity whatever is running.
             intensity: The intensity level, from 1 to 10.
 
         Returns:
@@ -332,9 +341,9 @@ class Pura:
             device_id: The ID of the device to update.
             active: Whether the nightlight should be on or off.
             brightness: The brightness level, from 1 to 10.
-            color: The nightlight color, as an uppercase hex string
-                (e.g. "1A46FF").
-            controller: The controller to use  ("default", "timer", or a
+            color: The nightlight color, as a hex string (e.g. "1A46FF").
+                Colors stored on the device can be lowercase.
+            controller: The controller to use ("default", "timer", or a
                 schedule ID/index).
 
         Returns:
