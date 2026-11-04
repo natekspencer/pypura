@@ -2,15 +2,19 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, Callable
+from collections.abc import Awaitable, Callable, Iterator
+from contextlib import contextmanager
 from datetime import UTC, datetime, timedelta
 import logging
+import threading
 from typing import Any, Final
 from urllib.parse import urljoin
 
 from aiohttp import ClientSession
-from botocore.exceptions import ClientError
+from botocore.exceptions import BotoCoreError, ClientError, ParamValidationError
+from jwt import PyJWTError
 from pycognito import Cognito
+from pycognito.exceptions import TokenVerificationException
 from pycognito.utils import RequestsSrpAuth, TokenType
 import requests
 
@@ -24,6 +28,52 @@ _LOGGER = logging.getLogger(__name__)
 BASE_URL: Final = "https://trypura.io/mobile/api/"
 
 TIMER_DURATION_DEFAULT = timedelta(minutes=30)
+
+AUTH_ERROR_CODES: Final = frozenset(
+    {
+        "NotAuthorizedException",
+        "PasswordResetRequiredException",
+        "UserNotConfirmedException",
+        "UserNotFoundException",
+    }
+)
+
+
+@contextmanager
+def _translate_errors() -> Iterator[None]:
+    """Raise a Pura exception for a failed Cognito or API call."""
+    try:
+        yield
+    except ClientError as err:
+        _LOGGER.error(err)
+        if err.response["Error"]["Code"] in AUTH_ERROR_CODES:
+            raise PuraAuthenticationError(err) from err
+        raise PuraApiException(err) from err
+    except (
+        ParamValidationError,  # A refresh without a refresh token
+        TokenVerificationException,
+        PyJWTError,
+        LookupError,  # A token without an expiry, or from an unknown signing key
+    ) as err:
+        _LOGGER.error(err)
+        raise PuraAuthenticationError(err) from err
+    except (BotoCoreError, requests.RequestException) as err:
+        raise PuraApiException(err) from err
+
+
+def _error_message(response: requests.Response) -> str:
+    """Return a message for a failed response, with any detail from the API."""
+    message = f"Request failed with status {response.status_code}"
+    try:
+        body = response.json()
+    except ValueError:
+        return message
+    if not isinstance(body, dict):
+        return message
+    detail = body.get("errorData") or body.get("message")
+    if isinstance(detail, dict):
+        detail = detail.get("error")
+    return f"{message}: {detail}" if detail else message
 
 
 class Pura:
@@ -45,6 +95,7 @@ class Pura:
         self._access_token = access_token
         self._id_token = id_token
         self._refresh_token = refresh_token
+        self._refresh_lock = threading.Lock()
 
     def get_user(self) -> Cognito:
         """Return the Cognito user."""
@@ -57,17 +108,16 @@ class Pura:
                 id_token=self._id_token,
                 refresh_token=self._refresh_token,
             )
-            if self._access_token or self._id_token:
-                try:
+            if self._access_token:
+                with _translate_errors():
                     self._user.check_token()
                     self._user.verify_tokens()
-                except ClientError as err:
-                    _LOGGER.error(err)
-                    raise PuraAuthenticationError(err) from err
         return self._user
 
     def get_auth(self) -> RequestsSrpAuth:
         """Return the RequestsSrpAuth."""
+        if not self.get_user().access_token:
+            raise PuraAuthenticationError("Unauthenticated")
         if self._auth is None:
             self._auth = RequestsSrpAuth(
                 cognito=self.get_user(), auth_token_type=TokenType.ID_TOKEN
@@ -86,24 +136,25 @@ class Pura:
 
     def authenticate(self, password: str) -> None:
         """Authenticate a user."""
-        try:
+        with _translate_errors():
             self.get_user().authenticate(password=password)
-        except ClientError as err:
-            _LOGGER.error(err)
-            raise PuraAuthenticationError(err) from err
 
     def logout(self) -> None:
         """Logout of all clients (including app)."""
-        self.get_user().logout()
+        with _translate_errors():
+            self.get_user().logout()
 
     def get_devices(self) -> dict[str, dict[str, Any]]:
         """Get devices."""
         response = self.__get("v3/accounts/v2/devices")
-        return {
-            device["deviceId"]: device | {"modelType": model_type}
-            for model_type, devices in response.items()
-            for device in devices
-        }
+        try:
+            return {
+                device["deviceId"]: device | {"modelType": model_type}
+                for model_type, devices in response.items()
+                for device in devices or []
+            }
+        except (KeyError, TypeError) as err:
+            raise PuraApiException(f"Invalid response: {err!r}") from err
 
     def get_latest_firmware_details(
         self, device_id: str, device_type: int, device_version: str
@@ -212,7 +263,8 @@ class Pura:
             device_id: The ID of the device to update.
             away_mode: Whether away mode should be on or off. If `True`,
                 `latitude`, `longitude`, and `radius` must all be
-                provided to define the geofence.
+                provided to define the geofence. If `False`, any saved
+                geofence is deleted, even if away mode was already off.
             latitude: Latitude of the geofence center. Required if
                 `away_mode` is `True`.
             longitude: Longitude of the geofence center. Required if
@@ -263,7 +315,7 @@ class Pura:
         """
         json = {"bay": bay, "controller": controller, "intensity": intensity}
         resp = self.__put(f"v3/devices/{device_id}/v2/intensity", json=json)
-        return resp is not None
+        return bool(resp)
 
     def set_nightlight(
         self,
@@ -295,7 +347,7 @@ class Pura:
             "controller": controller,
         }
         resp = self.__post(f"v3/devices/{device_id}/nightlight", json=json)
-        return resp is not None
+        return bool(resp)
 
     def set_timer(
         self,
@@ -355,26 +407,54 @@ class Pura:
         return subscriber
 
     def __request(self, method: str, url: str, **kwargs: Any) -> Any:
-        """Make a request."""
-        text_response = kwargs.pop("text_response", False)
+        """Make a request, refreshing the tokens and retrying once if unauthorized.
+
+        The response must be a JSON object. An empty response to a change is
+        returned as an empty object, but reading data must return it, so that
+        missing data isn't taken as there being none.
+        """
         _LOGGER.debug("Making %s request to %s with %s", method, url, kwargs)
+        user = self.get_user()
+        id_token = user.id_token
+        response = self.__send(method, url, **kwargs)
+        if response.status_code == 401 and user.refresh_token:
+            _LOGGER.debug("Unauthorized, refreshing the tokens and retrying")
+            self.__refresh_tokens(id_token)
+            response = self.__send(method, url, **kwargs)
+        if not response.ok:
+            _LOGGER.error("Status: %s - %s", response.status_code, response.text)
+            error = (
+                PuraAuthenticationError
+                if response.status_code == 401
+                else PuraApiException
+            )
+            raise error(_error_message(response), status_code=response.status_code)
+        if not response.content and method != "get":
+            return {}
         try:
-            response = requests.request(
+            data = response.json()
+        except ValueError as err:
+            raise PuraApiException(f"Invalid response: {err}") from err
+        if not isinstance(data, dict):
+            raise PuraApiException(f"Invalid response: {data!r}")
+        return data
+
+    def __refresh_tokens(self, rejected_id_token: str | None) -> None:
+        """Refresh the tokens, unless they changed since the rejected request."""
+        with self._refresh_lock, _translate_errors():
+            if (user := self.get_user()).id_token == rejected_id_token:
+                user.renew_access_token()
+
+    def __send(self, method: str, url: str, **kwargs: Any) -> requests.Response:
+        """Send a request, raising a Pura exception if it can't be made."""
+        with _translate_errors():
+            return requests.request(
                 method,
                 urljoin(BASE_URL, url),
                 auth=self.get_auth(),
                 timeout=10,
                 **kwargs,
             )
-        except ClientError as err:
-            _LOGGER.error(err)
-            if err.response["Error"]["Code"] == "NotAuthorizedException":
-                raise PuraAuthenticationError(err) from err
-            raise
-        if not response.ok:
-            _LOGGER.error("Status: %s - %s", response.status_code, response.text)
-            response.raise_for_status()
-        return response.text if text_response else response.json()
 
     def __get(self, url: str, **kwargs: Any) -> Any:
         """Make a get request."""
