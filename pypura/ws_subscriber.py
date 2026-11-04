@@ -66,9 +66,11 @@ class WebSocketSubscriber:
 
     async def stop(self) -> None:
         """Stop the subscriber, closing the session if it created it."""
-        if self._task:
-            self._task.cancel()
-            with contextlib.suppress(asyncio.CancelledError):
-                await self._task
-        if self._owns_session:
-            await self.session.close()
+        try:
+            if self._task:
+                self._task.cancel()
+                with contextlib.suppress(asyncio.CancelledError):
+                    await self._task
+        finally:
+            if self._owns_session:
+                await self.session.close()
