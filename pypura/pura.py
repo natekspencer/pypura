@@ -358,7 +358,7 @@ class Pura:
         """Make a request, refreshing the tokens and retrying once if unauthorized."""
         _LOGGER.debug("Making %s request to %s with %s", method, url, kwargs)
         response = self.__send(method, url, **kwargs)
-        if response.status_code == 401:
+        if response.status_code == 401 and self.get_user().refresh_token:
             _LOGGER.debug("Unauthorized, refreshing the tokens and retrying")
             response = self.__send(method, url, refresh_tokens=True, **kwargs)
         if not response.ok:

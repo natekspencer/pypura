@@ -198,6 +198,21 @@ def test_request_stops_after_second_unauthorized() -> None:
     assert request.call_count == 2
 
 
+def test_request_without_refresh_token_needs_new_login() -> None:
+    """Test a 401 is an auth error when there is no token to refresh with."""
+    with (
+        patch.object(Pura, "get_auth"),
+        patch.object(Pura, "get_user") as get_user,
+        patch("pypura.pura.requests.request", return_value=_response(401)) as request,
+        pytest.raises(PuraAuthenticationError),
+    ):
+        get_user.return_value.refresh_token = None
+        Pura().get_devices()
+
+    get_user.return_value.renew_access_token.assert_not_called()
+    assert request.call_count == 1
+
+
 @pytest.mark.parametrize(
     ("error", "expected"),
     [
