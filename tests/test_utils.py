@@ -105,11 +105,16 @@ def test_get_model_name(device: dict[str, Any], model: str) -> None:
     ("intensity", "name"),
     [
         (0, "off"),
-        (1, "subtle"),
-        (3, "light"),
+        (1, "gentle"),
+        (2, "gentle"),
+        (3, "subtle"),
+        (4, "subtle"),
         (5, "medium"),
-        (7, "pronounced"),
-        (10, "strong"),
+        (6, "medium"),
+        (7, "strong"),
+        (8, "strong"),
+        (9, "intense"),
+        (10, "intense"),
     ],
 )
 def test_parse_intensity(intensity: int | str, name: str) -> None:
