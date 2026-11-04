@@ -6,6 +6,7 @@ import asyncio
 from unittest.mock import AsyncMock, patch
 
 import aiohttp
+import pytest
 
 from pypura import Pura
 from pypura.ws_subscriber import WebSocketSubscriber
@@ -49,5 +50,34 @@ def test_stop_closes_own_session_and_start_replaces_it() -> None:
             assert not subscriber.session.closed
             await subscriber.stop()
             assert subscriber.session.closed
+
+    asyncio.run(run())
+
+
+def test_start_rejected_while_stopping_own_session() -> None:
+    """Test a new connection can't use a session that is about to be closed."""
+
+    async def slow_connect(_: WebSocketSubscriber, __: object) -> None:
+        try:
+            await asyncio.Event().wait()
+        except asyncio.CancelledError:
+            await asyncio.sleep(0)
+            raise
+
+    async def run() -> None:
+        with patch.object(WebSocketSubscriber, "connect", slow_connect):
+            subscriber = WebSocketSubscriber("token")
+            subscriber.start(_on_message)
+            await asyncio.sleep(0)
+
+            stopping = asyncio.create_task(subscriber.stop())
+            await asyncio.sleep(0)
+            with pytest.raises(RuntimeError, match="stopping"):
+                subscriber.start(_on_message)
+            await stopping
+
+            subscriber.start(_on_message)
+            assert not subscriber.session.closed
+            await subscriber.stop()
 
     asyncio.run(run())

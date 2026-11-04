@@ -20,6 +20,7 @@ class WebSocketSubscriber:
     """Websocket subscriber."""
 
     _running = False
+    _stopping = False
     _task: asyncio.Task[None] | None = None
 
     def __init__(self, token: str, session: aiohttp.ClientSession | None = None):
@@ -60,17 +61,24 @@ class WebSocketSubscriber:
 
     def start(self, on_message: Callable[[dict], Awaitable[None]]) -> None:
         """Start the subscriber in the background."""
-        if self._owns_session and self.session.closed:
-            self.session = aiohttp.ClientSession()
+        if self._owns_session:
+            if self._stopping:
+                raise RuntimeError("Cannot start the subscriber while it is stopping")
+            if self.session.closed:
+                self.session = aiohttp.ClientSession()
         self._task = asyncio.create_task(self.connect(on_message))
 
     async def stop(self) -> None:
         """Stop the subscriber, closing the session if it created it."""
+        self._stopping = True
         try:
             if self._task:
                 self._task.cancel()
                 with contextlib.suppress(asyncio.CancelledError):
                     await self._task
         finally:
-            if self._owns_session:
-                await self.session.close()
+            try:
+                if self._owns_session:
+                    await self.session.close()
+            finally:
+                self._stopping = False
