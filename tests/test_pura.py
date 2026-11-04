@@ -68,23 +68,6 @@ def test_set_timer_absolute_end(end: datetime | int) -> None:
 
 @pytest.mark.freeze_time(START)
 @pytest.mark.parametrize(
-    "start", [0, START_TS - 3600, START + timedelta(hours=1), START_TS + 3600]
-)
-def test_set_timer_start_is_deprecated_and_ignored(start: datetime | int) -> None:
-    """Test passing start warns, and the timer still starts now."""
-    with (
-        patch.object(Pura, "_Pura__post", return_value=TIMER_RESPONSE) as post,
-        pytest.warns(DeprecationWarning, match="'start' is deprecated"),
-    ):
-        assert Pura().set_timer(
-            "device", bay=1, intensity=5, start=start, end=timedelta(minutes=1)
-        )
-
-    post.assert_called_once_with(TIMER_URL, json=_timer_json(START_TS + 60))
-
-
-@pytest.mark.freeze_time(START)
-@pytest.mark.parametrize(
     "end",
     [timedelta(0), timedelta(seconds=-1), START, START_TS, START_TS - 1],
 )

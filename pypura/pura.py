@@ -7,7 +7,6 @@ from datetime import UTC, datetime, timedelta
 import logging
 from typing import Any, Final
 from urllib.parse import urljoin
-import warnings
 
 from botocore.exceptions import ClientError
 from pycognito import Cognito
@@ -303,7 +302,6 @@ class Pura:
         *,
         bay: int,
         intensity: int,
-        start: datetime | int | None = None,
         end: datetime | timedelta | int = TIMER_DURATION_DEFAULT,
     ) -> bool:
         """Set a timer for a bay on a device.
@@ -312,9 +310,6 @@ class Pura:
             device_id: The ID of the device to update.
             bay: The bay number on the device to update.
             intensity: The intensity level, from 1 to 10.
-            start: Deprecated and ignored. Timers always start immediately,
-                as the API replaces any other start time with the current
-                time.
             end: When the timer should end, as a `datetime`, a
                 `timedelta` from now, or a Unix timestamp. Defaults to
                 30 minutes.
@@ -322,12 +317,6 @@ class Pura:
         Returns:
             True if the timer was set successfully.
         """
-        if start is not None:
-            warnings.warn(
-                "'start' is deprecated and ignored, timers always start immediately",
-                DeprecationWarning,
-                stacklevel=2,
-            )
         now = int(datetime.now(UTC).timestamp())
         if isinstance(end, datetime):
             end = int(end.timestamp())
