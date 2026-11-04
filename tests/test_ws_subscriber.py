@@ -81,3 +81,66 @@ def test_start_rejected_while_stopping_own_session() -> None:
             await subscriber.stop()
 
     asyncio.run(run())
+
+
+def test_start_rejected_while_stopping_passed_session() -> None:
+    """Test the connection being stopped can't be replaced on a passed session."""
+
+    async def slow_connect(_: WebSocketSubscriber, __: object) -> None:
+        try:
+            await asyncio.Event().wait()
+        except asyncio.CancelledError:
+            await asyncio.sleep(0)
+            raise
+
+    async def run() -> None:
+        async with aiohttp.ClientSession() as session:
+            with patch.object(WebSocketSubscriber, "connect", slow_connect):
+                subscriber = WebSocketSubscriber("token", session)
+                subscriber.start(_on_message)
+                await asyncio.sleep(0)
+
+                stopping = asyncio.create_task(subscriber.stop())
+                await asyncio.sleep(0)
+                with pytest.raises(RuntimeError, match="stopping"):
+                    subscriber.start(_on_message)
+                await stopping
+
+                subscriber.start(_on_message)
+                await subscriber.stop()
+
+    asyncio.run(run())
+
+
+def test_start_rejected_until_overlapping_stops_finish() -> None:
+    """Test overlapping stops keep rejecting start until the last one finishes."""
+
+    async def run() -> None:
+        subscriber = WebSocketSubscriber("token")
+        real_close = subscriber.session.close
+        releases = [asyncio.Event(), asyncio.Event()]
+        close_calls = 0
+
+        async def gated_close() -> None:
+            nonlocal close_calls
+            close_calls += 1
+            await releases[close_calls - 1].wait()
+
+        with patch.object(subscriber.session, "close", gated_close):
+            first = asyncio.create_task(subscriber.stop())
+            second = asyncio.create_task(subscriber.stop())
+            await asyncio.sleep(0)
+
+            releases[0].set()
+            await first
+            await asyncio.sleep(0)
+
+            assert not second.done()
+            with pytest.raises(RuntimeError, match="stopping"):
+                subscriber.start(_on_message)
+
+            releases[1].set()
+            await second
+        await real_close()
+
+    asyncio.run(run())

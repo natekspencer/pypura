@@ -20,7 +20,7 @@ class WebSocketSubscriber:
     """Websocket subscriber."""
 
     _running = False
-    _stopping = False
+    _stop_calls = 0
     _task: asyncio.Task[None] | None = None
 
     def __init__(self, token: str, session: aiohttp.ClientSession | None = None):
@@ -28,6 +28,7 @@ class WebSocketSubscriber:
         self.token = token
         self._owns_session = session is None
         self.session = session if session else aiohttp.ClientSession()
+        self._stop_lock = asyncio.Lock()
 
     @property
     def is_running(self) -> bool:
@@ -61,24 +62,24 @@ class WebSocketSubscriber:
 
     def start(self, on_message: Callable[[dict], Awaitable[None]]) -> None:
         """Start the subscriber in the background."""
-        if self._owns_session:
-            if self._stopping:
-                raise RuntimeError("Cannot start the subscriber while it is stopping")
-            if self.session.closed:
-                self.session = aiohttp.ClientSession()
+        if self._stop_calls:
+            raise RuntimeError("Cannot start the subscriber while it is stopping")
+        if self._owns_session and self.session.closed:
+            self.session = aiohttp.ClientSession()
         self._task = asyncio.create_task(self.connect(on_message))
 
     async def stop(self) -> None:
         """Stop the subscriber, closing the session if it created it."""
-        self._stopping = True
+        self._stop_calls += 1
         try:
-            if self._task:
-                self._task.cancel()
-                with contextlib.suppress(asyncio.CancelledError):
-                    await self._task
+            async with self._stop_lock:
+                try:
+                    if self._task:
+                        self._task.cancel()
+                        with contextlib.suppress(asyncio.CancelledError):
+                            await self._task
+                finally:
+                    if self._owns_session:
+                        await self.session.close()
         finally:
-            try:
-                if self._owns_session:
-                    await self.session.close()
-            finally:
-                self._stopping = False
+            self._stop_calls -= 1
