@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from datetime import UTC, datetime, timedelta
 import logging
+from typing import Any
 from unittest.mock import MagicMock, patch
 
 from botocore.exceptions import (
@@ -178,18 +179,32 @@ def test_request_error_status_raises(
 
 def test_request_retries_once_after_refreshing_tokens() -> None:
     """Test a rejected token is refreshed, so a brief 401 doesn't need a new login."""
+    auth_headers: list[str] = []
     with (
-        patch.object(Pura, "get_auth"),
         patch.object(Pura, "get_user") as get_user,
-        patch(
-            "pypura.pura.requests.request",
-            side_effect=[_response(401), _response(200)],
-        ) as request,
+        patch("pypura.pura.requests.request") as request,
     ):
+        user = get_user.return_value
+        user.access_token = "access"
+        user.id_token = "rejected"
+        user.refresh_token = "refresh"
+
+        def renew() -> None:
+            user.id_token = "refreshed"
+
+        user.renew_access_token.side_effect = renew
+
+        def send(method: str, url: str, **kwargs: Any) -> requests.Response:
+            prepared = kwargs["auth"](requests.Request(method, url).prepare())
+            auth_headers.append(prepared.headers["Authorization"])
+            return _response(401 if len(auth_headers) == 1 else 200)
+
+        request.side_effect = send
         assert Pura().get_devices() == {}
 
-    get_user.return_value.renew_access_token.assert_called_once_with()
+    user.renew_access_token.assert_called_once_with()
     assert request.call_count == 2
+    assert auth_headers == ["Bearer rejected", "Bearer refreshed"]
 
 
 def test_request_stops_after_second_unauthorized() -> None:
@@ -359,6 +374,25 @@ def test_get_devices_account_without_devices(content: bytes) -> None:
         patch("pypura.pura.requests.request", return_value=_response(200, content)),
     ):
         assert Pura().get_devices() == {}
+
+
+@pytest.mark.parametrize(
+    "content",
+    [
+        b'{"wall": [{"name": "no device id"}]}',
+        b'{"wall": "not a list"}',
+        b'{"wall": ["not an object"]}',
+        b'{"wall": 1}',
+    ],
+)
+def test_get_devices_malformed_device_data_raises(content: bytes) -> None:
+    """Test malformed device data raises a Pura exception."""
+    with (
+        patch.object(Pura, "get_auth"),
+        patch("pypura.pura.requests.request", return_value=_response(200, content)),
+        pytest.raises(PuraApiException, match="Invalid response"),
+    ):
+        Pura().get_devices()
 
 
 def test_request_empty_response_to_read_raises() -> None:

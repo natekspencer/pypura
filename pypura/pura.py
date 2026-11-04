@@ -147,11 +147,14 @@ class Pura:
     def get_devices(self) -> dict[str, dict[str, Any]]:
         """Get devices."""
         response = self.__get("v3/accounts/v2/devices")
-        return {
-            device["deviceId"]: device | {"modelType": model_type}
-            for model_type, devices in response.items()
-            for device in devices or []
-        }
+        try:
+            return {
+                device["deviceId"]: device | {"modelType": model_type}
+                for model_type, devices in response.items()
+                for device in devices or []
+            }
+        except (KeyError, TypeError) as err:
+            raise PuraApiException(f"Invalid response: {err!r}") from err
 
     def get_latest_firmware_details(
         self, device_id: str, device_type: int, device_version: str
