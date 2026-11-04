@@ -15,3 +15,8 @@ wheels/
 # Unit test / coverage reports
 .tox/
 .coverage
+
+# Local files
+.DS_Store
+.vscode/
+subscription.txt
