@@ -293,6 +293,11 @@ class Pura:
     def set_diffusion_mode(self, device_id: str, *, mode: str) -> bool:
         """Set the diffusion mode for a device.
 
+        Only devices listing more than one mode in
+        `capabilities.diffusionModes` can change it. Car devices can't, as
+        they hold a single cartridge and have no `capabilities`, and the API
+        responds with a 503.
+
         Args:
             device_id: The ID of the device to update.
             mode: The diffusion mode to use ("oscillation-multi-bay" or
