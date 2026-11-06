@@ -93,6 +93,7 @@ def test_get_fragrance_remaining(
         ({"model": 2}, "Car"),
         ({"model": 3}, "Home Plus"),
         ({"model": 4}, "Home Mini"),
+        ({"model": 5}, "Home Luxe"),
         ({"model": -1}, "Pura"),
         ({}, "Pura"),
     ],
@@ -793,3 +794,13 @@ def test_schedule_realistic_sequence_ends_empty(
         merge_websocket_update(devices, update)
 
     assert devices[device_id]["schedules"] == []
+
+
+def test_merge_websocket_update_insert_luxe() -> None:
+    """Test a Luxe added over the websocket gets its model type."""
+    devices: dict[str, dict[str, Any]] = {}
+    update = _device_update(NEW_DEVICE_ID, EVENT_INSERT, {"model": 5})
+
+    merge_websocket_update(devices, update)
+
+    assert devices[NEW_DEVICE_ID]["modelType"] == "luxe"

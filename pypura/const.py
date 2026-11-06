@@ -18,6 +18,7 @@ DEVICE_VERSION_MODEL_MAP: Final[dict[str, str]] = {
     "wall_5": "Home v5",
     # device type defaults
     "car": "Car",
+    "luxe": "Home Luxe",
     "mini": "Home Mini",
     "plus": "Home Plus",
     "wall": "Home",
@@ -34,4 +35,5 @@ MODEL_TYPE_MAP: Final[dict[int, str]] = {
     2: "car",
     3: "plus",
     4: "mini",
+    5: "luxe",
 }
