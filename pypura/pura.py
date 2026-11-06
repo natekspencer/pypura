@@ -168,10 +168,10 @@ class Pura:
         Args:
             device_id: The ID of the device to check.
             device_type: The type of the device.
-                (1 = wall, 2 = car, 3 = plus, 4 = mini)
+                (1 = wall, 2 = car, 3 = plus, 4 = mini, 5 = luxe)
             device_version: The device's hardware/firmware version, as
-                reported by the API's `deviceVer` field. For wall, plus,
-                and mini devices, this is passed through as-is. For car
+                reported by the API's `deviceVer` field. For home
+                devices, this is passed through as-is. For car
                 devices, the firmware check only accepts "v1" or "v2",
                 so raw values are mapped accordingly: the original car
                 maps to "v1" and the car pro maps to "v2".
@@ -179,7 +179,7 @@ class Pura:
         Returns:
             A dict of firmware details for the device. Car devices
             (`device_type` 2) return `file`, `host`, `version`, `major`,
-            `minor`, and `patch`. Wall, plus, and mini devices return
+            `minor`, and `patch`. Home devices return
             `file`, `host`, `version`, `interval`, and `size`.
             Don't join `host` and `file` without checking them: `host` only
             has a scheme for car devices, and `file` can be a full URL.
@@ -204,7 +204,7 @@ class Pura:
         Args:
             device_id: The ID of the device to request an update for.
             device_type: The type of the device.
-                (1 = wall, 2 = car, 3 = plus, 4 = mini)
+                (1 = wall, 2 = car, 3 = plus, 4 = mini, 5 = luxe)
             device_version: The device's hardware/firmware version, as
                 reported by the API's `deviceVer` field, if known.
             current_ota_version: The device's current OTA version, as
