@@ -20,3 +20,16 @@ repos:
         name: Update LICENSE year
         entry: scripts/update_license_year.sh
         language: script
+      # Type check, as CI does. pre-commit.ci skips this, as it can't run system hooks.
+      - id: mypy
+        name: mypy
+        # Sync dependencies without building the package: a build rewrites __version__,
+        # which pre-commit treats as the hook changing files.
+        entry: sh -c 'uv sync --quiet --inexact --no-install-project && uv run --no-sync mypy pypura tests'
+        language: system
+        # Python code, plus mypy's settings (setup.cfg) and version
+        files: ^(pypura/|tests/|pyproject\.toml$|setup\.cfg$|uv\.lock$)
+        pass_filenames: false
+
+ci:
+  skip: [mypy]
