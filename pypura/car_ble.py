@@ -53,7 +53,7 @@ class PuraCarStatus:
     """A Pura Car's status, as read over Bluetooth."""
 
     mac: str
-    """The car's MAC address, without separators (e.g. "E41A01DB8057")."""
+    """The car's MAC address, without separators (e.g. "AAAAAAAAAA04")."""
     firmware: str
     hardware: str
     battery_level: int

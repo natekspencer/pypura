@@ -22,21 +22,21 @@ from pypura.car_ble import (
 
 # Replies from a Car Pro on firmware 9.1.16
 REPLIES: dict[int, dict[str, Any]] = {
-    1: {"ack": 1, "mac": "E41A01DB8057", "fw": "9.1.16", "hw": "27.5", "env": 0},
+    1: {"ack": 1, "mac": "AAAAAAAAAA04", "fw": "9.1.16", "hw": "27.5", "env": 0},
     34: {"ack": 34, "level": 85, "charging": 1, "state": 0},
     36: {"ack": 36, "status": 1, "fragrance": "FZYC", "runtime": 190411},
     42: {"ack": 42, "intensity": 1},
-    60: {"ack": 60, "id": "59D6C859-C9D1-4BED-B11E-8B2B47402179"},
+    60: {"ack": 60, "id": "00000000-0000-4000-8000-000000000001"},
 }
 STATUS = PuraCarStatus(
-    mac="E41A01DB8057",
+    mac="AAAAAAAAAA04",
     firmware="9.1.16",
     hardware="27.5",
     battery_level=85,
     charging=True,
     intensity="low",
     fragrance_code="FZYC",
-    cartridge_id="59D6C859-C9D1-4BED-B11E-8B2B47402179",
+    cartridge_id="00000000-0000-4000-8000-000000000001",
     runtime=190411,
 )
 
@@ -221,8 +221,8 @@ def test_write_failure() -> None:
 
 def _device() -> MagicMock:
     device = MagicMock()
-    device.name = "PCarPro-8057"
-    device.address = "E4:1A:01:DB:80:57"
+    device.name = "PCarPro-AA04"
+    device.address = "AA:AA:AA:AA:AA:04"
     return device
 
 
@@ -233,7 +233,7 @@ def test_read_car_status() -> None:
         car_ble, "establish_connection", AsyncMock(return_value=car.client)
     ) as connect:
         assert asyncio.run(read_car_status(_device())) == STATUS
-    assert connect.call_args.args[2] == "PCarPro-8057"
+    assert connect.call_args.args[2] == "PCarPro-AA04"
     car.client.disconnect.assert_awaited_once()
 
 

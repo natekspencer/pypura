@@ -9,4 +9,4 @@ __all__ = [
     "PuraAuthenticationError",
     "PuraBluetoothError",
 ]
-__version__ = "4.0.1.post3.dev0+6d491b7"
+__version__ = "0.0.0"
