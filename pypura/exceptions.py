@@ -12,3 +12,7 @@ class PuraApiException(Exception):
 
 class PuraAuthenticationError(PuraApiException):
     """To indicate there is an issue authenticating."""
+
+
+class PuraBluetoothError(Exception):
+    """To indicate a Pura Car couldn't be reached or read over Bluetooth."""

@@ -1,13 +1,16 @@
 [project]
 name = "pypura"
-description = "Python package for interacting with Pura smart fragrance diffusers over the cloud"
+description = "Python package for interacting with Pura smart fragrance diffusers over the cloud and Bluetooth"
 authors = [{ name = "Nathan Spencer", email = "natekspencer@gmail.com" }]
 requires-python = ">=3.11"
 readme = "README.md"
 license = "MIT"
 dependencies = [
     "aiohttp>=3.12.15",
+    "bleak>=1.0",
+    "bleak-retry-connector>=3.10",
     "boto3>=1.28",
+    "cbor2>=5.6",
     "pycognito>=2024.2.0",
     "pyjwt>=2.0",
     "requests>=2.0",
