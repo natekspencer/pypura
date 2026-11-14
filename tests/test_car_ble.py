@@ -169,10 +169,72 @@ def test_no_reply() -> None:
     asyncio.run(run())
 
 
+def test_stalled_write() -> None:
+    """A write that never completes times out too."""
+
+    async def run() -> None:
+        car = FakeCar(REPLIES)
+
+        async def stall(*args: Any, **kwargs: Any) -> None:
+            await asyncio.Event().wait()
+
+        car.client.write_gatt_char.side_effect = stall
+        client = await _client(car)
+        with (
+            patch.object(car_ble, "COMMAND_TIMEOUT", 0.01),
+            pytest.raises(PuraBluetoothError, match="No reply to command 42"),
+        ):
+            await client.request(42)
+        # The lock is released for the next request
+        car.client.write_gatt_char.side_effect = car._write
+        assert await client.request(42) == REPLIES[42]
+
+    asyncio.run(run())
+
+
+def test_messages_before_request_are_dropped() -> None:
+    """A message received before a request isn't taken as its reply."""
+
+    async def run() -> None:
+        car = FakeCar(REPLIES)
+        client = await _client(car)
+        assert car.callback
+        # An intensity change the car pushed earlier, and the start of another
+        # message whose end arrives after the request is sent
+        for chunk in chunks(cbor2.dumps({"ack": 42, "intensity": 3})):
+            car.callback(MagicMock(), bytearray(chunk))
+        start, *rest = chunks(cbor2.dumps(REPLIES[60] | {"ack": 42}))
+        car.callback(MagicMock(), bytearray(start))
+        car.before_reply = rest
+        assert await client.request(42) == REPLIES[42]
+
+    asyncio.run(run())
+
+
+def test_late_reply_is_dropped() -> None:
+    """A reply arriving after its request timed out isn't taken for the next."""
+
+    async def run() -> None:
+        car = FakeCar({})
+        client = await _client(car)
+        with (
+            patch.object(car_ble, "COMMAND_TIMEOUT", 0.01),
+            pytest.raises(PuraBluetoothError),
+        ):
+            await client.request(42)
+        assert car.callback
+        for chunk in chunks(cbor2.dumps({"ack": 42, "intensity": 3})):
+            car.callback(MagicMock(), bytearray(chunk))
+        car.replies = REPLIES
+        assert await client.request(42) == REPLIES[42]
+
+    asyncio.run(run())
+
+
 @pytest.mark.parametrize(
     ("reply", "match"),
     [
-        (b"\xff\x00", "Couldn't decode"),
+        (b"\xa1", "Couldn't decode"),  # a map cut short
         (cbor2.dumps([42]), "Expected a map"),
     ],
 )

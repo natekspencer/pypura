@@ -80,6 +80,15 @@ class _Reassembler:
         self._parts: list[bytes] | None = None
         self.messages: asyncio.Queue[bytes] = asyncio.Queue()
 
+    def clear(self) -> None:
+        """Drop the messages received so far, including one still arriving.
+
+        The rest of a dropped message is then ignored as stray chunks.
+        """
+        self._parts = None
+        while not self.messages.empty():
+            self.messages.get_nowait()
+
     def feed(self, chunk: bytes) -> None:
         if not chunk:
             return
@@ -123,9 +132,15 @@ class PuraCarClient:
         async with self._lock:
             # Requests are a few bytes, so they always fit in one chunk.
             data = bytes([_SINGLE]) + cbor2.dumps({"cmd": cmd})
+            # Anything already queued came before this request: a message the car
+            # sent by itself, or a late reply to one that timed out.
+            self._reassembler.clear()
             try:
-                await self._client.write_gatt_char(COMMAND_UUID, data, response=True)
+                # The write can stall too, so the deadline covers it
                 async with asyncio.timeout(COMMAND_TIMEOUT):
+                    await self._client.write_gatt_char(
+                        COMMAND_UUID, data, response=True
+                    )
                     while True:
                         reply = _decode(await self._reassembler.messages.get())
                         if reply.get("ack") == cmd:
