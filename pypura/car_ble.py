@@ -1,7 +1,7 @@
 """Read a Pura Car diffuser's status over Bluetooth LE.
 
 The car only syncs with the cloud through the Pura app, so its cloud data can be
-hours old. While a car is on it advertises CAR_SERVICE_UUID and answers commands
+stale or quite old. While a car is on it advertises CAR_SERVICE_UUID and answers commands
 locally, without pairing.
 
 Requests are CBOR maps like {"cmd": 36} written to the command characteristic. Each
