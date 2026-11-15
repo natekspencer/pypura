@@ -7,7 +7,7 @@ from contextlib import contextmanager
 from datetime import UTC, datetime, timedelta
 import logging
 import threading
-from typing import Any, Final
+from typing import Any, Final, Literal
 from urllib.parse import urljoin
 
 from aiohttp import ClientSession
@@ -159,6 +159,36 @@ class Pura:
             }
         except (KeyError, TypeError) as err:
             raise PuraApiException(f"Invalid response: {err!r}") from err
+
+    def get_fragrance(
+        self, code: str, fragrance_format: Literal["puck", "vial"]
+    ) -> dict[str, Any] | None:
+        """Get a fragrance's details by its code, as the app does for a new pod.
+
+        Args:
+            code: The fragrance code, as in a bay's `code` (e.g. "FZYC").
+            fragrance_format: "puck" for a car pod, or "vial" for a home
+                diffuser's vial.
+
+        Returns:
+            The fragrance, in the same form as a bay's `fragrance` (with `name`,
+            `expectedLifeHours`, `vialUrl` and so on), or `None` if there's no
+            fragrance with that code.
+        """
+        response = self.__get(
+            "v3/fragrances",
+            params={"code": code, "format": fragrance_format},
+            missing_ok=True,
+        )
+        if response is None:  # the API answers 404 for an unknown code
+            return None
+        fragrances = response.get("items")
+        if not isinstance(fragrances, list):
+            raise PuraApiException(f"Invalid response: {response!r}")
+        for fragrance in fragrances:
+            if isinstance(fragrance, dict) and fragrance.get("fragranceCode") == code:
+                return fragrance
+        return None
 
     def get_latest_firmware_details(
         self, device_id: str, device_type: int, device_version: str
@@ -420,12 +450,15 @@ class Pura:
         subscriber.start(on_message)
         return subscriber
 
-    def __request(self, method: str, url: str, **kwargs: Any) -> Any:
+    def __request(
+        self, method: str, url: str, *, missing_ok: bool = False, **kwargs: Any
+    ) -> Any:
         """Make a request, refreshing the tokens and retrying once if unauthorized.
 
         The response must be a JSON object. An empty response to a change is
         returned as an empty object, but reading data must return it, so that
-        missing data isn't taken as there being none.
+        missing data isn't taken as there being none. With `missing_ok`, a 404
+        returns None instead of raising, without logging an error.
         """
         _LOGGER.debug("Making %s request to %s with %s", method, url, kwargs)
         user = self.get_user()
@@ -435,6 +468,9 @@ class Pura:
             _LOGGER.debug("Unauthorized, refreshing the tokens and retrying")
             self.__refresh_tokens(id_token)
             response = self.__send(method, url, **kwargs)
+        if missing_ok and response.status_code == 404:
+            _LOGGER.debug("Not found: %s", response.text)
+            return None
         if not response.ok:
             _LOGGER.error("Status: %s - %s", response.status_code, response.text)
             error = (
