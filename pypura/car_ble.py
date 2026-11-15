@@ -39,6 +39,16 @@ GET_FRAGRANCE_DETAILS: Final = 36
 GET_FRAGRANCE_INTENSITY: Final = 42
 GET_CARTRIDGE_ID: Final = 60
 
+# The first firmware that answers GET_CARTRIDGE_ID, as in the app. A Car v1 (on
+# 1.x firmware) doesn't reply to it at all.
+CARTRIDGE_ID_FIRMWARE: Final = (9, 1, 14)
+
+# What a car replies to a command it doesn't support, e.g. {"ack": 255, "err": 1}
+_ERROR_ACK: Final = 255
+
+# The fragrance a car reports for a pod it can't read
+UNREADABLE_FRAGRANCE: Final = "NULL"
+
 # Intensity 0-3 in the cloud's words (its bay1.fanIntensity)
 CAR_INTENSITIES: Final = ("off", "low", "medium", "high")
 
@@ -46,6 +56,19 @@ CAR_INTENSITIES: Final = ("off", "low", "medium", "high")
 COMMAND_TIMEOUT: Final = 8.0
 
 _SINGLE, _START, _CONTINUATION, _END = 0, 1, 2, 3
+
+
+def _firmware_at_least(firmware: str, minimum: tuple[int, ...]) -> bool:
+    """Whether a version like "9.1.16" is `minimum` or newer; False if unreadable."""
+    try:
+        version = tuple(int(part) for part in firmware.split("."))
+    except ValueError:
+        return False
+    return version >= minimum
+
+
+class PuraCarCommandError(PuraBluetoothError):
+    """To indicate a Pura Car rejected a command, e.g. one its model doesn't support."""
 
 
 @dataclass(frozen=True)
@@ -56,16 +79,28 @@ class PuraCarStatus:
     """The car's MAC address, without separators (e.g. "AAAAAAAAAA04")."""
     firmware: str
     hardware: str
-    battery_level: int
-    charging: bool
+    battery_level: int | None
+    """The battery's charge in percent, or `None` for a car without a battery (v1)."""
+    charging: bool | None
+    """Whether the battery is charging, or `None` for a car without a battery (v1)."""
     intensity: str
     """One of CAR_INTENSITIES. The car can stop by itself and keep this setting."""
     fragrance_code: str | None
-    """The pod's fragrance code, or `None` without a pod."""
+    """The pod's fragrance code, or `None` without a pod or with an unknown one."""
     cartridge_id: str | None
-    """The pod's ID (the cloud's bay1.refillId), or `None` without a pod."""
+    """The pod's ID (the cloud's bay1.refillId), or `None` without a pod.
+
+    Also `None` on firmware older than 9.1.14, such as a Car v1's, which can't
+    report it.
+    """
     runtime: int | None
     """Seconds the pod has diffused (the cloud's bay1.wearingTime), or `None`."""
+    unknown_pod: bool = False
+    """Whether a pod is in that the car couldn't read.
+
+    The car then reports its fragrance as "NULL" and a runtime of 0, so
+    `fragrance_code`, `cartridge_id` and `runtime` are `None`, as without a pod.
+    """
 
 
 class _Reassembler:
@@ -127,7 +162,8 @@ class PuraCarClient:
         """Send a command and return the car's reply to it.
 
         Raises `PuraBluetoothError` if the car doesn't reply in time or the reply
-        can't be read. Messages the car sends on its own meanwhile are skipped.
+        can't be read, or `PuraCarCommandError` if it rejects the command. Messages
+        the car sends on its own meanwhile are skipped.
         """
         async with self._lock:
             # Requests are a few bytes, so they always fit in one chunk.
@@ -145,6 +181,11 @@ class PuraCarClient:
                         reply = _decode(await self._reassembler.messages.get())
                         if reply.get("ack") == cmd:
                             return reply
+                        if reply.get("ack") == _ERROR_ACK:
+                            # Only one request is sent at a time, so it's this one's
+                            raise PuraCarCommandError(
+                                f"The car rejected command {cmd}: {reply}"
+                            )
                         _LOGGER.debug("Skipping a message from the car: %s", reply)
             except TimeoutError as err:
                 raise PuraBluetoothError(f"No reply to command {cmd}") from err
@@ -154,22 +195,32 @@ class PuraCarClient:
     async def read_status(self) -> PuraCarStatus:
         """Read the car's status."""
         details = await self.request(GET_DEVICE_DETAILS)
-        battery = await self.request(GET_BATTERY_LEVEL)
+        try:
+            battery = await self.request(GET_BATTERY_LEVEL)
+        except PuraCarCommandError:
+            battery = None  # a Car v1, which runs on the car's power
         fragrance = await self.request(GET_FRAGRANCE_DETAILS)
         intensity = await self.request(GET_FRAGRANCE_INTENSITY)
         has_pod = fragrance.get("status") == 1
-        cartridge = await self.request(GET_CARTRIDGE_ID) if has_pod else {}
+        unknown_pod = has_pod and fragrance.get("fragrance") == UNREADABLE_FRAGRANCE
+        known_pod = has_pod and not unknown_pod
+        firmware = str(details.get("fw", ""))
+        has_cartridge_id = known_pod and _firmware_at_least(
+            firmware, CARTRIDGE_ID_FIRMWARE
+        )
+        cartridge = await self.request(GET_CARTRIDGE_ID) if has_cartridge_id else {}
         try:
             return PuraCarStatus(
                 mac=str(details["mac"]).upper(),
                 firmware=str(details["fw"]),
                 hardware=str(details["hw"]),
-                battery_level=int(battery["level"]),
-                charging=bool(battery["charging"]),
+                battery_level=int(battery["level"]) if battery else None,
+                charging=bool(battery["charging"]) if battery else None,
                 intensity=CAR_INTENSITIES[int(intensity["intensity"])],
-                fragrance_code=str(fragrance["fragrance"]) if has_pod else None,
-                cartridge_id=str(cartridge["id"]) if has_pod else None,
-                runtime=int(fragrance["runtime"]) if has_pod else None,
+                fragrance_code=str(fragrance["fragrance"]) if known_pod else None,
+                cartridge_id=str(cartridge["id"]) if has_cartridge_id else None,
+                runtime=int(fragrance["runtime"]) if known_pod else None,
+                unknown_pod=unknown_pod,
             )
         except (KeyError, IndexError, TypeError, ValueError) as err:
             raise PuraBluetoothError(f"Unexpected reply from the car: {err!r}") from err
