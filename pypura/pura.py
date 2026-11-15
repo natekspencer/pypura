@@ -161,7 +161,7 @@ class Pura:
             raise PuraApiException(f"Invalid response: {err!r}") from err
 
     def get_fragrance(
-        self, code: str, *, fragrance_format: Literal["puck", "vial"]
+        self, code: str, fragrance_format: Literal["puck", "vial"]
     ) -> dict[str, Any] | None:
         """Get a fragrance's details by its code, as the app does for a new pod.
 
