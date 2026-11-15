@@ -521,6 +521,19 @@ FRAGRANCE = {
 }
 
 
+def _assert_fragrance_lookup(
+    request: MagicMock, code: str, fragrance_format: str
+) -> None:
+    """Assert the last request looked up a fragrance by its code and format."""
+    method, url = request.call_args.args
+    assert method == "get"
+    assert url.endswith("/v3/fragrances")
+    assert request.call_args.kwargs["params"] == {
+        "code": code,
+        "format": fragrance_format,
+    }
+
+
 def test_get_fragrance() -> None:
     """Test a fragrance is looked up by its code, as a car pod or a home vial."""
     content = json.dumps({"items": [FRAGRANCE]}).encode()
@@ -531,14 +544,9 @@ def test_get_fragrance() -> None:
         ) as request,
     ):
         assert Pura().get_fragrance("FZYC", fragrance_format="puck") == FRAGRANCE
-        assert request.call_args.kwargs["params"]["format"] == "puck"
+        _assert_fragrance_lookup(request, "FZYC", "puck")
         Pura().get_fragrance("FZYC", fragrance_format="vial")
-
-    assert request.call_args.args[1].endswith("/v3/fragrances")
-    assert request.call_args.kwargs["params"] == {
-        "code": "FZYC",
-        "format": "vial",
-    }
+        _assert_fragrance_lookup(request, "FZYC", "vial")
 
 
 @pytest.mark.parametrize(
@@ -555,9 +563,10 @@ def test_get_fragrance_not_found(
     """Test an unknown code returns None, rather than another fragrance or an error."""
     with (
         patch.object(Pura, "get_auth"),
-        patch("pypura.pura.requests.request", return_value=response),
+        patch("pypura.pura.requests.request", return_value=response) as request,
     ):
         assert Pura().get_fragrance("FZYC", fragrance_format="puck") is None
+    _assert_fragrance_lookup(request, "FZYC", "puck")
     # Not finding a code is an answer, not an error
     assert not [r for r in caplog.records if r.levelno >= logging.WARNING]
 
@@ -574,7 +583,8 @@ def test_get_fragrance_errors(response: requests.Response, match: str) -> None:
     """Test a failed or malformed lookup raises a Pura exception."""
     with (
         patch.object(Pura, "get_auth"),
-        patch("pypura.pura.requests.request", return_value=response),
+        patch("pypura.pura.requests.request", return_value=response) as request,
         pytest.raises(PuraApiException, match=match),
     ):
         Pura().get_fragrance("FZYC", fragrance_format="puck")
+    _assert_fragrance_lookup(request, "FZYC", "puck")
