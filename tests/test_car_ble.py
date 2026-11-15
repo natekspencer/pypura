@@ -16,6 +16,7 @@ from pypura.car_ble import (
     COMMAND_UUID,
     RESPONSE_UUID,
     PuraCarClient,
+    PuraCarCommandError,
     PuraCarStatus,
     read_car_status,
 )
@@ -107,6 +108,115 @@ def test_read_status_without_pod() -> None:
     async def run() -> None:
         car = FakeCar(REPLIES | {36: {"ack": 36, "status": 0, "runtime": 0}})
         status = await (await _client(car)).read_status()
+        assert (status.fragrance_code, status.cartridge_id, status.runtime) == (
+            None,
+            None,
+            None,
+        )
+        assert 60 not in car.sent
+        assert status.unknown_pod is False
+
+    asyncio.run(run())
+
+
+def test_read_status_without_battery() -> None:
+    """A car without a battery (v1) rejects the battery request, which isn't an error."""
+
+    async def run() -> None:
+        car = FakeCar(REPLIES | {34: {"ack": 255, "err": 1}})
+        status = await (await _client(car)).read_status()
+        assert (status.battery_level, status.charging) == (None, None)
+        assert status.fragrance_code == "FZYC"
+
+    asyncio.run(run())
+
+
+def test_read_status_car_v1() -> None:
+    """A Car v1 (firmware 1.5.3) has no battery and isn't asked for its pod ID."""
+    v1_replies = {
+        1: {"ack": 1, "mac": "AAAAAAAAAA01", "fw": "1.5.3", "hw": "1.5", "env": 2},
+        34: {"ack": 255, "err": 1},
+        36: {
+            "ack": 36,
+            "status": 1,
+            "fragrance": "VNTC",
+            "LowOn": 20,
+            "LowOff": 40,
+            "runtime": 7320,
+        },
+        42: {"ack": 42, "intensity": 3},
+        # A v1 doesn't reply to 60 at all
+    }
+
+    async def run() -> None:
+        car = FakeCar(v1_replies)
+        with patch.object(car_ble, "COMMAND_TIMEOUT", 0.01):
+            status = await (await _client(car)).read_status()
+        assert status == PuraCarStatus(
+            mac="AAAAAAAAAA01",
+            firmware="1.5.3",
+            hardware="1.5",
+            battery_level=None,
+            charging=None,
+            intensity="high",
+            fragrance_code="VNTC",
+            cartridge_id=None,
+            runtime=7320,
+        )
+        assert car.sent == [1, 34, 36, 42]
+
+    asyncio.run(run())
+
+
+@pytest.mark.parametrize(
+    ("firmware", "expected"),
+    [
+        ("9.1.14", True),
+        ("9.1.16", True),
+        ("9.2.0", True),  # the app's check gets these two wrong
+        ("10.0.0", True),
+        ("9.1.13", False),
+        ("1.5.3", False),
+        ("", False),
+        ("9.1.x", False),
+    ],
+)
+def test_firmware_at_least(firmware: str, expected: bool) -> None:
+    """Versions compare as numbers, part by part; unreadable ones are too old."""
+    assert (
+        car_ble._firmware_at_least(firmware, car_ble.CARTRIDGE_ID_FIRMWARE) is expected
+    )
+
+
+def test_rejected_command() -> None:
+    """A rejected command raises PuraCarCommandError, without waiting for a timeout."""
+
+    async def run() -> None:
+        car = FakeCar({42: {"ack": 255, "err": 1}})
+        client = await _client(car)
+        with patch.object(car_ble, "COMMAND_TIMEOUT", 60):
+            async with asyncio.timeout(1):
+                with pytest.raises(PuraCarCommandError, match="rejected command 42"):
+                    await client.request(42)
+
+    asyncio.run(run())
+
+
+def test_read_status_unknown_pod() -> None:
+    """A pod the car can't read is reported as unknown, without its runtime of 0."""
+    unreadable = {
+        "ack": 36,
+        "status": 1,
+        "fragrance": "NULL",
+        "LowOn": 30,
+        "LowOff": 30,
+        "runtime": 0,
+    }
+
+    async def run() -> None:
+        car = FakeCar(REPLIES | {36: unreadable})
+        status = await (await _client(car)).read_status()
+        assert status.unknown_pod is True
         assert (status.fragrance_code, status.cartridge_id, status.runtime) == (
             None,
             None,
