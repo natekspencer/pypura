@@ -588,3 +588,34 @@ def test_get_fragrance_errors(response: requests.Response, match: str) -> None:
     ):
         Pura().get_fragrance("FZYC", fragrance_format="puck")
     _assert_fragrance_lookup(request, "FZYC", "puck")
+
+
+def test_request_log_redacts_device_id(caplog: pytest.LogCaptureFixture) -> None:
+    """The logged request keeps the device ID's last 4 digits, and no location."""
+    response = MagicMock(ok=True, status_code=200)
+    response.json.return_value = TIMER_RESPONSE
+    with (
+        patch.object(Pura, "get_auth"),
+        patch("pypura.pura.requests.request", return_value=response),
+        caplog.at_level(logging.DEBUG, logger="pypura.pura"),
+    ):
+        assert Pura().set_timer("AAAAAAAAAA04", bay=1, intensity=5)
+        Pura().set_away_mode(
+            "AA:AA:AA:AA:AA:04",
+            away_mode=True,
+            latitude=12.3456,
+            longitude=-65.4321,
+            radius=100,
+        )
+        Pura().set_ambient_mode("AA-AA-AA-AA-AA-04", ambient_mode=True)
+
+    assert "v3/devices/**REDACTED**AA04/v2/timer" in caplog.text
+    assert "devices/**REDACTED**AA04/awayMode" in caplog.text
+    assert "devices/**REDACTED**AA04/ambientMode" in caplog.text
+    assert "AA-AA-AA-AA-AA-04" not in caplog.text
+    assert "AAAAAAAAAA04" not in caplog.text
+    assert "AA:AA:AA:AA:AA:04" not in caplog.text
+    assert "'latitude': '**REDACTED**'" in caplog.text
+    assert "12.3456" not in caplog.text
+    assert "-65.4321" not in caplog.text
+    assert "'radius': 100" in caplog.text

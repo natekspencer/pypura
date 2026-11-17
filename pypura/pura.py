@@ -6,6 +6,7 @@ from collections.abc import Awaitable, Callable, Iterator
 from contextlib import contextmanager
 from datetime import UTC, datetime, timedelta
 import logging
+import re
 import threading
 from typing import Any, Final, Literal
 from urllib.parse import urljoin
@@ -20,10 +21,15 @@ import requests
 
 from .const import CLIENT_ID, USER_POOL_ID
 from .exceptions import PuraApiException, PuraAuthenticationError
-from .utils import decode
+from .utils import decode, redact_id, redact_ids
 from .ws_subscriber import WebSocketSubscriber
 
 _LOGGER = logging.getLogger(__name__)
+
+# A device ID (its MAC) as a URL path segment, e.g. "v3/devices/<id>/v2/timer"
+_DEVICE_ID_IN_PATH: Final = re.compile(
+    r"(?<=/)(?:[0-9A-Fa-f]{2}[:-]?){5}[0-9A-Fa-f]{2}(?=/|$)"
+)
 
 BASE_URL: Final = "https://trypura.io/mobile/api/"
 
@@ -460,7 +466,12 @@ class Pura:
         missing data isn't taken as there being none. With `missing_ok`, a 404
         returns None instead of raising, without logging an error.
         """
-        _LOGGER.debug("Making %s request to %s with %s", method, url, kwargs)
+        _LOGGER.debug(
+            "Making %s request to %s with %s",
+            method,
+            _DEVICE_ID_IN_PATH.sub(lambda match: redact_id(match[0]), url),
+            redact_ids(kwargs),
+        )
         user = self.get_user()
         id_token = user.id_token
         response = self.__send(method, url, **kwargs)

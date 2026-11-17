@@ -1,6 +1,7 @@
 """Tests utils."""
 
 import copy
+import logging
 from typing import Any
 
 from freezegun.api import FrozenDateTimeFactory
@@ -23,6 +24,8 @@ from pypura.utils import (
     has_fragrance,
     merge_websocket_update,
     parse_intensity,
+    redact_id,
+    redact_ids,
 )
 
 
@@ -804,3 +807,56 @@ def test_merge_websocket_update_insert_luxe() -> None:
     merge_websocket_update(devices, update)
 
     assert devices[NEW_DEVICE_ID]["modelType"] == "luxe"
+
+
+def test_redact_id() -> None:
+    """A device's ID and MAC redact the same way, whatever their format."""
+    assert redact_id("aa:aa:aa:aa:aa:04") == "**REDACTED**AA04"
+    assert redact_id("AAAAAAAAAA04") == "**REDACTED**AA04"
+
+
+def test_redact_ids() -> None:
+    """Device IDs, MACs and locations are redacted wherever they're nested."""
+    data = {
+        "deviceId": "AAAAAAAAAA04",
+        "deviceRecord": {"deviceId": "AAAAAAAAAA04", "bay1": {"code": "FZYC"}},
+        "schedules": [{"device_id": "AAAAAAAAAA04", "id": "schedule-1"}],
+        "reply": {"ack": 1, "mac": "AAAAAAAAAA04"},
+        "connected": None,
+        "geofence": {"latitude": 12.3456, "longitude": -65.4321, "radius": 100},
+        "noLocation": {"latitude": None},
+    }
+    assert redact_ids(data) == {
+        "deviceId": "**REDACTED**AA04",
+        "deviceRecord": {"deviceId": "**REDACTED**AA04", "bay1": {"code": "FZYC"}},
+        "schedules": [{"device_id": "**REDACTED**AA04", "id": "schedule-1"}],
+        "reply": {"ack": 1, "mac": "**REDACTED**AA04"},
+        "connected": None,
+        "geofence": {
+            "latitude": "**REDACTED**",
+            "longitude": "**REDACTED**",
+            "radius": 100,
+        },
+        "noLocation": {"latitude": None},
+    }
+    assert data["deviceId"] == "AAAAAAAAAA04"  # the original is left as is
+
+
+def test_websocket_logs_redact_device_ids(
+    devices: dict[str, dict[str, Any]], caplog: pytest.LogCaptureFixture
+) -> None:
+    """Logged websocket updates keep only the last 4 digits of a device ID."""
+    updates = [
+        _timer_update(HALLWAY_ID, EVENT_INSERT, {"bay": 1}),
+        _timer_update(UNKNOWN_ID, EVENT_INSERT, {"bay": 1}),
+        _device_update(HALLWAY_ID, EVENT_MODIFY, {"deviceId": HALLWAY_ID}),
+        _device_update(CAR_ID, EVENT_REMOVE),
+        {"deviceId": KITCHEN_ID, "recordType": "UNKNOWN"},
+    ]
+    with caplog.at_level(logging.DEBUG, logger="pypura.utils"):
+        for update in updates:
+            merge_websocket_update(devices, update)
+
+    for device_id in (HALLWAY_ID, UNKNOWN_ID, CAR_ID, KITCHEN_ID):
+        assert device_id not in caplog.text
+        assert redact_id(device_id) in caplog.text

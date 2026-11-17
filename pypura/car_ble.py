@@ -26,6 +26,7 @@ from bleak_retry_connector import BleakClientWithServiceCache, establish_connect
 import cbor2
 
 from .exceptions import PuraBluetoothError
+from .utils import redact_ids
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -186,7 +187,9 @@ class PuraCarClient:
                             raise PuraCarCommandError(
                                 f"The car rejected command {cmd}: {reply}"
                             )
-                        _LOGGER.debug("Skipping a message from the car: %s", reply)
+                        _LOGGER.debug(
+                            "Skipping a message from the car: %s", redact_ids(reply)
+                        )
             except TimeoutError as err:
                 raise PuraBluetoothError(f"No reply to command {cmd}") from err
             except BleakError as err:

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 from collections.abc import Callable
+import logging
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -251,6 +252,21 @@ def test_messages_from_the_car_are_skipped() -> None:
         assert await client.request(36) == REPLIES[36]
 
     asyncio.run(run())
+
+
+def test_skipped_messages_log_redacted_mac(caplog: pytest.LogCaptureFixture) -> None:
+    """A skipped message keeps only the last 4 digits of the car's MAC in the log."""
+
+    async def run() -> None:
+        car = FakeCar(REPLIES)
+        client = await _client(car)
+        car.before_reply = chunks(cbor2.dumps(REPLIES[1]))
+        with caplog.at_level(logging.DEBUG, logger="pypura.car_ble"):
+            assert await client.request(42) == REPLIES[42]
+
+    asyncio.run(run())
+    assert "'mac': '**REDACTED**AA04'" in caplog.text
+    assert "AAAAAAAAAA04" not in caplog.text
 
 
 def test_stray_chunks_are_ignored() -> None:

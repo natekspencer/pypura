@@ -5,6 +5,7 @@ from __future__ import annotations
 from base64 import b64decode
 from datetime import UTC, datetime
 import logging
+import re
 from typing import Any, Final
 
 from .const import DEVICE_VERSION_MODEL_MAP, MODEL_TYPE_MAP
@@ -20,6 +21,41 @@ EVENT_REMOVE = "REMOVE"
 RECORD_TYPE_DEVICE = "DEVICE"
 RECORD_TYPE_SCHEDULE = "SCHEDULE"
 RECORD_TYPE_TIMER = "TIMER"
+
+PARTIALLY_REDACTED: Final = frozenset({"device_id", "deviceId", "mac"})
+"""Fields holding a device ID or MAC, which keep enough to tell devices apart."""
+REDACTED: Final = frozenset({"latitude", "longitude"})
+"""Fields that are redacted completely, such as an away mode geofence's location."""
+
+
+def redact_id(value: str) -> str:
+    """Partially redact a device ID or MAC, keeping its last 4 hex digits.
+
+    Separators and case are ignored, so a device's ID and MAC redact the same way
+    (e.g. "AA:AA:AA:AA:AA:04" and "aaaaaaaaaa04" both become "**REDACTED**AA04").
+    """
+    return f"**REDACTED**{re.sub(r'[^0-9A-F]', '', value.upper())[-4:]}"
+
+
+def redact_ids(data: Any) -> Any:
+    """Redact the device IDs, MACs and locations in nested data, e.g. for logging.
+
+    Device IDs and MACs keep their last 4 hex digits (see `redact_id`).
+    """
+    if isinstance(data, dict):
+        return {
+            key: (
+                "**REDACTED**"
+                if key in REDACTED and value is not None
+                else redact_id(value)
+                if key in PARTIALLY_REDACTED and isinstance(value, str)
+                else redact_ids(value)
+            )
+            for key, value in data.items()
+        }
+    if isinstance(data, (list, tuple)):
+        return [redact_ids(item) for item in data]
+    return data
 
 
 def decode(value: str) -> str:
@@ -131,7 +167,7 @@ def merge_websocket_update(
     was applied.
     """
     if not (device_id := update.get("deviceId")):
-        _LOGGER.warning("Received unknown update: %s", update)
+        _LOGGER.warning("Received unknown update: %s", redact_ids(update))
         return False
 
     event_type = update.get("eventType")
@@ -142,7 +178,11 @@ def merge_websocket_update(
 
     device = devices.get(device_id)
     if device is None:
-        _LOGGER.debug("Device %s does not exist, skipping: %s", device_id, update)
+        _LOGGER.debug(
+            "Device %s does not exist, skipping: %s",
+            redact_id(device_id),
+            redact_ids(update),
+        )
         return False
 
     if record_type == RECORD_TYPE_TIMER:
@@ -150,7 +190,7 @@ def merge_websocket_update(
     elif record_type == RECORD_TYPE_SCHEDULE:
         return _merge_schedule_record(device, device_id, event_type, update)
     else:
-        _LOGGER.warning("Received unknown update: %s", update)
+        _LOGGER.warning("Received unknown update: %s", redact_ids(update))
         return False
 
 
@@ -163,14 +203,18 @@ def _merge_device_record(
     """Merge a device record."""
     if event_type == EVENT_REMOVE:
         if devices.pop(device_id, None) is not None:
-            _LOGGER.debug("Removed device %s", device_id)
+            _LOGGER.debug("Removed device %s", redact_id(device_id))
             return True
 
-        _LOGGER.debug("Device %s does not exist, no need to remove", device_id)
+        _LOGGER.debug(
+            "Device %s does not exist, no need to remove", redact_id(device_id)
+        )
         return False
 
     if not isinstance(record := update.get("deviceRecord"), dict):
-        _LOGGER.debug("Cannot update device %s: %s", device_id, update)
+        _LOGGER.debug(
+            "Cannot update device %s: %s", redact_id(device_id), redact_ids(update)
+        )
         return False
 
     if not record.get("deviceId"):
@@ -185,26 +229,28 @@ def _merge_device_record(
 
     if event_type == EVENT_INSERT:
         if device_id in devices:
-            _LOGGER.debug("Device %s exists, updating", device_id)
+            _LOGGER.debug("Device %s exists, updating", redact_id(device_id))
             _merge_device_update(devices[device_id], record)
             return True
-        _LOGGER.debug("Insert device %s", device_id)
+        _LOGGER.debug("Insert device %s", redact_id(device_id))
         model_type = MODEL_TYPE_MAP.get(record.get("model", 0))
         devices[device_id] = record | {"modelType": model_type}
         return True
 
     if event_type == EVENT_MODIFY:
         if device_id in devices:
-            _LOGGER.debug("Updated device %s", device_id)
+            _LOGGER.debug("Updated device %s", redact_id(device_id))
             _merge_device_update(devices[device_id], record)
             return True
 
         _LOGGER.debug(
-            "Device %s does not exist, skipping update: %s", device_id, record
+            "Device %s does not exist, skipping update: %s",
+            redact_id(device_id),
+            redact_ids(record),
         )
         return False
 
-    _LOGGER.warning("Received unknown update: %s", update)
+    _LOGGER.warning("Received unknown update: %s", redact_ids(update))
     return False
 
 
@@ -237,16 +283,18 @@ def _merge_timer_record(
 ) -> bool:
     """Merge a timer record."""
     if event_type == EVENT_REMOVE:
-        _LOGGER.debug("Removed timer from device %s", device_id)
+        _LOGGER.debug("Removed timer from device %s", redact_id(device_id))
         device["timer"] = None
         return True
 
     if event_type in (EVENT_INSERT, EVENT_MODIFY):
-        _LOGGER.debug("%s timer on device %s", event_type.capitalize(), device_id)
+        _LOGGER.debug(
+            "%s timer on device %s", event_type.capitalize(), redact_id(device_id)
+        )
         device["timer"] = update.get("timerRecord")
         return True
 
-    _LOGGER.warning("Received unknown update: %s", update)
+    _LOGGER.warning("Received unknown update: %s", redact_ids(update))
     return False
 
 
@@ -258,11 +306,11 @@ def _merge_schedule_record(
 ) -> bool:
     """Merge a schedule record."""
     if not (record := update.get("scheduleRecord")):
-        _LOGGER.debug("Schedule missing: %s", update)
+        _LOGGER.debug("Schedule missing: %s", redact_ids(update))
         return False
 
     if (record_id := record.get("id")) is None:
-        _LOGGER.debug("Schedule ID missing: %s", update)
+        _LOGGER.debug("Schedule ID missing: %s", redact_ids(update))
         return False
 
     if (schedules := device.get("schedules")) is None:
@@ -272,7 +320,7 @@ def _merge_schedule_record(
         device["schedules"] = [
             schedule for schedule in schedules if schedule.get("id") != record_id
         ]
-        _LOGGER.debug("Removed schedule from device %s", device_id)
+        _LOGGER.debug("Removed schedule from device %s", redact_id(device_id))
         return True
 
     if event_type in (EVENT_INSERT, EVENT_MODIFY):
@@ -284,5 +332,5 @@ def _merge_schedule_record(
             schedules.append(record)
         return True
 
-    _LOGGER.warning("Received unknown update: %s", update)
+    _LOGGER.warning("Received unknown update: %s", redact_ids(update))
     return False
