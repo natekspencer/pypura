@@ -607,9 +607,12 @@ def test_request_log_redacts_device_id(caplog: pytest.LogCaptureFixture) -> None
             longitude=-65.4321,
             radius=100,
         )
+        Pura().set_ambient_mode("AA-AA-AA-AA-AA-04", ambient_mode=True)
 
     assert "v3/devices/**REDACTED**AA04/v2/timer" in caplog.text
     assert "devices/**REDACTED**AA04/awayMode" in caplog.text
+    assert "devices/**REDACTED**AA04/ambientMode" in caplog.text
+    assert "AA-AA-AA-AA-AA-04" not in caplog.text
     assert "AAAAAAAAAA04" not in caplog.text
     assert "AA:AA:AA:AA:AA:04" not in caplog.text
     assert "'latitude': '**REDACTED**'" in caplog.text

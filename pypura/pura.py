@@ -28,7 +28,7 @@ _LOGGER = logging.getLogger(__name__)
 
 # A device ID (its MAC) as a URL path segment, e.g. "v3/devices/<id>/v2/timer"
 _DEVICE_ID_IN_PATH: Final = re.compile(
-    r"(?<=/)(?:[0-9A-Fa-f]{2}:?){5}[0-9A-Fa-f]{2}(?=/|$)"
+    r"(?<=/)(?:[0-9A-Fa-f]{2}[:-]?){5}[0-9A-Fa-f]{2}(?=/|$)"
 )
 
 BASE_URL: Final = "https://trypura.io/mobile/api/"
