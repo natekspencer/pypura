@@ -610,6 +610,23 @@ def test_car_change_events_same_code_swap() -> None:
     assert car_change_events(STATUS, replace(STATUS, runtime=60), READ_AT) == []
 
 
+def test_car_change_events_same_code_swap_after_unreported_runtime() -> None:
+    """A swap is found from the previous reading's runtime, not the one reported.
+
+    Runtime 0 was reported, 200 wasn't (only an intensity change was), and the new
+    pod has 60: that's a drop from 200, though it's more than 0.
+    """
+    previous = replace(CAR_V1, runtime=200)
+    after = replace(CAR_V1, runtime=60)
+    events = car_change_events(
+        previous, after, READ_AT, runtime_step=300, reported_runtime=0
+    )
+    assert [event["eventType"] for event in events] == [
+        "changedFruck",
+        "diffusionChanged",
+    ]
+
+
 def test_car_change_events_pod_removed() -> None:
     """A removed pod is reported with a null code."""
     after = replace(CAR_V1, fragrance_code=None, runtime=None, intensity="off")
@@ -716,6 +733,17 @@ def test_car_change_events_runtime() -> None:
     # The intensity and battery go in the same connect
     before = replace(before, intensity="high", battery_level=90)
     assert car_change_events(before, STATUS, READ_AT, runtime_step=300) == [connect]
+
+
+def test_car_change_events_runtime_since_reported() -> None:
+    """The step counts from the runtime last reported, not the previous reading."""
+    previous = replace(STATUS, runtime=STATUS.runtime - 100)  # type: ignore[operator]
+    reported = STATUS.runtime - 300  # type: ignore[operator]
+    assert car_change_events(previous, STATUS, READ_AT, runtime_step=300) == []
+    events = car_change_events(
+        previous, STATUS, READ_AT, runtime_step=300, reported_runtime=reported
+    )
+    assert [event["eventType"] for event in events] == ["connect"]
 
 
 def test_car_change_events_runtime_with_charging() -> None:

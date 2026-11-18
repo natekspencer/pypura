@@ -314,6 +314,7 @@ def car_change_events(
     read_at: float,
     *,
     runtime_step: int = 0,
+    reported_runtime: int | None = None,
 ) -> list[dict[str, Any]]:
     """Return the events reporting how a car changed between two readings.
 
@@ -329,16 +330,18 @@ def car_change_events(
     which the cloud ignores in a connect.
 
     Args:
-        before: The reading last reported, but with the runtime last reported: after
-            a batch without a runtime report (no changedFruck or connect event), keep
-            the earlier runtime, or changes reported in between would keep resetting
-            the step and postpone the runtime report indefinitely.
+        before: The previous reading.
         after: The new reading.
         read_at: When it was read, in seconds since the epoch.
-        runtime_step: Report the runtime only once it has grown by this many seconds,
-            since it grows the whole time the car diffuses.
+        runtime_step: Report the runtime only once it has grown by this many seconds
+            since `reported_runtime`, since it grows the whole time the car diffuses.
+        reported_runtime: The runtime last reported, if not `before`'s. With a
+            `runtime_step`, keep it across batches without a runtime report (no
+            changedFruck or connect event), or changes reported in between would keep
+            postponing the runtime report.
     """
     at = int(read_at * 1000)
+    baseline = before.runtime if reported_runtime is None else reported_runtime
     events: list[dict[str, Any]] = []
     pod_changed = (cloud_fragrance_code(before), before.cartridge_id) != (
         cloud_fragrance_code(after),
@@ -350,7 +353,7 @@ def car_change_events(
         not pod_changed
         and after.fragrance_code is not None
         and after.runtime is not None
-        and after.runtime - (before.runtime or 0) >= max(runtime_step, 1)
+        and after.runtime - (baseline or 0) >= max(runtime_step, 1)
     )
     # A new pod's intensity is sent even if unchanged, so the cloud's new bay has
     # the car's rather than whatever the cloud starts a bay with

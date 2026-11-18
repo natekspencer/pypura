@@ -448,7 +448,8 @@ class Pura:
         """Report what was read from a car over Bluetooth, as the Pura app does.
 
         A car only syncs with the cloud through a phone, which sends these events
-        after reading it. `car_ble.car_status_events` makes them from a reading.
+        after reading it. `car_ble.car_status_events` makes them from a reading, and
+        `car_ble.car_change_events` from what changed since.
 
         Args:
             device_id: The car's ID, its MAC without separators.
@@ -456,7 +457,7 @@ class Pura:
 
         Returns:
             The response, which has the car as the cloud now has it under
-            `carDiffuser`.
+            `device`, without the `modelType` that `get_devices` adds.
         """
         resp: dict[str, Any] = self.__post(
             f"car/{device_id}/batchedEvents", json={"events": events}
