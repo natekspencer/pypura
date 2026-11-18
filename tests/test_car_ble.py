@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 from collections.abc import Callable
+from dataclasses import replace
 import logging
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
@@ -19,6 +20,9 @@ from pypura.car_ble import (
     PuraCarClient,
     PuraCarCommandError,
     PuraCarStatus,
+    car_change_events,
+    car_status_events,
+    cloud_fragrance_code,
     read_car_status,
 )
 
@@ -203,12 +207,16 @@ def test_rejected_command() -> None:
     asyncio.run(run())
 
 
-def test_read_status_unknown_pod() -> None:
-    """A pod the car can't read is reported as unknown, without its runtime of 0."""
+@pytest.mark.parametrize("fragrance", ["NULL", "BIST"])
+def test_read_status_unknown_pod(fragrance: str) -> None:
+    """A pod the car can't read is reported as unknown, without its runtime of 0.
+
+    The app treats the car's factory test pod ("BIST") the same.
+    """
     unreadable = {
         "ack": 36,
         "status": 1,
-        "fragrance": "NULL",
+        "fragrance": fragrance,
         "LowOn": 30,
         "LowOff": 30,
         "runtime": 0,
@@ -448,3 +456,315 @@ def test_read_car_status_disconnects_on_failure() -> None:
     ):
         asyncio.run(read_car_status(_device()))
     car.client.disconnect.assert_awaited_once()
+
+
+READ_AT = 1794700000.25  # seconds; the app reports milliseconds
+CAR_V1 = PuraCarStatus(
+    mac="AAAAAAAAAA01",
+    firmware="1.5.3",
+    hardware="1.5",
+    battery_level=None,
+    charging=None,
+    intensity="medium",
+    fragrance_code="VNTC",
+    cartridge_id=None,
+    runtime=7320,
+)
+
+
+def test_car_status_events() -> None:
+    """A reading is reported like the app does on connecting, battery included."""
+    assert car_status_events(STATUS, READ_AT) == [
+        {
+            "eventType": "connect",
+            "fanIntensity": "low",
+            "firmwareVersion": "9.1.16",
+            "fragranceWeartime": 190411,
+            "batteryRemaining": 85,
+            "refillId": "00000000-0000-4000-8000-000000000001",
+            "informationSynthesizedTime": 1794700000250,
+        }
+    ]
+
+
+def test_car_status_events_car_v1() -> None:
+    """A Car v1 has no battery (sent as 0, which the cloud ignores) or pod ID, and
+    medium is "med" to the app."""
+    assert car_status_events(CAR_V1, READ_AT) == [
+        {
+            "eventType": "connect",
+            "fanIntensity": "med",
+            "firmwareVersion": "1.5.3",
+            "fragranceWeartime": 7320,
+            "batteryRemaining": 0,
+            "informationSynthesizedTime": 1794700000250,
+        }
+    ]
+
+
+def test_car_status_events_pod_changed() -> None:
+    """A changed pod is reported first."""
+    events = car_status_events(STATUS, READ_AT, pod_changed=True)
+    assert [event["eventType"] for event in events] == [
+        "changedFruck",
+        "connect",
+    ]
+    assert events[0] == {
+        "eventType": "changedFruck",
+        "fragranceCode": "FZYC",
+        "fragranceWeartime": 190411,
+        "refillId": "00000000-0000-4000-8000-000000000001",
+        "informationSynthesizedTime": 1794700000250,
+    }
+
+
+def test_car_status_events_pod_removed() -> None:
+    """A removed pod is reported with a null code, no ID, and no runtime."""
+    no_pod = PuraCarStatus(
+        **CAR_V1.__dict__
+        | {"intensity": "off", "fragrance_code": None, "runtime": None}
+    )
+    events = car_status_events(no_pod, READ_AT, pod_changed=True)
+    assert events == [
+        {
+            "eventType": "changedFruck",
+            "fragranceCode": None,  # the cloud requires it
+            "fragranceWeartime": 0,
+            "informationSynthesizedTime": 1794700000250,
+        },
+        {
+            "eventType": "connect",
+            "fanIntensity": "off",
+            "firmwareVersion": "1.5.3",
+            "fragranceWeartime": 0,
+            "batteryRemaining": 0,
+            "informationSynthesizedTime": 1794700000250,
+        },
+    ]
+
+
+def test_car_status_events_unknown_pod() -> None:
+    """A pod the car can't identify is reported as unknown, as the app does."""
+    unknown = PuraCarStatus(
+        **CAR_V1.__dict__
+        | {"fragrance_code": None, "runtime": None, "unknown_pod": True}
+    )
+    events = car_status_events(unknown, READ_AT, pod_changed=True)
+    assert events[0] == {
+        "eventType": "changedFruck",
+        "fragranceCode": "UKNC",
+        "fragranceWeartime": 0,
+        "informationSynthesizedTime": 1794700000250,
+    }
+    assert [event["eventType"] for event in events] == ["changedFruck", "connect"]
+
+
+AT = 1794700000250  # READ_AT in milliseconds
+
+
+def test_car_change_events_none() -> None:
+    """Nothing is reported for an unchanged reading."""
+    assert car_change_events(STATUS, STATUS, READ_AT) == []
+
+
+def test_car_change_events_pod() -> None:
+    """A new pod is reported with its code, ID, runtime and intensity."""
+    after = replace(STATUS, fragrance_code="VNTC", cartridge_id="new", runtime=60)
+    assert car_change_events(STATUS, after, READ_AT) == [
+        {
+            "eventType": "changedFruck",
+            "fragranceCode": "VNTC",
+            "fragranceWeartime": 60,
+            "refillId": "new",
+            "informationSynthesizedTime": AT,
+        },
+        # Sent though unchanged, so the cloud's new bay has the car's intensity
+        {
+            "eventType": "diffusionChanged",
+            "fanIntensity": "low",
+            "informationSynthesizedTime": AT,
+        },
+    ]
+
+
+def test_car_change_events_same_code_swap() -> None:
+    """A pod swapped for one with the same code is reported if its runtime is lower.
+
+    A Car v1 has no pod IDs, so that's the only sign of a different pod.
+    """
+    after = replace(CAR_V1, runtime=60)
+    assert car_change_events(CAR_V1, after, READ_AT) == [
+        {
+            "eventType": "changedFruck",
+            "fragranceCode": "VNTC",
+            "fragranceWeartime": 60,
+            "informationSynthesizedTime": AT,
+        },
+        {
+            "eventType": "diffusionChanged",
+            "fanIntensity": "med",
+            "informationSynthesizedTime": AT,
+        },
+    ]
+    # With pod IDs, the same ID is the same pod, whatever its runtime
+    assert car_change_events(STATUS, replace(STATUS, runtime=60), READ_AT) == []
+
+
+def test_car_change_events_same_code_swap_after_unreported_runtime() -> None:
+    """A swap is found from the previous reading's runtime, not the one reported.
+
+    Runtime 0 was reported, 200 wasn't (only an intensity change was), and the new
+    pod has 60: that's a drop from 200, though it's more than 0.
+    """
+    previous = replace(CAR_V1, runtime=200)
+    after = replace(CAR_V1, runtime=60)
+    events = car_change_events(
+        previous, after, READ_AT, runtime_step=300, reported_runtime=0
+    )
+    assert [event["eventType"] for event in events] == [
+        "changedFruck",
+        "diffusionChanged",
+    ]
+
+
+def test_car_change_events_pod_removed() -> None:
+    """A removed pod is reported with a null code."""
+    after = replace(CAR_V1, fragrance_code=None, runtime=None, intensity="off")
+    assert car_change_events(CAR_V1, after, READ_AT) == [
+        {
+            "eventType": "changedFruck",
+            "fragranceCode": None,
+            "fragranceWeartime": 0,
+            "informationSynthesizedTime": AT,
+        },
+        {
+            "eventType": "diffusionChanged",
+            "fanIntensity": "off",
+            "informationSynthesizedTime": AT,
+        },
+    ]
+
+
+def test_car_change_events_unknown_pod() -> None:
+    """A pod the car can't identify is reported as unknown, and then left alone."""
+    after = replace(CAR_V1, fragrance_code=None, runtime=None, unknown_pod=True)
+    assert car_change_events(CAR_V1, after, READ_AT) == [
+        {
+            "eventType": "changedFruck",
+            "fragranceCode": "UKNC",
+            "fragranceWeartime": 0,
+            "informationSynthesizedTime": AT,
+        },
+        {
+            "eventType": "diffusionChanged",
+            "fanIntensity": "med",
+            "informationSynthesizedTime": AT,
+        },
+    ]
+    assert car_change_events(after, after, READ_AT) == []
+
+
+def test_cloud_fragrance_code() -> None:
+    """The pod's code as the cloud has it: unknown pods as UKNC, none as None."""
+    assert cloud_fragrance_code(CAR_V1) == "VNTC"
+    assert cloud_fragrance_code(replace(CAR_V1, fragrance_code=None)) is None
+    unknown = replace(CAR_V1, fragrance_code=None, unknown_pod=True)
+    assert cloud_fragrance_code(unknown) == "UKNC"
+
+
+def test_car_change_events_intensity() -> None:
+    """A new intensity is reported in the event's words, e.g. "med" for medium."""
+    after = replace(STATUS, intensity="medium")
+    assert car_change_events(STATUS, after, READ_AT) == [
+        {
+            "eventType": "diffusionChanged",
+            "fanIntensity": "med",
+            "informationSynthesizedTime": AT,
+        }
+    ]
+
+
+@pytest.mark.parametrize(
+    ("charging", "level", "event_type"),
+    [(False, 85, "stopCharging"), (True, 86, "battery")],
+)
+def test_car_change_events_battery(charging: bool, level: int, event_type: str) -> None:
+    """The battery starting or stopping charging, or a new level, is reported."""
+    after = replace(STATUS, charging=charging, battery_level=level)
+    assert car_change_events(STATUS, after, READ_AT) == [
+        {
+            "eventType": event_type,
+            "batteryRemaining": level,
+            "informationSynthesizedTime": AT,
+        }
+    ]
+
+
+def test_car_change_events_start_charging() -> None:
+    """The battery starting to charge is reported with its level."""
+    before = replace(STATUS, charging=False)
+    assert car_change_events(before, STATUS, READ_AT) == [
+        {
+            "eventType": "startCharging",
+            "batteryRemaining": 85,
+            "informationSynthesizedTime": AT,
+        }
+    ]
+
+
+def test_car_change_events_runtime() -> None:
+    """The runtime is reported once it has grown by the step, with a connect.
+
+    That moves the cloud's times on, unlike the app's data event, and carries any
+    other change too.
+    """
+    before = replace(STATUS, runtime=STATUS.runtime - 300)  # type: ignore[operator]
+    assert car_change_events(before, STATUS, READ_AT, runtime_step=301) == []
+    connect = {
+        "eventType": "connect",
+        "fanIntensity": "low",
+        "firmwareVersion": "9.1.16",
+        "fragranceWeartime": 190411,
+        "batteryRemaining": 85,
+        "refillId": "00000000-0000-4000-8000-000000000001",
+        "informationSynthesizedTime": AT,
+    }
+    assert car_change_events(before, STATUS, READ_AT, runtime_step=300) == [connect]
+    # The intensity and battery go in the same connect
+    before = replace(before, intensity="high", battery_level=90)
+    assert car_change_events(before, STATUS, READ_AT, runtime_step=300) == [connect]
+
+
+def test_car_change_events_runtime_since_reported() -> None:
+    """The step counts from the runtime last reported, not the previous reading."""
+    previous = replace(STATUS, runtime=STATUS.runtime - 100)  # type: ignore[operator]
+    reported = STATUS.runtime - 300  # type: ignore[operator]
+    assert car_change_events(previous, STATUS, READ_AT, runtime_step=300) == []
+    events = car_change_events(
+        previous, STATUS, READ_AT, runtime_step=300, reported_runtime=reported
+    )
+    assert [event["eventType"] for event in events] == ["connect"]
+
+
+def test_car_change_events_runtime_with_charging() -> None:
+    """The battery starting or stopping charging is still reported with a connect."""
+    before = replace(STATUS, runtime=STATUS.runtime - 300, charging=False)  # type: ignore[operator]
+    events = car_change_events(before, STATUS, READ_AT, runtime_step=300)
+    assert [event["eventType"] for event in events] == ["connect", "startCharging"]
+    assert events[1]["batteryRemaining"] == 85
+
+
+def test_car_change_events_runtime_with_empty_battery() -> None:
+    """An empty battery is still reported with a connect, which can't carry 0."""
+    after = replace(STATUS, battery_level=0)
+    before = replace(STATUS, runtime=STATUS.runtime - 300, battery_level=1)  # type: ignore[operator]
+    events = car_change_events(before, after, READ_AT, runtime_step=300)
+    assert [event["eventType"] for event in events] == ["connect", "battery"]
+    assert events[1]["batteryRemaining"] == 0
+
+
+def test_car_status_events_empty_battery() -> None:
+    """An empty battery is reported separately, since a connect can't carry 0."""
+    events = car_status_events(replace(STATUS, battery_level=0), READ_AT)
+    assert [event["eventType"] for event in events] == ["connect", "battery"]
+    assert events[1]["batteryRemaining"] == 0

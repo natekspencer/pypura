@@ -627,3 +627,23 @@ def test_request_log_redacts_device_id(caplog: pytest.LogCaptureFixture) -> None
     assert "12.3456" not in caplog.text
     assert "-65.4321" not in caplog.text
     assert "'radius': 100" in caplog.text
+
+
+def test_send_car_events() -> None:
+    """Car events are posted in a batch, and the response returned."""
+    events = [{"eventType": "connect", "fanIntensity": "low"}]
+    response = MagicMock(ok=True, status_code=200)
+    response.json.return_value = {"message": "ok", "device": {"model": 2}}
+    with (
+        patch.object(Pura, "get_auth"),
+        patch("pypura.pura.requests.request", return_value=response) as request,
+    ):
+        assert Pura().send_car_events("AAAAAAAAAA04", events) == {
+            "message": "ok",
+            "device": {"model": 2},
+        }
+
+    method, url = request.call_args.args
+    assert method == "post"
+    assert url.endswith("/mobile/api/car/AAAAAAAAAA04/batchedEvents")
+    assert request.call_args.kwargs["json"] == {"events": events}
