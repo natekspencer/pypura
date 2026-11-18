@@ -274,7 +274,7 @@ class Pura:
             True if always-on mode was set successfully.
         """
         json = {"bay": bay}
-        resp = self.__post(f"devices/{device_id}/always-on", json=json)
+        resp = self.__post(f"v3/devices/{device_id}/always-on", json=json)
         return resp.get("success") is True
 
     def set_ambient_mode(self, device_id: str, *, ambient_mode: bool) -> bool:

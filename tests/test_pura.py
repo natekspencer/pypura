@@ -295,6 +295,14 @@ def test_request_invalid_response_raises(content: bytes) -> None:
         Pura().get_devices()
 
 
+def test_set_always_on() -> None:
+    """Always-on is set through the v3 endpoint, as the Pura app does since 3.14.19."""
+    with patch.object(Pura, "_Pura__post", return_value={"success": True}) as post:
+        assert Pura().set_always_on("device", bay=2)
+
+    post.assert_called_once_with("v3/devices/device/always-on", json={"bay": 2})
+
+
 def test_set_intensity_response() -> None:
     """Test the response to setting the intensity."""
     content = b'{"bay": 1, "controller": "default", "intensity": 1}'
