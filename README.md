@@ -8,6 +8,7 @@
 [![PyPI - Version](https://img.shields.io/pypi/v/pypura?style=for-the-badge)](https://pypi.org/project/pypura/)
 [![Buy Me A Coffee/Beer](https://img.shields.io/badge/Buy_Me_A_☕/🍺-F16061?style=for-the-badge&logo=ko-fi&logoColor=white&labelColor=grey)](https://ko-fi.com/natekspencer)
 [![Sponsor on GitHub](https://img.shields.io/badge/Sponsor_💜-6f42c1?style=for-the-badge&logo=github&logoColor=white&labelColor=grey)](https://github.com/sponsors/natekspencer)
+[![GitHub Stars](https://img.shields.io/github/stars/natekspencer/pypura?style=for-the-badge&logo=github&label=Star&color=yellow)](https://github.com/natekspencer/pypura)
 
 [![GitHub License](https://img.shields.io/github/license/natekspencer/pypura?style=flat-square)](LICENSE)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pypura?style=flat-square)](https://pypi.org/project/pypura/)
